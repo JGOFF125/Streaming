@@ -1,6 +1,18 @@
 # Orbit on a real Android phone
 
-Latest: [Orbit 1.2.2 privacy-cleanup APK](https://expo.dev/artifacts/eas/2L2zW_K9yTM3Z8RepteDbj4XJ6FpAAbiSwSldOTTuz0.apk) ([build](https://expo.dev/accounts/jgoff/projects/orbit/builds/b417efd6-bcca-4cf0-b28c-6311721baa4a)). It removes unused permissions and clarifies optional external controls. See [ANDROID_PERMISSIONS.md](ANDROID_PERMISSIONS.md). The installed/tested 1.2.1 artifact and its provenance remain below as history. Neither version embeds Netflix video.
+## Current in-app player candidate: 1.3.0
+
+The [Orbit 1.3.0 standalone APK](https://expo.dev/artifacts/eas/o4C3M1fMeDL6vvq1gtyDKqFRuQitqZXy2X1ezJT8_tw.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/8419489c-93bc-4cf8-9854-2e05d7c59954)) is finished. Native compilation, the cloud unit-test task and release assembly passed. Binary inspection verified the existing signing certificate, embedded app bundle, ARM64 phone libraries, minimal permissions and disabled application backup. No computer server or Expo Go is required.
+
+Open Netflix inside Orbit → Test Netflix inside Orbit. Stay in the app, use Netflix’s own page and try a full movie/episode. Select the matching observation in the panel. No notification access is needed. Movie playback, actual player identity and two-device automatic sync remain unverified. See [IN_APP_NETFLIX_TEST.md](IN_APP_NETFLIX_TEST.md) for the complete test and cleanup steps.
+
+All 62 JavaScript/database checks and 14 pure Kotlin tests passed locally, plus lint/typecheck. Build source: c0527d1. APK SHA-256: e0c12a46c216ec717a453f05b1192933048ac7659b7ec178ba87ef0b0c490ae7.
+
+The prior preliminary build was cancelled before delivery so the final artifact could disable Android app backup. Do not use its build ID as a download.
+
+## Previous verified APKs
+
+Previous verified privacy build: [Orbit 1.2.2 privacy-cleanup APK](https://expo.dev/artifacts/eas/2L2zW_K9yTM3Z8RepteDbj4XJ6FpAAbiSwSldOTTuz0.apk) ([build](https://expo.dev/accounts/jgoff/projects/orbit/builds/b417efd6-bcca-4cf0-b28c-6311721baa4a)). It removes unused permissions and clarifies optional external controls. See [ANDROID_PERMISSIONS.md](ANDROID_PERMISSIONS.md). The installed/tested 1.2.1 artifact and its provenance remain below as history. Neither version embeds Netflix video.
 
 Orbit's Netflix controls require its own Android app. Expo Go does not include the local native module, and neither Expo Go nor Android Studio's QR pairing is needed for a standalone APK.
 

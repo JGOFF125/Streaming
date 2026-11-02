@@ -1,6 +1,6 @@
 # In-app Netflix playback experiment
 
-Orbit 1.3.0, Android versionCode 7. Implemented November 2, 2026 (UTC). APK build/device results are tracked separately below and in PHONE_TEST_SETUP.md.
+Orbit 1.3.0, Android versionCode 7. Implemented November 2, 2026 (UTC). The standalone APK is finished; physical-device playback remains pending. See PHONE_TEST_SETUP.md.
 
 ## Purpose and limits
 
@@ -36,9 +36,10 @@ The normal browser engine may reject features under these deliberately restricti
 ## Validation
 
 - Lint and TypeScript pass.
+- All 62 JavaScript/database checks and 14 pure Kotlin tests passed locally (six browser-policy tests and eight existing planner tests). These are automated logic checks, not a real movie test.
 - Six Kotlin boundary tests cover official URLs, deceptive domains/user-info, external intents, malformed inputs, HTTPS dependencies and protected-media origin/resource restrictions.
-- The preview cloud build runs both the existing planner tests and these policy tests before APK assembly.
-- The finished artifact must pass the existing binary permission checker, signature check and standalone bundle check.
+- Native compilation, the cloud testDebugUnitTest task and release assembly passed in the finished preview build. The native task was not skipped or NO-SOURCE.
+- The finished signed artifact passed the binary permission/disabled-backup audit, signature and standalone bundle checks.
 - Neither compiler/tests nor an emulator page load establishes real Netflix movie playback. Physical-device feedback is pending.
 
 ## Documentation consulted
@@ -53,4 +54,8 @@ The normal browser engine may reject features under these deliberately restricti
 
 ## Provider browser backup boundary (1.3.0)
 
-The new browser keeps Netflix-managed sign-in state in app-private WebView storage until cleared. Android app backup is explicitly disabled through app.json android.allowBackup=false. The final 1.3.0 APK must also pass the binary check with --require-no-backup. This setting concerns Android application backup; it is not a claim about Android password-manager records or every OEM device-transfer behavior.
+The new browser keeps Netflix-managed sign-in state in app-private WebView storage until cleared. Android app backup is explicitly disabled through app.json android.allowBackup=false. The finished 1.3.0 APK passed the binary check with --require-no-backup. This setting concerns Android application backup; it is not a claim about Android password-manager records or every OEM device-transfer behavior.
+
+## Verified APK
+
+[Orbit 1.3.0 standalone APK](https://expo.dev/artifacts/eas/o4C3M1fMeDL6vvq1gtyDKqFRuQitqZXy2X1ezJT8_tw.apk) · [Build](https://expo.dev/accounts/jgoff/projects/orbit/builds/8419489c-93bc-4cf8-9854-2e05d7c59954). Source c0527d1, Android versionCode 7, minimum API 24, target API 36. Size 67547938 bytes. Signature verified with the same certificate as the previously installed app. SHA-256: e0c12a46c216ec717a453f05b1192933048ac7659b7ec178ba87ef0b0c490ae7. The app is not debuggable and contains assets/index.android.bundle. This is artifact verification, not a physical Netflix movie result.
