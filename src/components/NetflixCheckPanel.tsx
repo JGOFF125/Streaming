@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, AppState, Platform, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { acquireNetflixOperation } from '../netflixOperation';
 import { netflixMedia } from '../netflixMedia';
 import { formatPosition, netflixReport, netflixStatus, netflixTestMessage } from '../netflixDiagnostics';
 import type { MediaCommand, NetflixSnapshot, NetflixTestResult } from '../netflixDiagnostics';
@@ -31,7 +32,7 @@ export default function NetflixCheckPanel() {
     const listener = AppState.addEventListener('change', state => { if (state === 'active') void refresh(); });
     return () => {
       mounted.current = false; clearTimeout(initial); clearInterval(timer); listener.remove();
-      void netflixMedia?.cancelTest().catch(() => {});
+      if (running.current) void netflixMedia?.cancelTest().catch(() => {});
     };
   }, [refresh]);
 
@@ -52,6 +53,8 @@ export default function NetflixCheckPanel() {
 
   async function runTest(command: MediaCommand) {
     if (!netflixMedia || running.current) return;
+    const release = acquireNetflixOperation();
+    if (!release) { setMessage('Another Netflix control operation is running. Stop it before starting another test.'); return; }
     running.current = true; setTesting(true); setResult(null);
     setMessage('Netflix will open. Orbit will try ' + command + ' after 8 seconds. Return here afterward to see the result.');
     // Attach the rejection handler immediately, including if opening Netflix fails.
@@ -71,7 +74,7 @@ export default function NetflixCheckPanel() {
     } finally {
       // Wait until the native operation finishes before another test can start.
       await pending;
-      running.current = false;
+      release(); running.current = false;
       if (mounted.current) { setTesting(false); void refresh(); }
     }
   }
@@ -103,6 +106,7 @@ export default function NetflixCheckPanel() {
       <Text style={s.note}>Return to Orbit after playback starts, then run one test at a time.</Text>
       {snapshot?.session === 'active' && <>
         <Text style={s.readout}>Player: {snapshot.state} · Position: {formatPosition(snapshot.positionMs)}</Text>
+        <Text style={s.note}>Reported catalog ID: {snapshot.contentId ?? 'unavailable'}</Text>
         <Text style={s.note}>Reported controls: play {snapshot.canPlay ? 'yes' : 'no'} · pause {snapshot.canPause ? 'yes' : 'no'} · seek {snapshot.canSeek ? 'yes' : 'no'}</Text>
       </>}
       {snapshot?.access === 'ready' && <>
@@ -116,7 +120,7 @@ export default function NetflixCheckPanel() {
       }} />}
       <Button label="Refresh check" disabled={testing} onPress={() => { setMessage(''); void refresh(); }} />
       <Button label="Share diagnostic result" disabled={testing || !snapshot} onPress={() => { void shareReport(); }} />
-      <Text style={s.note}>Checks stay in memory. Shared diagnostics contain playback numbers and control results, with no account details or movie title.</Text>
+      <Text style={s.note}>Checks stay in memory. Shared diagnostics contain playback numbers, a public catalog ID when available, and control results, with no account details or movie title.</Text>
     </>}
     {!!message && <Text accessibilityLiveRegion="polite" style={s.note}>{message}</Text>}
   </View>;

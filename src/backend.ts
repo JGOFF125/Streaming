@@ -27,6 +27,8 @@ export const supabase = backendSetupMessage ? null : createClient(url!, key!, {
   },
 });
 
+export const backendConnection = backendSetupMessage ? null : { projectUrl: url!, publicKey: key! };
+
 export type RemoteRoom = {
   id: string;
   host_id: string;

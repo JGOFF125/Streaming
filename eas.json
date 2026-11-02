@@ -5,7 +5,8 @@
       "distribution": "internal",
       "environment": "development",
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "gradleCommand": ":orbit-media:testDebugUnitTest :app:assembleDebug"
       },
       "env": {
         "EXPO_PUBLIC_SUPABASE_URL": "https://syvxuqwlavfufbhsmzcd.supabase.co",

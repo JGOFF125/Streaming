@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { netflixStatus, netflixTestMessage, netflixReport, formatPosition } from '../src/netflixDiagnostics.ts';
 
 const ready = {access:'ready', session:'active', state:'playing', positionMs:12000, durationMs:90000,
-  canPlay:true, canPause:true, canSeek:true};
+  canPlay:true, canPause:true, canSeek:true, contentId:'80012345'};
 
 test('reported controls do not claim actual Netflix synchronization works', () => {
   assert.match(netflixStatus(ready), /Run the tests/);
@@ -11,6 +11,7 @@ test('reported controls do not claim actual Netflix synchronization works', () =
     assert.match(netflixStatus({...ready,[key]:false}), /requirements are missing/);
   }
   assert.match(netflixStatus({...ready,positionMs:null}), /position/);
+  assert.match(netflixStatus({...ready,contentId:null}), /catalog ID/);
   assert.match(netflixStatus({...ready,access:'permission_required'}), /controls are off/);
   assert.match(netflixStatus({...ready,session:'ambiguous'}), /More than one/);
   assert.match(netflixStatus({...ready,session:'none'}), /No Netflix player/);
@@ -27,7 +28,7 @@ test('state observations, lack of acknowledgment, and command rejection remain d
 
 test('diagnostic export strips extra native fields and arbitrary errors', () => {
   const secret = 'private_account_cookie_and_title';
-  const extra = {...ready, email:secret, provider_token:secret, title:secret, notification:secret, sessionToken:secret};
+  const extra = {...ready, email:secret, provider_token:secret, title:secret, contentId:secret, notification:secret, sessionToken:secret};
   const report = netflixReport(extra, {command:'pause',status:'unavailable',reason:secret,before:extra,after:extra,rawError:secret});
   assert.doesNotMatch(report, /private_account_cookie_and_title|provider_token|sessionToken|rawError|notification/);
   const parsed=JSON.parse(report);

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import RoomPlaybackPanel from './RoomPlaybackPanel';
 import type { Session } from '@supabase/supabase-js';
 import { backendSetupMessage, readRoomResult, supabase } from '../backend';
 import type { RemoteRoom, RoomMember } from '../backend';
@@ -236,6 +237,7 @@ export default function PrivateRoomPanel() {
           {member.nickname}{member.user_id === userId ? ' (you)' : ''}{member.user_id === room?.host_id ? ' · host' : ''}
         </Text>)}
         <Text style={s.note}>Members stay listed until they leave. Closing the app does not mark them offline. Rooms expire after 24 hours.</Text>
+        {room && <RoomPlaybackPanel roomId={roomId} userId={session.user.id} isHost={room.host_id === session.user.id} revision={room.revision} />}
         <Button label={room?.host_id === userId ? 'End room for everyone' : 'Leave room'} disabled={busy} onPress={() => { void run(leave); }} />
       </> : <>
         <TextInput accessibilityLabel="Your nickname" placeholder="Your nickname" placeholderTextColor="#9ca3af" style={s.input}

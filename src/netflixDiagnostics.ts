@@ -5,6 +5,7 @@ export type NetflixSnapshot = {
   state?: 'playing' | 'paused' | 'buffering' | 'stopped' | 'error' | 'unknown';
   positionMs?: number | null;
   durationMs?: number | null;
+  contentId?: string | null;
   canPlay?: boolean;
   canPause?: boolean;
   canSeek?: boolean;
@@ -23,7 +24,7 @@ export function netflixStatus(snapshot: NetflixSnapshot): string {
   if (snapshot.session === 'ambiguous') return 'More than one Netflix player was found. Close extra Netflix playback and try again.';
   if (snapshot.session === 'none') return 'No Netflix player found. Start a movie in the Netflix app, then return to Orbit.';
   const missing = [!snapshot.canPlay && 'play', !snapshot.canPause && 'pause', !snapshot.canSeek && 'seek',
-    snapshot.positionMs == null && 'position'].filter(Boolean);
+    snapshot.positionMs == null && 'position', !snapshot.contentId && 'catalog ID'].filter(Boolean);
   return missing.length
     ? 'Netflix is visible, but these sync requirements are missing: ' + missing.join(', ') + '.'
     : 'Netflix reports the controls needed for sync. Run the tests below to check whether they work.';
@@ -61,6 +62,7 @@ export function netflixReport(snapshot: NetflixSnapshot | null, result: NetflixT
   const describe = (value: NetflixSnapshot | null | undefined) => value ? {
     access: value.access, session: value.session, state: value.state,
     positionMs: value.positionMs, durationMs: value.durationMs,
+    contentId: typeof value.contentId === 'string' && /^[1-9][0-9]{0,11}$/.test(value.contentId) ? value.contentId : null,
     canPlay: value.canPlay, canPause: value.canPause, canSeek: value.canSeek,
   } : null;
   return JSON.stringify({

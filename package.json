@@ -1,6 +1,6 @@
 {
   "name": "orbit",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "index.ts",
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
@@ -35,8 +35,8 @@
     "start:go": "expo start --go",
     "start:dev": "expo start --dev-client",
     "test:auth": "node --experimental-strip-types --test tests/google-auth.test.mjs",
-    "test:netflix": "node --experimental-strip-types --test tests/netflix-diagnostics.test.mjs",
-    "test:playback": "node --experimental-strip-types --test tests/playback-sync.test.mjs tests/playback-database.test.mjs"
+    "test:netflix": "node --experimental-strip-types --test tests/netflix-diagnostics.test.mjs tests/netflix-operation.test.mjs",
+    "test:playback": "node --experimental-strip-types --test tests/playback-sync.test.mjs tests/playback-database.test.mjs tests/playback-client.test.mjs"
   },
   "private": true
 }

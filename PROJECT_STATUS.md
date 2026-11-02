@@ -1,3 +1,7 @@
+## Current development increment — 1.2.0
+
+The GitHub repository is connected and the prior project state is backed up. A one-minute native Netflix host/follower test, signed-in room playback panel, catalog-ID checks, acknowledgment handling and Android unit tests have been added. JavaScript/database tests, lint and TypeScript checks pass. The native build and signed-in/real Netflix tests are still pending. Supabase CLI sign-in is also pending; migration 002 remains undeployed. The Pixel is currently running the earlier 1.1.1 native build against local source, so the new test remains disabled until the new native build is installed.
+
 # Orbit — current status
 
 Verified November 2, 2026 (UTC).
@@ -27,6 +31,6 @@ The current development build finished successfully: [Orbit 1.1.1](https://expo.
 1. Verify Google sign-in and room approval in the current app. The SQL file open in the screenshot, .expo/admin/approve_signed_in_account.sql, belongs in Supabase SQL Editor as the project administrator; opening it in VS Code does not apply it. Its live execution has not been confirmed.
 2. The Pixel emulator has no Netflix installed and Google Play requires sign-in. The device owner must complete Google Play sign-in and install Netflix from its official listing before checking playback. Netflix sign-in remains inside Netflix.
 3. Deploy only the new playback migration when ready, then implement the room client integration and a user-started Android background session. Actual content identity, ads, buffering, seeking, reconnection and physical-phone compatibility still require verification. Do not treat simulated players as Netflix integration.
-4. The working tree includes uncommitted Phase 2 and synchronization work. No Git remote is configured, and this checkout has not been pushed to the user-supplied Streaming repository.
+4. The working tree includes uncommitted Phase 2 and synchronization work. The checkout tracks origin/main at https://github.com/JGOFF125/Streaming. The initial verified source was pushed in commit 37c66d0. Future verified changes are authorized for push.
 
 The earlier standalone 1.1.0 preview APK remains a historical test build that runs without a development server. Development app 1.1.1 is for running and changing the current local source.

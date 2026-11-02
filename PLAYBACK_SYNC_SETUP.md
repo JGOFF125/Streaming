@@ -1,6 +1,6 @@
 # Playback synchronization foundation
 
-This increment is local source code and automated tests. It is not deployed to Supabase, included as a user-facing feature in the 1.1.0 APK, connected to the Android Netflix adapter, or proof of Netflix playback support.
+The playback migration is prepared but not yet deployed to Supabase. Version 1.2.0 adds a room client and a bounded native host/follower test, pending build and real Netflix verification. This is not proof of Netflix support or a movie-length background session.
 
 ## Components
 
@@ -23,7 +23,7 @@ Do not place service-role keys, database passwords, or Netflix credentials into 
 4. Before execution, verify the actual player is on the intended title/episode, has a usable position and supports the required controls. The current Netflix probe does not provide a verified catalog/episode identity. Never copy the room ID into the player snapshot and treat that as content confirmation.
 5. Connect a user-started Android background session with a visible stop control and test long background operation, reconnection, ads, buffering, title changes and revocation. This service is not implemented yet.
 
-The planner returns actions; it does not execute them. Its simulated players are test objects and do not pretend to be Netflix. The embedded database tests do not exercise two simultaneous PostgreSQL connections; real deployment needs a concurrent-client check as well as the tested sequential revision-conflict checks.
+The TypeScript planner returns actions. The new Android planner and bounded test runner can request controls only after verifying the actual numeric Netflix media identifier, room response and capabilities. The runner stops if controls are not acknowledged within three seconds. Its simulated players are test objects and do not pretend to be Netflix. The embedded database tests do not exercise two simultaneous PostgreSQL connections; real deployment needs a concurrent-client check as well as the tested sequential revision-conflict checks.
 
 ## Emulator-only development
 
@@ -32,3 +32,11 @@ The user currently has an Android emulator available, without a physical test ph
 Even if Netflix plays on the emulator, report that result as emulator behavior. Two real Android phones remain an eventual validation step for the intended product. Orbit development can continue with local authorization and simulated-player tests meanwhile.
 
 Run npm.cmd run test:playback for the focused tests, or npm.cmd test for the complete suite. Lint and TypeScript checks also remain required.
+
+## Version 1.2.0 room test
+
+After applying migration 002, approve and sign in both accounts, create/join a room, and grant optional Netflix-controls access on both devices. The host selects a public Netflix catalog ID or official title/watch link and starts the host test. Start the follower test after the host publishes playback. Each device opens the official Netflix app, waits eight seconds, and runs a one-minute native test. Changing Netflix playback on the host should update the room; the follower requests matching controls.
+
+The native adapter must independently read a strictly numeric media ID matching the selected catalog item. A pasted title link does not override missing or mismatched native identity. If Netflix does not expose that identity or supported controls, automatic control remains blocked. No fallback collects credentials or bypasses DRM.
+
+The test uses a fresh, short-lived Orbit access token in native memory to call only this project’s playback RPCs. It neither reads Netflix authentication nor persists the Orbit token. It does not refresh tokens or provide a foreground service, so movie-length operation still requires separate implementation.
