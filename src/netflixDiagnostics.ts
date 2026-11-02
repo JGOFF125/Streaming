@@ -22,7 +22,7 @@ export function netflixStatus(snapshot: NetflixSnapshot): string {
   if (snapshot.access === 'permission_required') return 'Netflix controls are off. Enable access below to test them.';
   if (snapshot.access === 'connecting') return 'Waiting for Android to connect the controls. Wait a moment, then refresh.';
   if (snapshot.session === 'ambiguous') return 'More than one Netflix player was found. Close extra Netflix playback and try again.';
-  if (snapshot.session === 'none') return 'No Netflix player found. Start a movie in the Netflix app, then return to Orbit.';
+  if (snapshot.session === 'none') return 'No Netflix player found. Start a movie in the Netflix app, then return to Orbit. If Netflix closes or resets during sign-in, resolve that in Netflix first; Orbit cannot sync until playback works.';
   const missing = [!snapshot.canPlay && 'play', !snapshot.canPause && 'pause', !snapshot.canSeek && 'seek',
     snapshot.positionMs == null && 'position', !snapshot.contentId && 'catalog ID'].filter(Boolean);
   return missing.length

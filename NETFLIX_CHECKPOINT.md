@@ -6,7 +6,7 @@ The requirement is automatic Netflix synchronization between two Android devices
 
 Orbit 1.2.0 now contains a one-minute native host/follower test connected to the private-room playback protocol. The running Pixel app exposes this method, and Android planner unit tests passed before its EAS build completed. The host publishes observed Netflix playback; the follower can request pause/play/seek adjustments after strict identity, timing, capability and room-access checks. Unacknowledged controls stop the test. This is implemented test code, not verified Netflix support.
 
-The playback migration is still undeployed because Supabase CLI sign-in is missing. Netflix is installed on the Pixel, but Netflix sign-in and playback remain unverified. Orbit is signed out and its optional controls permission is off. No two-device Netflix result exists.
+The playback migration is deployed and the owner's previously signed-in Google account is approved for rooms. Hosted host-publish, stale-write, outsider-denial and grants checks passed; signed-out public API access is denied. Netflix controls permission is enabled, but Netflix exits before sign-in/playback. This also reproduced on a standard-page emulator with Orbit absent. The original Pixel is restored. See [NETFLIX_STARTUP_INVESTIGATION.md](NETFLIX_STARTUP_INVESTIGATION.md). No two-device Netflix result exists.
 
 The current integration requires Netflix to expose a strictly numeric media ID matching the selected public catalog item. An official title link does not override absent native identity. If the required metadata or controls are unavailable, do not claim automatic Netflix sync works or bypass the gate.
 

@@ -4,7 +4,9 @@ This is a compatibility build, not completed automatic synchronization.
 
 ## Emulator-only testing
 
-Only an emulator is currently available. The Pixel 10 Pro XL configuration has Google Play enabled; Netflix is not installed, and Google Play currently requires sign-in. Installation and playback remain unverified. You can try the steps below on the emulator using Netflix from the official Play Store. Report any results as emulator results. Physical-phone compatibility is still unverified. Development of the room-sync foundation can continue with simulated players; see PLAYBACK_SYNC_SETUP.md.
+Only Android emulators are currently available. Netflix is installed from the official Play Store on the Pixel 10 Pro XL, and the user granted Orbit's optional controls permission. Netflix currently exits before sign-in or playback can be completed. The standard 4 KB emulator comparison also exited with Orbit absent; changing page size did not resolve startup. See [the startup investigation](NETFLIX_STARTUP_INVESTIGATION.md) for evidence and limits.
+
+Netflix must remain open and play a movie independently before control tests can establish anything. Do not repeatedly change Orbit permissions to troubleshoot Netflix sign-in. Physical-phone compatibility remains unverified. Shared timing and database tests use simulated players and do not prove Netflix support.
 
 ## Current development build
 

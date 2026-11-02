@@ -1,6 +1,6 @@
 # Playback synchronization foundation
 
-The playback migration is prepared but not yet deployed to Supabase. Version 1.2.0 adds a room client and a bounded native host/follower test, pending build and real Netflix verification. This is not proof of Netflix support or a movie-length background session.
+The playback migration was deployed to the existing Supabase project on November 2, 2026. Version 1.2.0 is installed on the Pixel and adds a room client and a bounded native host/follower test. Actual Netflix behavior remains unverified because Netflix currently exits before login/playback. This is not proof of Netflix support or a movie-length background session.
 
 ## Components
 
@@ -11,7 +11,7 @@ The playback migration is prepared but not yet deployed to Supabase. Version 1.2
 
 ## Backend deployment
 
-The new migration is prepared but has not been applied to the hosted project. Apply only 202611020002_playback_timeline.sql through Supabase SQL Editor as the project administrator after confirming the original private-room migration is present. Do not rerun the original migration. The new migration creates new playback objects; it does not approve accounts or enable Netflix control.
+Migration 202611020002_playback_timeline.sql is already applied to the existing hosted project through the authenticated Management API. The original room schema was confirmed first. Hosted checks verified host publishing, stale revisions, outsider denial and role grants; temporary test data was rolled back. The public API denies signed-out playback reads. The owner's previously signed-in Google account was separately approved for rooms. Do not rerun either migration on this project or blindly use db push against a manually provisioned schema. For a new project only, apply migration 001 and then 002 in order; neither enables Netflix controls.
 
 Do not place service-role keys, database passwords, or Netflix credentials into the app or this chat.
 
@@ -27,7 +27,7 @@ The TypeScript planner returns actions. The new Android planner and bounded test
 
 ## Emulator-only development
 
-The user currently has an Android emulator available, without a physical test phone. The existing Pixel_10_Pro_XL configuration enables Google Play. Try Netflix only from the official Play Store listing and sign in only inside Netflix. A direct emulator check found Netflix is not installed, and Google Play opens its unauthenticated activity with Updating Google apps / Sign in. Sign in manually in Google Play before checking Netflix installation and playback. No sign-in was attempted by the agent. Do not change certification, protected playback, or identity checks to make it work.
+Only Android emulators are currently available. Netflix was installed from Play Store and the owner enabled Orbit's optional controls permission. Netflix currently exits before sign-in/playback; a standard 4 KB image comparison with Orbit absent and a Pixel restart did not resolve startup. See [NETFLIX_STARTUP_INVESTIGATION.md](NETFLIX_STARTUP_INVESTIGATION.md). Do not change certification, protected playback or device identity checks to make it work.
 
 Even if Netflix plays on the emulator, report that result as emulator behavior. Two real Android phones remain an eventual validation step for the intended product. Orbit development can continue with local authorization and simulated-player tests meanwhile.
 

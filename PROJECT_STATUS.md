@@ -25,16 +25,17 @@ The current development build finished successfully: [Orbit 1.2.0](https://expo.
 ## Checks and remaining access
 
 - Dependency compatibility, all JavaScript/database tests, lint and TypeScript passed. Android compilation and native planner unit tests passed in EAS; Pixel installation and native-method availability were verified.
-- Supabase's last public Auth check returned HTTP 200 with Google enabled. The CLI is not signed in, so migration 002 has not been deployed or independently inspected on the hosted project.
-- Sign in through npx.cmd supabase@latest login in a separate terminal. Keep any token inside the terminal. After login, the agent can use the CLI's management API query support to inspect the target project, apply only the new migration and verify grants.
-- The Pixel now has Netflix installed. Netflix sign-in, actual playback, and control behavior remain unverified.
-- Orbit is currently signed out and Netflix-controls permission is off. The user must sign in to Orbit, confirm room-account approval and grant the optional permission inside Orbit before testing. The existing ignored administrator SQL .expo/admin/approve_signed_in_account.sql can approve the intended previously signed-in account; its live execution remains unconfirmed.
+- Supabase CLI sign-in is working and the target project reports ACTIVE_HEALTHY. Migration 002 was applied through the Management API after confirming the existing private-room schema; do not rerun either migration on this project.
+- The previously signed-in Google account now has room access. No other accounts were approved. Public Auth settings returned HTTP 200 with Google enabled; a fresh end-to-end Google sign-in has not been automated.
+- Hosted verification passed for host publish/read, stale revision rejection, outsider RLS/RPC denial and grants. Its temporary room and timeline were rolled back. Anonymous playback access returned HTTP 401 / PostgreSQL code 42501 through the public API. Direct member table writes and anonymous RPC execution are denied.
+- Netflix is installed, and the user granted Orbit's optional controls permission. Netflix repeatedly exits before login/playback, including on a separate standard-page emulator with Orbit absent. Restarting the Pixel did not fix startup. See [NETFLIX_STARTUP_INVESTIGATION.md](NETFLIX_STARTUP_INVESTIGATION.md); the cause remains unknown and automatic playback is still unverified.
+- The original Pixel and local development server are running again. Orbit sessions remain memory-only, so sign in again after restart and create a room to verify the actual app path. A live signed-in room check is pending user feedback.
 - The new room playback UI has not been tested with a live signed-in room. Automated tests exercise database authorization, timing, stale revisions, content matching and simulated players; these are not real Netflix results.
 - The package audit still reports 24 moderate and one high finding. The high finding is a transitive zod dependency in ESLint development tooling. No forced major dependency upgrades were applied.
 
 ## Delivery order
 
-1. Verify actual Netflix controls and identity, deploy the playback backend, test the host/follower path, then implement reliable movie-length background operation and authentication lifecycle handling.
+1. Resolve Netflix startup, verify actual controls and identity, test the deployed host/follower path, then implement reliable movie-length background operation and authentication lifecycle handling.
 2. Add YouTube, Prime Video and Disney+ adapters, reusing shared room and timing code while verifying each provider separately.
 3. Add room text chat and realtime voice.
 

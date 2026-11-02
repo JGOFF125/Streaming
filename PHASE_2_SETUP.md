@@ -1,7 +1,7 @@
 # Orbit Phase 2 — setup and verification
 
-Current recovery status (November 2, 2026): Supabase is paused. See
-[PROJECT_STATUS.md](PROJECT_STATUS.md) before following older setup steps.
+Current status (November 2, 2026): Supabase is healthy, both database migrations are deployed, and the owner's Google account has room access. GitHub main and the existing VS Code checkout are connected. See
+[PROJECT_STATUS.md](PROJECT_STATUS.md) before following the historical setup below. Do not recreate the existing backend or rerun its migrations.
 Updated October 19, 2026.
 
 Google sign-in was added on October 21, 2026. For its required Supabase return URL,
@@ -9,7 +9,7 @@ account authorization, and Android development-build steps, use
 [GOOGLE_SIGN_IN_SETUP.md](GOOGLE_SIGN_IN_SETUP.md). Google is disabled in Expo Go.
 
 The existing Phase 1 app was extended in place. The private-room implementation is
-ready for backend setup; it has not been deployed or tested between two devices.
+deployed and its database authorization has been checked. Two-device app behavior is not verified.
 Voice, playback synchronization, provider integrations and screen sharing remain unfinished.
 
 ## 1. Use the real app folder
@@ -27,9 +27,7 @@ Orbit folder above, and make it primary. An alternative is to open this exact
 folder in VS Code and use its Codex extension.
 [Official project and folder guidance](https://learn.chatgpt.com/docs/projects).
 
-Git already exists, with an initial commit on `master`. Phase 1 changes were
-uncommitted when this work started. No changes were discarded, and no commit or
-push was made during this increment. No GitHub remote was configured.
+The original setup began on an unpushed master branch. The current checkout uses main and tracks https://github.com/JGOFF125/Streaming; verified milestones are committed and pushed.
 
 ## 2. Create the Supabase development backend
 
