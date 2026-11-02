@@ -2,6 +2,10 @@
 
 Verified November 2, 2026 (UTC).
 
+## Current development increment
+
+Version 1.3.0 (Android versionCode 7) adds an isolated native Netflix website surface inside Orbit, separate from the external media controls and room timeline. It has no injected scripts, page/cookie reads or new manifest permissions/dependencies; explicit protected-media consent and browser-sign-in cleanup are included. Lint/typecheck pass; a fresh cloud build/native policy test run and binary inspection are required before publishing an APK link. Real Netflix movie playback, actual player identity and automatic sync remain unverified. See [IN_APP_NETFLIX_TEST.md](IN_APP_NETFLIX_TEST.md). Earlier build/device records below are history.
+
 ## Current local app and source
 
 - Work remains in the VS Code project at C:/Users/jessu/Downloads/Orbit/Orbit phase 1/orbit.

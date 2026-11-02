@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Linking, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import PrivateRoomPanel from './src/components/PrivateRoomPanel';
 import NetflixCheckPanel from './src/components/NetflixCheckPanel';
+import NetflixInsidePanel from './src/components/NetflixInsidePanel';
 import { privacyRules } from './src/security';
 import { providers, ProviderId } from './src/providers';
 
@@ -14,7 +15,7 @@ export default function App() {
   async function openProvider() {
     const selected = providers.find(p => p.id === providerId);
     if (!selected?.url) { Alert.alert('Not implemented', 'Screen sharing needs a native Android build, user consent and WebRTC. No capture has started.'); return; }
-    // Open the official Netflix website in the user's normal browser, never an embedded login form
+    // This compatibility lab still opens providers externally; the separate in-app test is above.
     const url = selected.url;
     try { await Linking.openURL(url); }
     catch { Alert.alert('Could not open service', 'Open the official app or site manually'); }
@@ -22,15 +23,16 @@ export default function App() {
   return <SafeAreaView style={s.page}><ScrollView contentContainerStyle={s.content}>
     <Text style={s.eyebrow}>ORBIT / PRIVATE WATCH PARTY</Text>
     <Text style={s.title}>Your cinema, together.</Text>
-    <Text style={s.subtitle}>Private rooms · Netflix sync test</Text>
+    <Text style={s.subtitle}>Private rooms · In-app Netflix experiment</Text>
     <PrivateRoomPanel />
+    <NetflixInsidePanel />
     <NetflixCheckPanel />
     <View style={s.panel}>
       <Text style={s.h2}>Streaming compatibility lab</Text>
       <Text style={s.label}>Choose a mode</Text>
       <View style={[s.row,{flexWrap:'wrap'}]}>{providers.map(p => <TouchableOpacity key={p.id} style={[s.chip,providerId===p.id && s.selected]} onPress={() => { setProviderId(p.id); setMedia('untested'); setAudio('untested'); }}><Text style={s.chipText}>{p.label}</Text></TouchableOpacity>)}</View>
       <Text style={s.note}>{providers.find(p => p.id===providerId)?.detail}</Text>
-      <Text style={s.note}>No streaming passwords are entered into Orbit. Open each provider through its official route, then record your observations locally.</Text>
+      <Text style={s.note}>This compatibility lab opens each provider externally. The separate Netflix panel above tests its official website inside Orbit.</Text>
       <TouchableOpacity style={s.button} onPress={openProvider}><Text style={s.buttonText}>Open service / inspect limitation</Text></TouchableOpacity>
       <Text style={s.label}>Does this service play normally?</Text>
       <View style={s.row}>{(['pass', 'fail', 'unknown'] as const).map(v => <TouchableOpacity key={v} style={[s.chip, media===v && s.selected]} onPress={() => setMedia(v)}><Text style={s.chipText}>{v}</Text></TouchableOpacity>)}</View>

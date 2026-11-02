@@ -44,3 +44,7 @@ Version 1.2.2 removes unused overlay, legacy external storage, vibration and ins
 ## Competitor workflow research
 
 See [WATCH_PARTY_RESEARCH.md](WATCH_PARTY_RESEARCH.md) for the November 2 public workflow/UI comparison. The recommended next experiment is a legitimate isolated in-app provider playback surface, rather than embedding the Netflix Android activity or expanding notification-based external control. Competitor mobile workflows justify testing that candidate but do not prove that a generic WebView will play Netflix. Missing public SDK documentation is not a substitute for a bounded physical-device feasibility test.
+
+## Implemented candidate: 1.3.0
+
+The normal Android browser candidate is now implemented as an isolated native surface, with no JS bridge or provider data extraction. It is not connected to the room timeline and is not a verified Netflix player. See [IN_APP_NETFLIX_TEST.md](IN_APP_NETFLIX_TEST.md) for boundaries and physical-device acceptance steps. Success requires actual movie playback rather than page/authentication success.
