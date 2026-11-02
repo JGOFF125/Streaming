@@ -14,7 +14,7 @@ For future local development, run npm.cmd run start:dev -- --android from the pr
 
 ## Standalone phone build
 
-The user now has a real Android phone available and confirmed Orbit Google sign-in works; the reset concerns Netflix. A standalone Orbit 1.2.1 APK (versionCode 5) is being prepared under the preview profile, without Expo Go or a local development server. The phone model/Android version and finished artifact checks are pending. See [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md). The additional Android 16 emulator comparison was stopped in favor of physical-device validation; no Android 16 Netflix result exists.
+The user now has a real Android phone available and confirmed Orbit Google sign-in works; the reset concerns Netflix. A standalone Orbit 1.2.1 APK (versionCode 5) is being prepared under the preview profile, without Expo Go or a local development server. The physical test phone is a Google Pixel 10 Pro XL on Android 17. Finished artifact checks and actual phone installation remain pending. See [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md). The additional Android 16 emulator comparison was stopped in favor of physical-device validation; no Android 16 Netflix result exists.
 
 ## Netflix increment
 

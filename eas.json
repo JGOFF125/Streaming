@@ -18,7 +18,7 @@
       "environment": "development",
       "android": {
         "buildType": "apk",
-        "gradleCommand": ":orbit-media:testReleaseUnitTest :app:assembleRelease"
+        "gradleCommand": ":orbit-media:testDebugUnitTest :app:assembleRelease"
       },
       "env": {
         "EXPO_PUBLIC_SUPABASE_URL": "https://syvxuqwlavfufbhsmzcd.supabase.co",
