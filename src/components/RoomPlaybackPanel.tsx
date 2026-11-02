@@ -126,7 +126,7 @@ export default function RoomPlaybackPanel({ roomId, userId, isHost, revision }: 
     <Text style={s.title}>Netflix room sync · one-minute test</Text>
     <Text style={s.note}>{isHost ? 'You control playback from Netflix. Start your host test before the other person starts following.'
       : 'The host controls playback. Open the same catalog item before starting your follower test.'}</Text>
-    <Text style={s.note}>Automatic Netflix control is experimental and unverified. This short test does not yet support a full movie session.</Text>
+    <Text style={s.note}>Automatic Netflix control is experimental and unverified. Use normal 1× playback on both devices. This short test does not yet support a full movie session.</Text>
     {timeline ? <Text style={s.note}>Shared item: {timeline.contentId} · {timeline.playing ? 'playing' : 'paused'} · about {formatPosition(position)}</Text>
       : <Text style={s.note}>Waiting for the host to share playback.</Text>}
     {isHost && <>

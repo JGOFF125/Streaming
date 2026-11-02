@@ -22,7 +22,7 @@ export default function App() {
   return <SafeAreaView style={s.page}><ScrollView contentContainerStyle={s.content}>
     <Text style={s.eyebrow}>ORBIT / PRIVATE WATCH PARTY</Text>
     <Text style={s.title}>Your cinema, together.</Text>
-    <Text style={s.subtitle}>Phase 2 · Private rooms</Text>
+    <Text style={s.subtitle}>Private rooms · Netflix sync test</Text>
     <PrivateRoomPanel />
     <NetflixCheckPanel />
     <View style={s.panel}>
@@ -43,7 +43,7 @@ export default function App() {
       <Text style={s.h2}>Security policy</Text>
       {privacyRules.map(rule => <Text key={rule} style={s.rule}>• {rule}</Text>)}
     </View>
-    <Text style={s.footer}>Private rooms require Supabase configuration. Voice and automatic streaming sync are not implemented.</Text>
+    <Text style={s.footer}>Full movie synchronization and voice are not ready. Netflix room tests are experimental.</Text>
   </ScrollView></SafeAreaView>;
 }
 const s=StyleSheet.create({page:{flex:1,backgroundColor:'#0b1020'},content:{padding:22,paddingBottom:48},eyebrow:{color:'#a5b4fc',letterSpacing:2,fontWeight:'700',fontSize:11,marginTop:12},title:{color:'#fff',fontSize:30,fontWeight:'800',marginTop:10},subtitle:{color:'#bac4dd',marginTop:5,marginBottom:23},panel:{backgroundColor:'#172138',borderRadius:18,padding:17,marginBottom:16,borderWidth:1,borderColor:'#2b3552'},h2:{color:'#fff',fontWeight:'700',fontSize:19,marginBottom:12},input:{backgroundColor:'#0d162a',borderWidth:1,borderColor:'#46506c',padding:12,borderRadius:10,color:'#fff',marginBottom:11},multiline:{minHeight:72,textAlignVertical:'top',marginTop:13},button:{backgroundColor:'#505ce0',padding:14,borderRadius:10,alignItems:'center',marginBottom:11},secondaryButton:{backgroundColor:'#33415f',padding:14,borderRadius:10,alignItems:'center'},buttonText:{color:'#fff',fontWeight:'700'},note:{color:'#becae0',fontSize:13,lineHeight:19,marginTop:9},label:{color:'#fff',fontWeight:'600',marginTop:14,marginBottom:8},row:{flexDirection:'row',gap:8},chip:{paddingVertical:9,paddingHorizontal:15,backgroundColor:'#33415f',borderRadius:9},selected:{backgroundColor:'#505ce0'},chipText:{color:'#fff',textTransform:'capitalize'},rule:{color:'#d6deee',lineHeight:23,marginBottom:7},footer:{color:'#9baaca',fontSize:12,textAlign:'center'}});

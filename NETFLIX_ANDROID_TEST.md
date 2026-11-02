@@ -6,7 +6,11 @@ This is a compatibility build, not completed automatic synchronization.
 
 Only an emulator is currently available. The Pixel 10 Pro XL configuration has Google Play enabled; Netflix is not installed, and Google Play currently requires sign-in. Installation and playback remain unverified. You can try the steps below on the emulator using Netflix from the official Play Store. Report any results as emulator results. Physical-phone compatibility is still unverified. Development of the room-sync foundation can continue with simulated players; see PLAYBACK_SYNC_SETUP.md.
 
-## Install and test
+## Current development build
+
+Orbit 1.2.0 is already installed on the Pixel emulator and connects to the running local source. Its [EAS development build](https://expo.dev/accounts/jgoff/projects/orbit/builds/11042537-beb5-4d00-ae1a-45842b29c7a6) contains the native room test. Development builds require the local server. The standalone 1.1.0 preview below is historical and contains only local controls diagnostics, not the new room test.
+
+## Historical 1.1.0 local diagnostics
 
 1. Open the [Orbit 1.1.0 build page](https://expo.dev/accounts/jgoff/projects/orbit/builds/d32f83e6-60a7-46ed-9fce-2b172f1b34eb) on a physical Android phone. The build is finished. Download/install the APK, or use the [direct APK download](https://expo.dev/artifacts/eas/ntNJHw0R_h0KL8JIBLu-k0zI4yQSdMNxcIN03gyPKi8.apk). It uses the existing Orbit application ID and signing configuration.
 2. Open Orbit. This preview APK includes the app bundle and does not need Metro or your computer running.
@@ -42,3 +46,11 @@ If required Netflix controls are absent or ignored, this MediaSession route cann
 - [Android MediaController.TransportControls](https://developer.android.com/reference/android/media/session/MediaController.TransportControls)
 - [Android NotificationListenerService](https://developer.android.com/reference/android/service/notification/NotificationListenerService)
 - [Expo local native modules](https://docs.expo.dev/modules/get-started/)
+
+## Experimental room test in version 1.2.0
+
+The new development build adds a one-minute host/follower test inside a joined room. Supabase playback migration 002 and approved accounts are required first. Enable Netflix controls on each device. The host selects an official Netflix title/watch link or a detected numeric catalog ID and starts the host test. After the host has published playback, the other device starts its follower test. Use normal 1× playback on both devices.
+
+Each device opens Netflix and waits eight seconds before the native test begins. Change play/pause/position in Netflix on the host and observe the follower. The native runner requires Netflix itself to expose a matching numeric media ID and stops if identity, authorization, network timing or control acknowledgments fail. Do not treat a completed timer or simulated-player tests as verified Netflix support. Ads and nonstandard playback rates are not supported by this test contract.
+
+This is a short validation window, not a movie-length background service. The tested window ends automatically and supports cancellation. No streaming credentials enter Orbit. The one-minute runner uses only its own Orbit access token in memory.

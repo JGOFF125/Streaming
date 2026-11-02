@@ -251,7 +251,7 @@ export default function PrivateRoomPanel() {
     </>}
     {busy && <Text style={s.note}>Working…</Text>}
     {!!message && <Text accessibilityLiveRegion="polite" style={s.note}>{message}</Text>}
-    <Text style={s.note}>Voice and synchronized playback are not connected yet.</Text>
+    <Text style={s.note}>Voice and full movie synchronization are not ready.</Text>
   </View>;
 }
 

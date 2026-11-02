@@ -96,10 +96,11 @@ export default function NetflixCheckPanel() {
 
   return <View style={s.panel}>
     <Text style={s.title}>Netflix controls check</Text>
-    <Text style={s.note}>First we need to confirm that Netflix accepts playback commands on this phone. Automatic two-phone sync is not connected yet.</Text>
+    <Text style={s.note}>Check that Netflix accepts playback commands on this device before trying the experimental room sync test.</Text>
     {!netflixMedia ? <Text style={s.note}>{Platform.OS === 'android'
       ? 'Install the new Orbit test APK to use this check. The previous build and Expo Go do not contain Netflix controls.'
       : 'Netflix controls currently require an Android phone and the Orbit test APK.'}</Text> : <>
+      {typeof netflixMedia.runSyncWindow === 'function' && <Text style={s.note}>Room sync test is installed. Join an approved private room to use the one-minute host/follower controls.</Text>}
       <Text style={s.note}>{snapshot ? netflixStatus(snapshot) : 'Reading Android media controls…'}</Text>
       <Button label={snapshot?.access === 'permission_required' ? '1. Enable Netflix controls' : 'Manage controls access'} disabled={testing} onPress={manageAccess} />
       <Button label="2. Open Netflix and start a movie" disabled={testing} onPress={() => { void openNetflix(); }} />

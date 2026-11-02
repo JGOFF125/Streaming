@@ -2,12 +2,14 @@
 
 Updated November 2, 2026 (UTC).
 
-The requirement is automatic Netflix synchronization between two Android phones inside Orbit. Manual countdown is not an accepted substitute.
+The requirement is automatic Netflix synchronization between two Android devices in Orbit. Manual countdown is not an accepted substitute. Full-movie operation remains unfinished.
 
-Orbit now includes a native Android MediaSession compatibility adapter and a Netflix controls check. It selects only the official Netflix Android package and tests local play, pause, seek, and playback-position reporting. Android notification access is optional, explained before settings open, and granted/revoked by the device owner. The adapter does not process notification text or send diagnostics to a server.
+Orbit 1.2.0 now contains a one-minute native host/follower test connected to the private-room playback protocol. The running Pixel app exposes this method, and Android planner unit tests passed before its EAS build completed. The host publishes observed Netflix playback; the follower can request pause/play/seek adjustments after strict identity, timing, capability and room-access checks. Unacknowledged controls stop the test. This is implemented test code, not verified Netflix support.
 
-This is still an unverified integration route. API support and successful compilation do not establish Netflix compatibility. No real-phone result has been collected for this adapter. Automatic cross-device synchronization and voice are not implemented.
+The playback migration is still undeployed because Supabase CLI sign-in is missing. Netflix is installed on the Pixel, but Netflix sign-in and playback remain unverified. Orbit is signed out and its optional controls permission is off. No two-device Netflix result exists.
 
-The next action is to install the new standalone test APK and run all three checks on both physical phones. Follow [NETFLIX_ANDROID_TEST.md](NETFLIX_ANDROID_TEST.md). If Netflix accepts the controls, the next implementation is an authenticated room playback timeline plus Android background execution and drift correction. If not, do not claim automatic Netflix sync works.
+The current integration requires Netflix to expose a strictly numeric media ID matching the selected public catalog item. An official title link does not override absent native identity. If the required metadata or controls are unavailable, do not claim automatic Netflix sync works or bypass the gate.
 
-Do not use Netflix credentials, cookies, provider tokens, protected-stream capture, DRM bypasses, or accessibility automation as integration shortcuts.
+Use [NETFLIX_ANDROID_TEST.md](NETFLIX_ANDROID_TEST.md) for the test procedure. The next gate is real playback behavior, followed by reliable movie-length background execution and authentication handling. Other providers, text chat and voice follow Netflix under the user's delivery order.
+
+Never collect Netflix credentials or session cookies, bypass DRM, capture protected streams, or use accessibility automation to control Netflix.
