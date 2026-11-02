@@ -51,3 +51,7 @@ See [PROJECT_STATUS.md](PROJECT_STATUS.md), [PLAYBACK_SYNC_SETUP.md](PLAYBACK_SY
 3. Add room text chat and realtime voice.
 
 Never collect streaming passwords, cookies or provider tokens; bypass DRM; extract protected streams; or use accessibility automation to control Netflix.
+
+## Workflow research
+
+[WATCH_PARTY_RESEARCH.md](WATCH_PARTY_RESEARCH.md) compares Rave, Hearo, Teleparty and Watchly using official workflows and public screenshots. It separates documented facts from proposed architecture and records the next in-app playback experiment.

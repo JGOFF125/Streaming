@@ -40,3 +40,7 @@ Version 1.2.2 removes unused overlay, legacy external storage, vibration and ins
 - [Android MediaSessionManager](https://developer.android.com/reference/android/media/session/MediaSessionManager)
 - [Android activity embedding](https://developer.android.com/develop/ui/views/layout/activity-embedding)
 - [Expo permission removal](https://docs.expo.dev/guides/permissions/)
+
+## Competitor workflow research
+
+See [WATCH_PARTY_RESEARCH.md](WATCH_PARTY_RESEARCH.md) for the November 2 public workflow/UI comparison. The recommended next experiment is a legitimate isolated in-app provider playback surface, rather than embedding the Netflix Android activity or expanding notification-based external control. Competitor mobile workflows justify testing that candidate but do not prove that a generic WebView will play Netflix. Missing public SDK documentation is not a substitute for a bounded physical-device feasibility test.
