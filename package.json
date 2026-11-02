@@ -1,22 +1,42 @@
 {
   "name": "orbit",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "main": "index.ts",
   "dependencies": {
-    "expo": "~58.0.14",
-    "expo-status-bar": "~58.0.3",
+    "@supabase/supabase-js": "^2.118.0",
+    "expo": "~58.0.22",
+    "expo-auth-session": "~58.0.16",
+    "expo-constants": "~58.0.14",
+    "expo-crypto": "~58.0.7",
+    "expo-dev-client": "~58.0.18",
+    "expo-status-bar": "~58.0.4",
+    "expo-web-browser": "~58.0.7",
     "react": "19.3.0",
-    "react-native": "0.88.0"
+    "react-native": "0.88.1",
+    "react-native-url-polyfill": "^4.0.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.10",
     "@types/react": "~19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "~58.0.4",
     "typescript": "~6.0.3"
   },
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "expo lint",
+    "typecheck": "tsc --noEmit",
+    "test:rooms": "node --test tests/rooms.test.mjs",
+    "test:unit": "node --experimental-strip-types --test tests/room-validation.test.mjs tests/room-errors.test.mjs",
+    "test": "npm run test:unit && npm run test:auth && npm run test:rooms && npm run test:netflix && npm run test:playback",
+    "start:go": "expo start --go",
+    "start:dev": "expo start --dev-client",
+    "test:auth": "node --experimental-strip-types --test tests/google-auth.test.mjs",
+    "test:netflix": "node --experimental-strip-types --test tests/netflix-diagnostics.test.mjs",
+    "test:playback": "node --experimental-strip-types --test tests/playback-sync.test.mjs tests/playback-database.test.mjs"
   },
   "private": true
 }

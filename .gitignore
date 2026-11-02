@@ -39,3 +39,9 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Keep local configuration and generated test/build output private
+.env
+.env.*
+!.env.example
+coverage/

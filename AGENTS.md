@@ -39,3 +39,10 @@ Docs: https://docs.expo.dev/eas/index.md
 - If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
 - Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
 - Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+
+## Orbit delivery priorities
+
+- Keep this existing checkout current for VS Code; it is the project working copy.
+- The user authorized committing and pushing completed changes to https://github.com/JGOFF125/Streaming, including future changes. Push verified milestones, without force-pushing or overwriting unrelated work. Never commit local environment files, credentials, signing material, APKs, or generated test/build output.
+- Prioritize actual Netflix synchronization first. Then add YouTube, Prime Video and Disney+ playback adapters, followed by room text chat and real-time voice. Reuse shared room, timing and messaging code while independently verifying each platform adapter.
+- Never collect streaming credentials or session cookies, bypass DRM, or use accessibility automation to control Netflix. Distinguish simulated-player results from real Netflix behavior.
