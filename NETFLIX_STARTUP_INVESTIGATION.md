@@ -6,7 +6,7 @@ Verified November 2, 2026 (UTC). Automatic Netflix synchronization is not verifi
 
 The user reports that Netflix resets to Get started after about ten seconds during sign-in, including when Orbit is not open. No credentials were entered by the agent. Only Android system process/package metadata was collected; Netflix sign-in screens, application data, cookies and account tokens were not read.
 
-The Pixel 10 Pro XL has the official Play Store installation of Netflix 9.89.0 build 14 (versionCode 74684, x86_64). Its API 37.2 Play Store image uses 16 KB memory pages. Repeated foreground exits show Android reason SIGNALED with status 9. System Process-tag entries show the same Netflix process sending SIGKILL to itself. This identifies the immediate termination mechanism, not its underlying cause.
+The Pixel 10 Pro XL emulator has the official Play Store installation of Netflix 9.89.0 build 14 (versionCode 74684, x86_64). Its API 37.2 Play Store image uses 16 KB memory pages. Repeated foreground exits show Android reason SIGNALED with status 9. System Process-tag entries show the same Netflix process sending SIGKILL to itself. This identifies the immediate termination mechanism, not its underlying cause.
 
 After a full emulator restart, Netflix again disappeared about six seconds after an explicit launch, before credentials or playback. One separate startup process was also recorded as LOW_MEMORY during boot. Memory pressure therefore cannot be ruled out, but it does not explain away the repeated self-signal evidence. No Netflix media session was available for Orbit to control.
 
@@ -20,7 +20,7 @@ The standard test emulator was stopped and the original Pixel was reopened. Save
 
 ## Physical-device follow-up
 
-The user confirmed that Orbit's Google sign-in works and that the reset concerns Netflix. Opening Netflix through Orbit's native controls launches the same official Netflix package, so the same startup problem can appear through either route. The user now has a real Android phone available. An Android 16 emulator comparison was prepared but stopped before testing; no Android 16 Netflix conclusion can be drawn. Use [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md) for the standalone APK path instead of Expo Go.
+The user confirmed that Orbit's Google sign-in works and that the reset concerns Netflix. Opening Netflix through Orbit's native controls launches the same official Netflix package, so the same startup problem can appear through either route. The physical device is a Google Pixel 10 Pro XL on Android 17; the user confirmed that Netflix plays a movie normally there. An Android 16 emulator comparison was prepared but stopped before testing; no Android 16 Netflix conclusion can be drawn. Use [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md) for the standalone APK path instead of Expo Go.
 
 ## Next validation gate
 

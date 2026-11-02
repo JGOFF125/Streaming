@@ -1,6 +1,6 @@
 # Playback synchronization foundation
 
-The playback migration was deployed to the existing Supabase project on November 2, 2026. Version 1.2.0 is installed on the Pixel and adds a room client and a bounded native host/follower test. Actual Netflix behavior remains unverified because Netflix currently exits before login/playback. This is not proof of Netflix support or a movie-length background session.
+The playback migration was deployed to the existing Supabase project on November 2, 2026. Version 1.2.0 is installed on the Pixel emulator and adds a room client and a bounded native host/follower test. Standalone 1.2.1 is now available for the physical phone through [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md). Actual Netflix controls remain unverified. Netflix exits during startup on the emulator; the user confirmed normal Netflix playback on a physical Pixel 10 Pro XL with Android 17. This is not proof of Netflix support or a movie-length background session.
 
 ## Components
 
@@ -27,9 +27,9 @@ The TypeScript planner returns actions. The new Android planner and bounded test
 
 ## Emulator-only development
 
-Only Android emulators are currently available. Netflix was installed from Play Store and the owner enabled Orbit's optional controls permission. Netflix currently exits before sign-in/playback; a standard 4 KB image comparison with Orbit absent and a Pixel restart did not resolve startup. See [NETFLIX_STARTUP_INVESTIGATION.md](NETFLIX_STARTUP_INVESTIGATION.md). Do not change certification, protected playback or device identity checks to make it work.
+Initial tests used Android emulators. Netflix was installed from Play Store and the owner enabled Orbit's optional controls permission on the Pixel emulator. Netflix exits before sign-in/playback there; a standard 4 KB image comparison with Orbit absent and a Pixel restart did not resolve startup. The user now has a physical Pixel 10 Pro XL with Android 17 and confirmed that Netflix plays normally on it. Use [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md) for the standalone app. Actual phone controls remain unverified. See [NETFLIX_STARTUP_INVESTIGATION.md](NETFLIX_STARTUP_INVESTIGATION.md). Do not change certification, protected playback or device identity checks to make it work.
 
-Even if Netflix plays on the emulator, report that result as emulator behavior. Two real Android phones remain an eventual validation step for the intended product. Orbit development can continue with local authorization and simulated-player tests meanwhile.
+Even if Netflix plays on the emulator, report that result as emulator behavior. Two real Android phones remain necessary to validate the intended two-device product; only one physical phone is currently confirmed. Orbit development can continue with local authorization and simulated-player tests meanwhile.
 
 Run npm.cmd run test:playback for the focused tests, or npm.cmd test for the complete suite. Lint and TypeScript checks also remain required.
 
