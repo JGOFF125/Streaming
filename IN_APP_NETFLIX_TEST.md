@@ -50,3 +50,7 @@ The normal browser engine may reject features under these deliberately restricti
 - [Android WebChromeClient](https://developer.android.com/reference/android/webkit/WebChromeClient)
 - [Android website permission requests](https://developer.android.com/reference/android/webkit/PermissionRequest)
 - [Netflix browser support](https://help.netflix.com/en/node/30081)
+
+## Provider browser backup boundary (1.3.0)
+
+The new browser keeps Netflix-managed sign-in state in app-private WebView storage until cleared. Android app backup is explicitly disabled through app.json android.allowBackup=false. The final 1.3.0 APK must also pass the binary check with --require-no-backup. This setting concerns Android application backup; it is not a claim about Android password-manager records or every OEM device-transfer behavior.

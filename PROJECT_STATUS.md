@@ -47,7 +47,7 @@ The current development build finished successfully: [Orbit 1.2.0](https://expo.
 
 ## Delivery order
 
-1. Resolve Netflix startup, verify actual controls and identity, test the deployed host/follower path, then implement reliable movie-length background operation and authentication lifecycle handling.
+1. Establish actual Netflix playback inside Orbit on the physical Pixel, then verify actual player identity/controls and two-device synchronization. The emulator startup issue and external controls are historical diagnostics, not completion of the required player.
 2. Add YouTube, Prime Video and Disney+ adapters, reusing shared room and timing code while verifying each provider separately.
 3. Add room text chat and realtime voice.
 

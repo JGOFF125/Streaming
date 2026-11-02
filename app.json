@@ -25,7 +25,8 @@
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.VIBRATE",
         "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"
-      ]
+      ],
+      "allowBackup": false
     },
     "web": {
       "favicon": "./assets/favicon.png"

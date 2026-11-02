@@ -25,9 +25,22 @@ if (packageName !== 'com.jgoff125.orbit' || !permissions.includes('android.permi
 }
 const allowed = new Set(['android.permission.INTERNET', packageName + '.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION']);
 const unexpected = permissions.filter(permission => !allowed.has(permission));
+const requireNoBackup = process.argv.includes('--require-no-backup');
+let backupDisabled = null;
+if (requireNoBackup) {
+  const manifest = spawnSync(aapt, ['dump', 'xmltree', resolve(apk), 'AndroidManifest.xml'], {
+    encoding: 'utf8', timeout: 15000, maxBuffer: 4 * 1024 * 1024,
+  });
+  if (manifest.error || manifest.status !== 0) {
+    console.error('Could not inspect the merged application backup setting.');
+    process.exit(2);
+  }
+  backupDisabled = /^\s+A: android:allowBackup\(0x[0-9a-f]+\)=\(type 0x12\)0x0\s*$/mi.test(manifest.stdout);
+}
+const passed = unexpected.length === 0 && (!requireNoBackup || backupDisabled === true);
 console.log(JSON.stringify({
   packageName, declaredPermissions: permissions, unexpectedPermissions: unexpected,
-  passed: unexpected.length === 0,
+  backupDisabled, passed,
   notificationAccess: 'Separate broad optional Android grant; this check does not remove or narrow it.',
 }, null, 2));
-process.exitCode = unexpected.length ? 1 : 0;
+process.exitCode = passed ? 0 : 1;

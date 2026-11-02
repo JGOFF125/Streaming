@@ -28,3 +28,7 @@ Set AAPT_PATH to the Android SDK aapt executable, then run:
 The check examines the merged binary rather than trusting the config. The 1.2.1 artifact was used as a negative control and correctly failed for the five extra grants. The finished 1.2.2 artifact passed with no unexpected declared permission. The checker explicitly states that the separate notification-access grant remains broad.
 
 Build source: 8f71340. APK SHA-256: a553abdc98ec8a426af30870e5a6999e544f659b09bc253998a10be6696c302b.
+
+## Provider browser backup boundary (1.3.0)
+
+The new browser keeps Netflix-managed sign-in state in app-private WebView storage until cleared. Android app backup is explicitly disabled through app.json android.allowBackup=false. The final 1.3.0 APK must also pass the binary check with --require-no-backup. This setting concerns Android application backup; it is not a claim about Android password-manager records or every OEM device-transfer behavior.
