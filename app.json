@@ -2,7 +2,7 @@
   "expo": {
     "name": "orbit",
     "slug": "orbit",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,14 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.jgoff125.orbit",
-      "versionCode": 5
+      "versionCode": 6,
+      "blockedPermissions": [
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.VIBRATE",
+        "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

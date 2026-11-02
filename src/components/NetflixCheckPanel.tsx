@@ -43,7 +43,7 @@ export default function NetflixCheckPanel() {
 
   function manageAccess() {
     Alert.alert('Netflix controls access',
-      'Android calls this notification access. It grants broad notification privileges. Orbit uses it only to find Netflix media controls; it does not process notification text or upload this check. You can revoke access in the same settings at any time.', [
+      'This optional Android notification-access grant is broad and is not restricted to Netflix. Orbit ignores notification text and uses access only for Netflix media controls. Google sign-in and rooms work without it. You can review or revoke access in Android settings at any time.', [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Open Android settings', onPress: () => {
           void netflixMedia?.openAccessSettings().catch(() => setMessage('Open Android Settings and search for Notification access, then choose Orbit Netflix controls.'));
@@ -96,13 +96,13 @@ export default function NetflixCheckPanel() {
 
   return <View style={s.panel}>
     <Text style={s.title}>Netflix controls check</Text>
-    <Text style={s.note}>Check that Netflix accepts playback commands on this device before trying the experimental room sync test.</Text>
+    <Text style={s.note}>Optional tests of the separate Netflix app. Netflix video is not embedded in Orbit. Google sign-in and private rooms work without this permission.</Text>
     {!netflixMedia ? <Text style={s.note}>{Platform.OS === 'android'
       ? 'Install the new Orbit test APK to use this check. The previous build and Expo Go do not contain Netflix controls.'
       : 'Netflix controls currently require an Android phone and the Orbit test APK.'}</Text> : <>
-      {typeof netflixMedia.runSyncWindow === 'function' && <Text style={s.note}>Room sync test is installed. Join an approved private room to use the one-minute host/follower controls.</Text>}
+      {typeof netflixMedia.runSyncWindow === 'function' && <Text style={s.note}>The external-player room test requires an approved room and matching catalog ID. A successful local control test does not verify two-device synchronization.</Text>}
       <Text style={s.note}>{snapshot ? netflixStatus(snapshot) : 'Reading Android media controls…'}</Text>
-      <Button label={snapshot?.access === 'permission_required' ? '1. Enable Netflix controls' : 'Manage controls access'} disabled={testing} onPress={manageAccess} />
+      <Button label={snapshot?.access === 'permission_required' ? '1. Enable optional Netflix controls' : 'Review / revoke controls access'} disabled={testing} onPress={manageAccess} />
       <Button label="2. Open Netflix and start a movie" disabled={testing} onPress={() => { void openNetflix(); }} />
       <Text style={s.note}>Return to Orbit after playback starts, then run one test at a time.</Text>
       {snapshot?.session === 'active' && <>

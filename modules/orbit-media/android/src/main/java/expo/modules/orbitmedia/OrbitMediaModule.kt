@@ -111,9 +111,15 @@ class OrbitMediaModule : Module() {
 
   private fun controllers(): List<MediaController> {
     if (!hasAccess() || !OrbitMediaListener.connected) return emptyList()
-    // Never select another app, even when it owns the highest-priority session.
-    return context().getSystemService(MediaSessionManager::class.java)
-      .getActiveSessions(component()).filter { it.packageName == NETFLIX }
+    val context = context()
+    val manager = context.getSystemService(MediaSessionManager::class.java)
+    // Android 17 can query Netflix alone. This narrows the read, not the broad
+    // notification-access grant. Older Android exposes only the all-session API.
+    val sessions = if (Build.VERSION.SDK_INT >= 37) {
+      manager.getActiveSessionsForPackage(NETFLIX, component()).map { MediaController(context, it) }
+    } else manager.getActiveSessions(component())
+    // Never read metadata or control another app, including on the legacy path.
+    return sessions.filter { it.packageName == NETFLIX }
   }
 
   private fun snapshot(): Map<String, Any?> {
