@@ -11,6 +11,10 @@ Android app built with React Native, Expo SDK 58 and Supabase. Development happe
 
 **Automatic Netflix synchronization is not verified or movie-length ready.** The room test requires the playback database migration, an approved account, a compatible Netflix media session, supported controls and matching media identity on both devices. It stops on lost access, mismatched identity, slow/failed requests or unacknowledged adjustments. A one-minute test is not a background movie session. Other platforms and text/voice chat are not implemented yet.
 
+## Test on a phone
+
+Orbit uses its own standalone APK; Expo Go and Android Studio QR pairing are not required. See [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md) for the current phone build and testing steps.
+
 ## Development
 
 Use Windows PowerShell commands from the project root:

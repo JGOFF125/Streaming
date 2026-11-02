@@ -12,6 +12,10 @@ Verified November 2, 2026 (UTC).
 
 For future local development, run npm.cmd run start:dev -- --android from the project folder, using the existing server if port 8081 is already occupied.
 
+## Standalone phone build
+
+The user now has a real Android phone available and confirmed Orbit Google sign-in works; the reset concerns Netflix. A standalone Orbit 1.2.1 APK (versionCode 5) is being prepared under the preview profile, without Expo Go or a local development server. The phone model/Android version and finished artifact checks are pending. See [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md). The additional Android 16 emulator comparison was stopped in favor of physical-device validation; no Android 16 Netflix result exists.
+
 ## Netflix increment
 
 The new signed-in room panel supports a bounded one-minute host/follower test. The host selects a public Netflix catalog identifier and publishes observed playback from Netflix; a follower attempts matching pause/play/seek controls. Both devices open the official Netflix app and wait eight seconds before the test begins.
@@ -26,7 +30,7 @@ The current development build finished successfully: [Orbit 1.2.0](https://expo.
 
 - Dependency compatibility, all JavaScript/database tests, lint and TypeScript passed. Android compilation and native planner unit tests passed in EAS; Pixel installation and native-method availability were verified.
 - Supabase CLI sign-in is working and the target project reports ACTIVE_HEALTHY. Migration 002 was applied through the Management API after confirming the existing private-room schema; do not rerun either migration on this project.
-- The previously signed-in Google account now has room access. No other accounts were approved. Public Auth settings returned HTTP 200 with Google enabled; a fresh end-to-end Google sign-in has not been automated.
+- The previously signed-in Google account now has room access. No other accounts were approved. Public Auth settings returned HTTP 200 with Google enabled. The user confirmed that Orbit Google sign-in works and that the reset concerns Netflix streaming, rather than Orbit authentication.
 - Hosted verification passed for host publish/read, stale revision rejection, outsider RLS/RPC denial and grants. Its temporary room and timeline were rolled back. Anonymous playback access returned HTTP 401 / PostgreSQL code 42501 through the public API. Direct member table writes and anonymous RPC execution are denied.
 - Netflix is installed, and the user granted Orbit's optional controls permission. Netflix repeatedly exits before login/playback, including on a separate standard-page emulator with Orbit absent. Restarting the Pixel did not fix startup. See [NETFLIX_STARTUP_INVESTIGATION.md](NETFLIX_STARTUP_INVESTIGATION.md); the cause remains unknown and automatic playback is still unverified.
 - The original Pixel and local development server are running again. Orbit sessions remain memory-only, so sign in again after restart and create a room to verify the actual app path. A live signed-in room check is pending user feedback.

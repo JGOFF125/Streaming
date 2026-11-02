@@ -18,9 +18,13 @@ Netflix restarted once and then exited on that emulator too. Both main-process e
 
 The standard test emulator was stopped and the original Pixel was reopened. Saved data and Orbit's owner-granted controls permission were preserved. Orbit 1.2.0 (versionCode 4) was reopened against the existing development server.
 
+## Physical-device follow-up
+
+The user confirmed that Orbit's Google sign-in works and that the reset concerns Netflix. Opening Netflix through Orbit's native controls launches the same official Netflix package, so the same startup problem can appear through either route. The user now has a real Android phone available. An Android 16 emulator comparison was prepared but stopped before testing; no Android 16 Netflix conclusion can be drawn. Use [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md) for the standalone APK path instead of Expo Go.
+
 ## Next validation gate
 
-1. Netflix must remain open, complete sign-in and play a movie independently, using its official app. The restart has already been tried without success. Use a supported physical Android device when available, or continue with official Netflix support for the startup problem. No real phone is currently available to this project.
+1. Netflix must remain open, complete sign-in and play a movie independently, using its official app. The restart has already been tried without success. Use a supported physical Android device when available, or continue with official Netflix support for the startup problem. The user now has a real phone available; setup has shifted to a standalone Orbit APK. Its Android version and real Netflix control behavior still need verification.
 2. Once playback works, verify the actual catalog ID and acknowledged play/pause/seek controls through Orbit's local check. Missing metadata or controls still blocks this MediaSession route.
 3. Then run the one-minute host/follower test on two approved room members. The playback backend is now deployed and the owner's previously signed-in Google account has room access.
 4. Only after real behavior is established, implement and validate full-movie background operation and token lifecycle handling.
