@@ -1,5 +1,7 @@
 # Orbit on a real Android phone
 
+Latest: [Orbit 1.2.2 privacy-cleanup APK](https://expo.dev/artifacts/eas/2L2zW_K9yTM3Z8RepteDbj4XJ6FpAAbiSwSldOTTuz0.apk) ([build](https://expo.dev/accounts/jgoff/projects/orbit/builds/b417efd6-bcca-4cf0-b28c-6311721baa4a)). It removes unused permissions and clarifies optional external controls. See [ANDROID_PERMISSIONS.md](ANDROID_PERMISSIONS.md). The installed/tested 1.2.1 artifact and its provenance remain below as history. Neither version embeds Netflix video.
+
 Orbit's Netflix controls require its own Android app. Expo Go does not include the local native module, and neither Expo Go nor Android Studio's QR pairing is needed for a standalone APK.
 
 Version 1.2.1 (Android versionCode 5) is finished. [Download the standalone APK](https://expo.dev/artifacts/eas/Z6Tod6xtqFvATUCTLZiSsrqPrOENmiVCNWlnrWD4rqY.apk) on the phone, or open the [successful build page](https://expo.dev/accounts/jgoff/projects/orbit/builds/d1f6aad9-83dd-4626-a2a0-5d97ab28b71b). The APK is about 67.5 MB. It contains the one-minute room test and bundles the app so no development server or computer connection is required. This is not verified automatic Netflix support or movie-length synchronization.
@@ -16,4 +18,4 @@ The finished 1.2.1 APK was inspected: minimum Android API 24 (Android 7.0), targ
 
 The successful preview build ran the existing native planner unit-test task and then assembled the release APK. The module's existing debug unit-test task tests the same pure Kotlin planner source used in the release app. Device testing still needs to establish real Netflix behavior, and full-movie background operation remains unfinished.
 
-Build source: a6ae01c. The final guide/status changes do not alter the APK. SHA-256: 60876952de60e05715497c443b912956a975309f3e5dbe20649e07dae750c6a9. The user confirmed that the APK installs and opens on the physical Pixel. Actual Netflix controls remain pending user testing.
+Build source: a6ae01c. The final guide/status changes do not alter the APK. SHA-256: 60876952de60e05715497c443b912956a975309f3e5dbe20649e07dae750c6a9. The user confirmed that 1.2.1 installs and opens on the physical Pixel and shared an observed-seek report. Its accepted catalog ID was null, so two-device synchronization remains blocked by identity checks.

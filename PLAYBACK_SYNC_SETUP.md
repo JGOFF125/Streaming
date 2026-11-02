@@ -1,6 +1,6 @@
 # Playback synchronization foundation
 
-The playback migration was deployed to the existing Supabase project on November 2, 2026. Version 1.2.0 is installed on the Pixel emulator and adds a room client and a bounded native host/follower test. Standalone 1.2.1 is now available for the physical phone through [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md). Actual Netflix controls remain unverified. Netflix exits during startup on the emulator; the user confirmed normal Netflix playback on a physical Pixel 10 Pro XL with Android 17. This is not proof of Netflix support or a movie-length background session.
+The playback migration was deployed to the existing Supabase project on November 2, 2026. Version 1.2.0 is installed on the Pixel emulator and adds a room client and a bounded native host/follower test. Standalone 1.2.1 is now available for the physical phone through [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md). A physical-phone diagnostic reports an observed seek, but no usable numeric catalog ID. Independent play/pause acknowledgments and actual two-device synchronization remain unverified. Netflix exits during startup on the emulator; the user confirmed normal Netflix playback on a physical Pixel 10 Pro XL with Android 17. This is not proof of Netflix support or a movie-length background session.
 
 ## Components
 

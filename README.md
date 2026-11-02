@@ -2,6 +2,8 @@
 
 Android app built with React Native, Expo SDK 58 and Supabase. Development happens in the existing local checkout used by VS Code and is pushed to this repository at verified milestones.
 
+The intended product plays video inside Orbit alongside text and voice. The current Netflix adapter controls the separate official app; embedded Netflix playback is not implemented or established as feasible through a verified integration. See [NETFLIX_EMBEDDED_FEASIBILITY.md](NETFLIX_EMBEDDED_FEASIBILITY.md).
+
 ## Current capabilities
 
 - Google OAuth with native S256 PKCE and memory-only Orbit sessions.
@@ -10,6 +12,10 @@ Android app built with React Native, Expo SDK 58 and Supabase. Development happe
 - An experimental one-minute room sync test: the host publishes its Netflix playback; a follower attempts to reconcile to the shared timeline. The test opens the official Netflix app, waits eight seconds, then runs briefly in native code.
 
 **Automatic Netflix synchronization is not verified or movie-length ready.** The room test requires the playback database migration, an approved account, a compatible Netflix media session, supported controls and matching media identity on both devices. It stops on lost access, mismatched identity, slow/failed requests or unacknowledged adjustments. A one-minute test is not a background movie session. Other platforms and text/voice chat are not implemented yet.
+
+## Privacy
+
+The 1.2.2 APK removes unused overlay/storage/vibration/install-referrer permissions. External Netflix diagnostics still use a separate broad optional notification-access grant; core rooms and Google sign-in do not need it. See [ANDROID_PERMISSIONS.md](ANDROID_PERMISSIONS.md) for the verified binary audit.
 
 ## Test on a phone
 

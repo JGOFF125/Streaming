@@ -4,7 +4,7 @@ This is a compatibility build, not completed automatic synchronization.
 
 ## Physical phone and emulator status
 
-A real Google Pixel 10 Pro XL running Android 17 is now available. The user confirmed that Netflix plays normally on that phone. Orbit Google sign-in also works. Use [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md) for the standalone APK; Expo Go and Android Studio QR pairing are not required. Actual Netflix media identity and control acknowledgment on the phone remain unverified.
+A real Google Pixel 10 Pro XL running Android 17 is now available. The user confirmed that Netflix plays normally on that phone. Orbit Google sign-in also works. Use [PHONE_TEST_SETUP.md](PHONE_TEST_SETUP.md) for the standalone APK; Expo Go and Android Studio QR pairing are not required. The user has now shared an observed-seek diagnostic. It reports no usable numeric content ID; separate play/pause command acknowledgments and two-device behavior remain unverified. The seek also changed the reported state from paused to playing.
 
 The Pixel emulator still exits Netflix before sign-in or playback. A standard-page emulator comparison also exited with Orbit absent; changing page size and restarting did not resolve startup. See [the startup investigation](NETFLIX_STARTUP_INVESTIGATION.md). No Android 16 comparison was completed. These emulator failures do not establish the cause or predict the physical phone's control behavior.
 

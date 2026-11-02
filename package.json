@@ -36,7 +36,8 @@
     "start:dev": "expo start --dev-client",
     "test:auth": "node --experimental-strip-types --test tests/google-auth.test.mjs",
     "test:netflix": "node --experimental-strip-types --test tests/netflix-diagnostics.test.mjs tests/netflix-operation.test.mjs",
-    "test:playback": "node --experimental-strip-types --test tests/playback-sync.test.mjs tests/playback-database.test.mjs tests/playback-client.test.mjs"
+    "test:playback": "node --experimental-strip-types --test tests/playback-sync.test.mjs tests/playback-database.test.mjs tests/playback-client.test.mjs",
+    "check:apk-permissions": "node scripts/check-apk-permissions.mjs"
   },
   "private": true
 }
