@@ -2,6 +2,12 @@
 
 Reviewed November 3, 2026 (UTC). This is an evidence and implementation handoff, not a working player or an APK release.
 
+## Public catalog evidence while 1.3.3 builds
+
+The official public Stranger Things page exposes series/episode names and runtimes. A bounded unauthenticated fetch found one standard JSON-LD record containing TVSeries, VideoObject and Person types, with no typed TVEpisode records or canonical episode IDs in that structured-data extraction. This is a single-page/representation result, not proof no public episode identifier exists anywhere. No HTML, cookies, hidden session fields or raw descriptions were retained. The reviewed evidence does not establish a stable catalog-to-current-player resolver, so no name/duration inference or runtime catalog scraper was added. [Netflix official series page](https://www.netflix.com/title/80057281).
+
+Android additionally documents an active queue-item identifier and a current play queue. The queue ID is a session-local item key, not automatically a Netflix catalog ID. If Netflix publishes a canonical media identifier on the specifically active item’s description, that could be another exact-identity source; availability in this Netflix session has not been observed and it is not implemented in 1.3.3. Do not substitute the queue number or the first queued item for the actual current movie. [PlaybackState active item contract](https://developer.android.com/reference/android/media/session/PlaybackState#getActiveQueueItemId()), [MediaController queue contract](https://developer.android.com/reference/android/media/session/MediaController#getQueue()).
+
 ## Current connection review: November 3, 2026, 13:36 UTC
 
 The current verified APK is 1.3.2, recorded in [PROJECT_STATUS.md](PROJECT_STATUS.md) and [NETFLIX_IDENTITY_TEST.md](NETFLIX_IDENTITY_TEST.md). Its provider-metadata parser and paused-seek changes passed native/build/binary checks; the new physical-phone diagnostic is pending. The user confirms official Netflix PiP plays above Orbit for 15 seconds. This is a companion presentation result, not protected video rendered by Orbit or verified synchronization. The earlier 1.3.1 references below describe previous checkpoints.
