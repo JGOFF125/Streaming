@@ -41,9 +41,9 @@ An integration candidate must provide a documented, usable path for all of these
 
 Existing Orbit room timing/revisions can be reused after these inputs exist. Reusing synchronization code does not remove each provider's playback/authentication requirements.
 
-## Prepared SDK inquiry — not sent
+## Rave inquiry — sent November 3, 2026
 
-Rave's official company page publishes a business contact. No public embeddable playback SDK was established in the reviewed materials; a vendor answer is a possible next source of evidence, not a promised solution. Sending any inquiry requires the user's explicit authorization. [Rave company/contact page](https://shop.rave.io/pages/about-rave).
+Rave's official company page publishes a business contact. No public embeddable playback SDK was established in the reviewed materials; a vendor answer is a possible next source of evidence, not a promised solution. The user subsequently authorized sending this inquiry and extending outreach to similar apps. The Rave message below was sent through Gmail; see [the outreach record](NETFLIX_INTEGRATION_OUTREACH.md) for confirmed send status and contact provenance. [Rave company/contact page](https://shop.rave.io/pages/about-rave).
 
 **Subject:** Android in-app streaming integration availability for Orbit
 
@@ -62,4 +62,4 @@ Orbit project
 
 ## Decision and handoff
 
-Netflix remains first. Keep the current verified 1.3.1 APK and working source checkout. This research changes the evidence and the next integration target; it does not add a renderer, claim Netflix support, modify accounts/backend settings or justify another browser-only APK. The remaining blocker is a usable provider/player integration. No external inquiry has been sent.
+Netflix remains first. Keep the current verified 1.3.1 APK and working source checkout. This research changes the evidence and the next integration target; it does not add a renderer, claim Netflix support, modify accounts/backend settings or justify another browser-only APK. The remaining blocker is a usable provider/player integration. The user authorized outreach; inquiries to Rave, Hearo, Teleparty and Watchly were sent. See [NETFLIX_INTEGRATION_OUTREACH.md](NETFLIX_INTEGRATION_OUTREACH.md). No reply or available SDK is established by sending them.

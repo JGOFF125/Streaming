@@ -93,3 +93,7 @@ The first checkpoint was ef442a6. Resume from this report, NETFLIX_EMBEDDED_FEAS
 ## November 3 follow-up: working Rave comparison
 
 The user reports a Netflix movie plays inside the official Rave Android app on their physical Pixel. This is user-reported playback, not our inspection of the player engine or two-device sync. Orbit’s own 1.3.1 layout, keyboard and Google sign-in work, but its browser comparison still does not play the movie. The original 1.2.2 resume checkpoint above is historical. Netflix remains first; see [NETFLIX_NATIVE_INTEGRATION.md](NETFLIX_NATIVE_INTEGRATION.md) for the subsequent native-player/SDK investigation.
+
+## November 3: expanded integration outreach
+
+User-authorized inquiries were sent separately to Rave, Hearo, Teleparty and Watchly using official contact provenance. See [NETFLIX_INTEGRATION_OUTREACH.md](NETFLIX_INTEGRATION_OUTREACH.md) for the historical Hearo business lead, current mobile/desktop distinctions, Watchly infrastructure disclosures and literal TeleTV identity check. No current SDK or working Orbit playback is established.

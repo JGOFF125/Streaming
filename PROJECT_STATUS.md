@@ -1,8 +1,13 @@
 # Orbit — current status
 
+## Integration outreach: November 3, 2026 (UTC)
+
+The user authorized outreach beyond Rave. Gmail returned SENT for separate inquiries to Rave, Hearo, Teleparty and Watchly at contacts verified through official sites/listings. This confirms submission, not delivery or a reply. The expanded review found a historical Hearo business/white-label venue lead but no currently deployable Netflix SDK. See [NETFLIX_INTEGRATION_OUTREACH.md](NETFLIX_INTEGRATION_OUTREACH.md) for sources, scope and follow-up questions. No player/API integration has been obtained and no new APK was built; Orbit Netflix playback and two-device synchronization remain blocked.
+
+
 ## Native integration investigation: November 3, 2026 (UTC)
 
-The user reaffirmed Netflix as the next priority and reports Netflix movie playback inside the official Rave app on the same Pixel. This is a working comparison, not an Orbit result or a verified explanation of Rave’s implementation. The public Netflix MSL framework and Android DRM-player documentation do not supply a usable Netflix player/session integration for Orbit. Namesake social SDKs, watch-history APIs and app launchers were reviewed and do not fill that gap. See [NETFLIX_NATIVE_INTEGRATION.md](NETFLIX_NATIVE_INTEGRATION.md) for sources, acceptance requirements and a prepared vendor inquiry that has not been sent. The current APK remains 1.3.1; no dependency, permission, backend or account changes were made. Actual Orbit Netflix playback and two-device synchronization remain blocked.
+The user reaffirmed Netflix as the next priority and reports Netflix movie playback inside the official Rave app on the same Pixel. This is a working comparison, not an Orbit result or a verified explanation of Rave’s implementation. The public Netflix MSL framework and Android DRM-player documentation do not supply a usable Netflix player/session integration for Orbit. Namesake social SDKs, watch-history APIs and app launchers were reviewed and do not fill that gap. See [NETFLIX_NATIVE_INTEGRATION.md](NETFLIX_NATIVE_INTEGRATION.md) for sources, acceptance requirements and the original inquiry, now sent with the user’s authorization. The current APK remains 1.3.1; no dependency, permission, backend or account changes were made. Actual Orbit Netflix playback and two-device synchronization remain blocked.
 
 ## Firefox comparison result
 
