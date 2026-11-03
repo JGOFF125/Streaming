@@ -144,6 +144,11 @@ class OrbitMediaModule : Module() {
     val identity = OrbitMediaIdentity.resolve(
       metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID),
       metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_URI))
+    val labels = OrbitDisplayMetadata.read(
+      metadata?.getText(MediaMetadata.METADATA_KEY_DISPLAY_TITLE),
+      metadata?.getText(MediaMetadata.METADATA_KEY_TITLE),
+      metadata?.getText(MediaMetadata.METADATA_KEY_DISPLAY_SUBTITLE),
+      metadata?.getText(MediaMetadata.METADATA_KEY_DISPLAY_DESCRIPTION))
     return mapOf(
       "access" to "ready", "session" to "active",
       "state" to when (state?.state) {
@@ -155,6 +160,11 @@ class OrbitMediaModule : Module() {
         else -> "unknown"
       },
       "positionMs" to position(state, duration), "durationMs" to duration, "contentId" to identity.contentId,
+      // These labels are local UI evidence only, excluded from shared diagnostics and room requests.
+      "displayMetadata" to mapOf("titleLabel" to labels.titleLabel, "subtitleLabel" to labels.subtitleLabel,
+        "descriptionLabel" to labels.descriptionLabel, "titleSource" to labels.titleSource,
+        "titlePresent" to labels.titlePresent, "displayTitlePresent" to labels.displayTitlePresent,
+        "subtitlePresent" to labels.subtitlePresent, "descriptionPresent" to labels.descriptionPresent),
       "identitySource" to identity.source, "mediaIdPresent" to identity.mediaIdPresent,
       "mediaUriPresent" to identity.mediaUriPresent,
       "canPlay" to (supports(actions, PlaybackState.ACTION_PLAY) || supports(actions, PlaybackState.ACTION_PLAY_PAUSE)),

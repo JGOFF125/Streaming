@@ -1,4 +1,18 @@
 export type MediaCommand = 'play' | 'pause' | 'seek';
+export type NetflixDisplayLabels = {
+  // Raw labels stay in local screen memory; netflixReport exports only evidence flags.
+  titleLabel?: string | null; subtitleLabel?: string | null; descriptionLabel?: string | null;
+  titleSource?: string; titlePresent?: boolean; displayTitlePresent?: boolean;
+  subtitlePresent?: boolean; descriptionPresent?: boolean;
+};
+export type NetflixLabelComparison = { available: boolean; titleChanged: boolean; subtitleChanged: boolean; descriptionChanged: boolean };
+export function compareNetflixLabels(before: NetflixDisplayLabels | null, after: NetflixDisplayLabels | null): NetflixLabelComparison {
+  const available = typeof before?.titleLabel === 'string' && !!before.titleLabel &&
+    typeof after?.titleLabel === 'string' && !!after.titleLabel;
+  return { available, titleChanged: available && before!.titleLabel !== after!.titleLabel,
+    subtitleChanged: available && (before!.subtitleLabel ?? null) !== (after!.subtitleLabel ?? null),
+    descriptionChanged: available && (before!.descriptionLabel ?? null) !== (after!.descriptionLabel ?? null) };
+}
 export type NetflixSnapshot = {
   access: 'permission_required' | 'connecting' | 'ready';
   session: 'none' | 'active' | 'ambiguous';
@@ -7,6 +21,7 @@ export type NetflixSnapshot = {
   durationMs?: number | null;
   contentId?: string | null;
   identitySource?: string;
+  displayMetadata?: NetflixDisplayLabels;
   mediaIdPresent?: boolean;
   mediaUriPresent?: boolean;
   canPlay?: boolean;
@@ -61,17 +76,25 @@ export function formatPosition(ms: number | null | undefined): string {
 
 // Explicit allowlist: reports cannot accidentally include identities, tokens, titles,
 // session handles, or notification content if the native snapshot changes later.
-export function netflixReport(snapshot: NetflixSnapshot | null, result: NetflixTestResult | null): string {
+export function netflixReport(snapshot: NetflixSnapshot | null, result: NetflixTestResult | null, comparison: NetflixLabelComparison | null = null): string {
   const describe = (value: NetflixSnapshot | null | undefined) => value ? {
     access: value.access, session: value.session, state: value.state,
     positionMs: value.positionMs, durationMs: value.durationMs,
     contentId: typeof value.contentId === 'string' && /^[1-9][0-9]{0,11}$/.test(value.contentId) ? value.contentId : null,
     identitySource: ['media_id', 'media_id_watch_url', 'media_uri_watch_url', 'matching_fields', 'conflicting_fields', 'unavailable'].includes(value.identitySource ?? '') ? value.identitySource : 'unavailable',
     mediaIdPresent: value.mediaIdPresent === true, mediaUriPresent: value.mediaUriPresent === true,
+    displayEvidence: value.displayMetadata ? {
+      titleSource: ['display_title', 'title', 'unavailable'].includes(value.displayMetadata.titleSource ?? '') ? value.displayMetadata.titleSource : 'unavailable',
+      titlePresent: value.displayMetadata.titlePresent === true, displayTitlePresent: value.displayMetadata.displayTitlePresent === true,
+      subtitlePresent: value.displayMetadata.subtitlePresent === true, descriptionPresent: value.displayMetadata.descriptionPresent === true,
+      usableTitleLabelPresent: typeof value.displayMetadata.titleLabel === 'string' && !!value.displayMetadata.titleLabel,
+    } : null,
     canPlay: value.canPlay, canPause: value.canPause, canSeek: value.canSeek,
   } : null;
   return JSON.stringify({
-    diagnostic: 'Orbit Netflix controls v1',
+    diagnostic: 'Orbit Netflix controls v2',
+    automaticMovieIdentificationVerified: false,
+    labelComparison: comparison ? { available: comparison.available === true, titleChanged: comparison.titleChanged === true, subtitleChanged: comparison.subtitleChanged === true, descriptionChanged: comparison.descriptionChanged === true } : null,
     automaticSyncVerified: false,
     snapshot: describe(snapshot),
     lastTest: result ? {

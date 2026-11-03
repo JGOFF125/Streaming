@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { netflixStatus, netflixTestMessage, netflixReport, formatPosition } from '../src/netflixDiagnostics.ts';
+import { compareNetflixLabels, netflixStatus, netflixTestMessage, netflixReport, formatPosition } from '../src/netflixDiagnostics.ts';
 
 const ready = {access:'ready', session:'active', state:'playing', positionMs:12000, durationMs:90000,
   canPlay:true, canPause:true, canSeek:true, contentId:'80012345'};
@@ -54,4 +54,30 @@ test('identity diagnostics retain only fixed source labels and presence flags', 
   assert.doesNotMatch(bad,/private_metadata_url_or_token/);
   assert.equal(JSON.parse(bad).snapshot.identitySource,'unavailable');
   assert.equal(JSON.parse(bad).snapshot.mediaIdPresent,false);
+});
+
+
+test('display evidence never exports raw titles, episode details, or arbitrary fields', () => {
+  const secret='private_display_label_value';
+  const snapshot={...ready,contentId:null,displayMetadata:{titleLabel:secret,subtitleLabel:secret,descriptionLabel:secret,
+    titleSource:'display_title',titlePresent:true,displayTitlePresent:true,subtitlePresent:true,descriptionPresent:true,custom:secret}};
+  const report=netflixReport(snapshot,{command:'pause',status:'observed',reason:'state_changed',before:snapshot,after:snapshot},
+    {available:true,titleChanged:true,subtitleChanged:false,descriptionChanged:true,rawLabel:secret});
+  assert.doesNotMatch(report,/private_display_label_value|titleLabel|subtitleLabel|descriptionLabel|rawLabel|custom/);
+  const parsed=JSON.parse(report);
+  assert.equal(parsed.snapshot.contentId,null);
+  assert.equal(parsed.automaticMovieIdentificationVerified,false);
+  assert.equal(parsed.snapshot.displayEvidence.titleSource,'display_title');
+  assert.equal(parsed.lastTest.before.displayEvidence.subtitlePresent,true);
+  assert.deepEqual(parsed.labelComparison,{available:true,titleChanged:true,subtitleChanged:false,descriptionChanged:true});
+});
+
+
+test('label comparisons distinguish episodes without inventing catalog identity', () => {
+  const first={titleLabel:'Fictional series',subtitleLabel:'Episode one',descriptionLabel:null};
+  assert.deepEqual(compareNetflixLabels(first,{...first}),{available:true,titleChanged:false,subtitleChanged:false,descriptionChanged:false});
+  assert.deepEqual(compareNetflixLabels(first,{...first,subtitleLabel:'Episode two'}),{available:true,titleChanged:false,subtitleChanged:true,descriptionChanged:false});
+  assert.equal(compareNetflixLabels(first,{...first,titleLabel:'Different movie'}).titleChanged,true);
+  assert.deepEqual(compareNetflixLabels(first,null),{available:false,titleChanged:false,subtitleChanged:false,descriptionChanged:false});
+  assert.equal(compareNetflixLabels(first,{titleLabel:''}).available,false);
 });

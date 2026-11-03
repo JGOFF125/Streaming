@@ -57,3 +57,5 @@ Docs: https://docs.expo.dev/eas/index.md
 
 - Each participant chooses portrait/chat or full-screen locally. Changing one viewer’s presentation must never change the other viewer’s mode or publish a playback command. Preserve unsent drafts when returning to chat. Only one physical phone is currently available: continue local/backend/virtual-client development without claiming a real two-device synchronization test.
 - The user confirms Netflix’s own PiP continues playing above Orbit for 15 seconds on their Pixel. This is a user-reported co-existence result, not embedded Orbit video or verified sync; investigate it without adding Orbit overlay access.
+
+- The 1.3.2 physical Pixel report shows contentId null and both MEDIA_ID / MEDIA_URI absent despite working position/control capability. The user explicitly rejected one-time manual movie confirmation: retain automatic actual movie/episode identification. Do not substitute a selected link, manual acknowledgment, session token or matching duration for actual player identity.

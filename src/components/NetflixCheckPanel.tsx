@@ -2,14 +2,16 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, AppState, Platform, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { acquireNetflixOperation } from '../netflixOperation';
 import { netflixMedia } from '../netflixMedia';
-import { formatPosition, netflixReport, netflixStatus, netflixTestMessage } from '../netflixDiagnostics';
-import type { MediaCommand, NetflixSnapshot, NetflixTestResult } from '../netflixDiagnostics';
+import { compareNetflixLabels, formatPosition, netflixReport, netflixStatus, netflixTestMessage } from '../netflixDiagnostics';
+import type { MediaCommand, NetflixDisplayLabels, NetflixSnapshot, NetflixTestResult } from '../netflixDiagnostics';
 
 export default function NetflixCheckPanel() {
   const [snapshot, setSnapshot] = useState<NetflixSnapshot | null>(null);
   const [result, setResult] = useState<NetflixTestResult | null>(null);
   const [message, setMessage] = useState('');
   const [testing, setTesting] = useState(false);
+  const [labelBaseline, setLabelBaseline] = useState<NetflixDisplayLabels | null>(null);
+  const labelComparison = labelBaseline ? compareNetflixLabels(labelBaseline, snapshot?.displayMetadata ?? null) : null;
   const running = useRef(false);
   const mounted = useRef(true);
   const refreshing = useRef(false);
@@ -90,7 +92,7 @@ export default function NetflixCheckPanel() {
   }
 
   async function shareReport() {
-    try { await Share.share({ title: 'Orbit Netflix controls check', message: netflixReport(snapshot, result) }); }
+    try { await Share.share({ title: 'Orbit Netflix controls check', message: netflixReport(snapshot, result, labelComparison) }); }
     catch { setMessage('Could not open sharing. You can read the result on this screen.'); }
   }
 
@@ -109,6 +111,22 @@ export default function NetflixCheckPanel() {
         <Text style={s.readout}>Player: {snapshot.state} · Position: {formatPosition(snapshot.positionMs)}</Text>
         <Text style={s.note}>Reported catalog ID: {snapshot.contentId ?? 'unavailable'}</Text>
         <Text style={s.note}>Identity fields: media ID {snapshot.mediaIdPresent ? 'present' : 'not reported'} · media URI {snapshot.mediaUriPresent ? 'present' : 'not reported'}. Raw values stay private.</Text>
+        {snapshot.displayMetadata && <>
+          <Text style={s.note}>Netflix’s display labels · local to this screen</Text>
+          <Text numberOfLines={3} style={s.readout}>{snapshot.displayMetadata.titleLabel ?? 'No useful title label reported'}</Text>
+          {!!snapshot.displayMetadata.subtitleLabel && <Text numberOfLines={3} style={s.note}>{snapshot.displayMetadata.subtitleLabel}</Text>}
+          {!!snapshot.displayMetadata.descriptionLabel && <Text numberOfLines={4} style={s.note}>{snapshot.displayMetadata.descriptionLabel}</Text>}
+          <Text style={s.note}>These are Netflix’s reported labels, not a verified unique movie/episode ID. Automatic sync still requires verified identity. Raw labels stay in memory and are excluded from shared diagnostics.</Text>
+          <Button label="Remember labels for comparison" disabled={testing || !snapshot.displayMetadata.titleLabel} onPress={() => {
+            setLabelBaseline({ ...snapshot.displayMetadata }); setMessage('Labels remembered on this phone. Open a different movie or episode in Netflix, then return and refresh to compare. This sends no playback command.');
+          }} />
+          {!!labelComparison && <>
+            <Text style={s.note}>{labelComparison.available
+              ? 'Compared with remembered labels: title ' + (labelComparison.titleChanged ? 'changed' : 'same') + ' · subtitle ' + (labelComparison.subtitleChanged ? 'changed' : 'same') + ' · description ' + (labelComparison.descriptionChanged ? 'changed' : 'same')
+              : 'Comparison unavailable: a useful title label is missing.'}</Text>
+            <Button label="Forget remembered labels" disabled={testing} onPress={() => setLabelBaseline(null)} />
+          </>}
+        </>}
         <Text style={s.note}>Reported controls: play {snapshot.canPlay ? 'yes' : 'no'} · pause {snapshot.canPause ? 'yes' : 'no'} · seek {snapshot.canSeek ? 'yes' : 'no'}</Text>
       </>}
       {snapshot?.access === 'ready' && <>
@@ -122,7 +140,7 @@ export default function NetflixCheckPanel() {
       }} />}
       <Button label="Refresh check" disabled={testing} onPress={() => { setMessage(''); void refresh(); }} />
       <Button label="Share diagnostic result" disabled={testing || !snapshot} onPress={() => { void shareReport(); }} />
-      <Text style={s.note}>Checks stay in memory. Shared diagnostics contain playback numbers, a public catalog ID when available, and control results, with no account details or movie title.</Text>
+      <Text style={s.note}>Checks stay in memory. Shared diagnostics contain playback numbers, a public catalog ID when available, and control results, with no account details or raw movie/episode labels.</Text>
     </>}
     {!!message && <Text accessibilityLiveRegion="polite" style={s.note}>{message}</Text>}
   </View>;
