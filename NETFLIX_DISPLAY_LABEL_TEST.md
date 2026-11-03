@@ -18,7 +18,7 @@ Shared diagnostics v2 export only fixed presence/source flags and comparison boo
 
 ## Verification
 
-Lint/typecheck, 14 Netflix diagnostic/operation tests and 27 playback/client/database tests pass. All 28 pure Kotlin policy/identity/planner/display tests pass, including Unicode bounds, generic-label handling and accidental object-log privacy. A signed native build and binary audit are still pending; do not offer an unverified APK. Physical label capture and episode discrimination are untested.
+Lint/typecheck, 14 Netflix diagnostic/operation tests and 27 playback/client/database tests pass. All 28 pure Kotlin policy/identity/planner/display tests pass, including Unicode bounds, generic-label handling and accidental object-log privacy. The [signed native build](https://expo.dev/accounts/jgoff/projects/orbit/builds/d5822f62-814f-4850-83df-1020cf085282) is submitted from source 11598a93d5bfbd475c01c2d96cc506547ca252be. Cloud native tests, release assembly and binary audit are pending; do not offer an unverified APK. Physical label capture and episode discrimination are untested.
 
 ## Physical Pixel acceptance, after a verified APK is available
 

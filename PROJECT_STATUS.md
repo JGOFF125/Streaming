@@ -2,7 +2,7 @@
 
 ## Current development: provider display metadata, 1.3.3
 
-The user’s 1.3.2 report confirms both candidate catalog-ID values are absent. They require automatic movie identification and declined a manual confirmation fallback. They also confirm Android’s Netflix media controls display the actual movie/episode name. Version 1.3.3 (code 10) now reads standard display labels locally and compares changes across items while exporting only fixed flags. Native/reporting/playback tests, lint and typecheck pass; signed build/binary audit and physical label capture are pending. No identity gate or permission was relaxed. See [NETFLIX_DISPLAY_LABEL_TEST.md](NETFLIX_DISPLAY_LABEL_TEST.md). The latest verified APK remains 1.3.2 below.
+The user’s 1.3.2 report confirms both candidate catalog-ID values are absent. They require automatic movie identification and declined a manual confirmation fallback. They also confirm Android’s Netflix media controls display the actual movie/episode name. Version 1.3.3 (code 10) now reads standard display labels locally and compares changes across items while exporting only fixed flags. Native/reporting/playback tests, lint and typecheck pass; the [signed build](https://expo.dev/accounts/jgoff/projects/orbit/builds/d5822f62-814f-4850-83df-1020cf085282) is submitted from source 11598a93d5bfbd475c01c2d96cc506547ca252be. Cloud native tests, binary audit and physical label capture are pending. No identity gate or permission was relaxed. See [NETFLIX_DISPLAY_LABEL_TEST.md](NETFLIX_DISPLAY_LABEL_TEST.md). The latest verified APK remains 1.3.2 below.
 
 ## Renewed investigation and room design: November 3, 2026 (UTC)
 
