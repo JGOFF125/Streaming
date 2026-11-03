@@ -89,3 +89,7 @@ Record whether actual movie frames/audio play inside the app with dependable ide
 This review establishes workflows, public UI patterns and some disclosed infrastructure, not the proprietary Android Netflix implementation of any competitor. No player dependency, app build, account, subscription, microphone grant or provider sign-in was created during this research. Orbit remains at 1.2.2 with its external diagnostic and in-app feasibility gap.
 
 The first checkpoint was ef442a6. Resume from this report, NETFLIX_EMBEDDED_FEASIBILITY.md and ANDROID_PERMISSIONS.md. Hibernation pauses local tool work; no offline work, scheduled monitor or automatic resume was configured. Continue this chat after the PC wakes.
+
+## November 3 follow-up: working Rave comparison
+
+The user reports a Netflix movie plays inside the official Rave Android app on their physical Pixel. This is user-reported playback, not our inspection of the player engine or two-device sync. Orbit’s own 1.3.1 layout, keyboard and Google sign-in work, but its browser comparison still does not play the movie. The original 1.2.2 resume checkpoint above is historical. Netflix remains first; see [NETFLIX_NATIVE_INTEGRATION.md](NETFLIX_NATIVE_INTEGRATION.md) for the subsequent native-player/SDK investigation.

@@ -1,8 +1,12 @@
 # Orbit — current status
 
+## Native integration investigation: November 3, 2026 (UTC)
+
+The user reaffirmed Netflix as the next priority and reports Netflix movie playback inside the official Rave app on the same Pixel. This is a working comparison, not an Orbit result or a verified explanation of Rave’s implementation. The public Netflix MSL framework and Android DRM-player documentation do not supply a usable Netflix player/session integration for Orbit. Namesake social SDKs, watch-history APIs and app launchers were reviewed and do not fill that gap. See [NETFLIX_NATIVE_INTEGRATION.md](NETFLIX_NATIVE_INTEGRATION.md) for sources, acceptance requirements and a prepared vendor inquiry that has not been sent. The current APK remains 1.3.1; no dependency, permission, backend or account changes were made. Actual Orbit Netflix playback and two-device synchronization remain blocked.
+
 ## Firefox comparison result
 
-November 3, 2026 (UTC): the user reports Firefox also asks for the Netflix app or blocks playback. The exact Firefox mode/version and error were not specified. Together with the earlier Orbit and Chrome results, this supplies no working browser baseline for a GeckoView replacement. The larger screen, keyboard and Google sign-in remain user-confirmed working; Netflix movie playback and automatic sync are blocked/unverified. Keep 1.3.1 as the current APK and do not ship another speculative browser wrapper. See [ANDROID_PLAYER_NEXT_STEP.md](ANDROID_PLAYER_NEXT_STEP.md). The user has been asked which development priority to take next; no changed order has been assumed.
+November 3, 2026 (UTC): the user reports Firefox also asks for the Netflix app or blocks playback. The exact Firefox mode/version and error were not specified. Together with the earlier Orbit and Chrome results, this supplies no working browser baseline for a GeckoView replacement. The larger screen, keyboard and Google sign-in remain user-confirmed working; Netflix movie playback and automatic sync are blocked/unverified. Keep 1.3.1 as the current APK and do not ship another speculative browser wrapper. See [ANDROID_PLAYER_NEXT_STEP.md](ANDROID_PLAYER_NEXT_STEP.md). The user subsequently reaffirmed Netflix integration; the newer Rave comparison and native-player findings are recorded above.
 
 
 ## Current verified APK: 1.3.1
