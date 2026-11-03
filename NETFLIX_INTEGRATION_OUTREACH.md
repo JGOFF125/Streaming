@@ -2,6 +2,10 @@
 
 November 3, 2026 (UTC).
 
+## Latest thread check: November 3, 2026, 13:36 UTC
+
+All four inquiry threads were re-read and each still contains only the original sent message. This does not establish delivery or a response, and no duplicate inquiry was sent. The current verified APK is now 1.3.2; earlier 1.3.1 references below belong to the original outreach milestone. The protected-player integration remains unavailable in the reviewed evidence. See [the current integration review](NETFLIX_NATIVE_INTEGRATION.md).
+
 ## Completed outreach
 
 The user explicitly authorized sending the prepared Rave inquiry and extending the investigation to similar apps. Four separate messages were sent from the connected Gmail account, each with a successful tool response carrying the SENT label. This records submission through Gmail, not recipient delivery, a read receipt or a reply.

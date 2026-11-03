@@ -2,6 +2,18 @@
 
 Reviewed November 3, 2026 (UTC). This is an evidence and implementation handoff, not a working player or an APK release.
 
+## Current connection review: November 3, 2026, 13:36 UTC
+
+The current verified APK is 1.3.2, recorded in [PROJECT_STATUS.md](PROJECT_STATUS.md) and [NETFLIX_IDENTITY_TEST.md](NETFLIX_IDENTITY_TEST.md). Its provider-metadata parser and paused-seek changes passed native/build/binary checks; the new physical-phone diagnostic is pending. The user confirms official Netflix PiP plays above Orbit for 15 seconds. This is a companion presentation result, not protected video rendered by Orbit or verified synchronization. The earlier 1.3.1 references below describe previous checkpoints.
+
+A narrower Android control connection was checked against the previously copied official Play Store emulator installation, Netflix 9.89.0 build 14 (74684). All seven saved split manifests were inspected; the base declares 20 services. None of those manifests declares the standard android.media.browse.MediaBrowserService, androidx.media3.session.MediaSessionService or androidx.media3.session.MediaLibraryService action. This is a bounded static result for that saved app version, not a fresh physical-phone inspection or proof that all Netflix versions lack every integration.
+
+Android's documented browser-client path connects to a provider service; the provider must declare its service action and accept the connecting client. The saved package does not supply evidence for adding that path to Orbit. No private service was bound, APK executed, streaming session inspected or new dependency added. [Android media browser client](https://developer.android.com/media/legacy/audio/mediabrowser), [service declaration and client acceptance](https://developer.android.com/media/legacy/audio/mediabrowserservice).
+
+Android 17's package-filtered active-session API still requires privileged media control or an enabled notification listener when querying another app. Orbit already uses the Netflix-only query on API 37; narrowing the read does not narrow the underlying optional Android grant. No newly available per-app permission was established by this review. [MediaSessionManager contract](https://developer.android.com/reference/android/media/session/MediaSessionManager#getActiveSessionsForPackage(java.lang.String,%20android.content.ComponentName)).
+
+The four authorized developer inquiry threads were re-read: each still contains only the sent inquiry. No usable player SDK or vendor reply was obtained. The next actual-player input is the requested 1.3.2 report, particularly the catalog ID, identity source and field-presence flags. Its result must inform the next native change; do not substitute a chosen title or infer playback from the successful APK build. Netflix, Disney+ and Prime Video playback inside Orbit, and real two-device sync, remain incomplete. This review supplies no new deployable integration.
+
 ## New working comparison
 
 The user explicitly reaffirmed Netflix integration as the next priority, then reported that a movie plays inside the official Rave Android app on the same physical Pixel used for Orbit's failed browser tests. The question asked for actual video and sound rather than login alone. This is user-reported one-device playback, not our instrumented inspection or a two-phone synchronization result. Rave's exact version, title, rendering engine and provider integration remain unknown.
@@ -87,4 +99,4 @@ Orbit project
 
 ## Decision and handoff
 
-Netflix remains first. Keep the current verified 1.3.1 APK and working source checkout. This research changes the evidence and the next integration target; it does not add a renderer, claim Netflix support, modify accounts/backend settings or justify another browser-only APK. The remaining blocker is a usable provider/player integration. The user authorized outreach; inquiries to Rave, Hearo, Teleparty and Watchly were sent. See [NETFLIX_INTEGRATION_OUTREACH.md](NETFLIX_INTEGRATION_OUTREACH.md). No reply or available SDK is established by sending them.
+Netflix remains first. Use the current verified APK in PROJECT_STATUS.md and the working source checkout; 1.3.1 was the verified APK at the earlier inquiry milestone. This research changes the evidence and the next integration target; it does not add a renderer, claim Netflix support, modify accounts/backend settings or justify another browser-only APK. The remaining blocker is a usable provider/player integration. The user authorized outreach; inquiries to Rave, Hearo, Teleparty and Watchly were sent. See [NETFLIX_INTEGRATION_OUTREACH.md](NETFLIX_INTEGRATION_OUTREACH.md). No reply or available SDK is established by sending them.
