@@ -40,3 +40,7 @@ The Android cloud build, native test task and release assembly passed. The signe
 ## Confirmed 1.3.1 phone feedback
 
 November 3: the user confirms the larger screen and keyboard layout work, and Orbit Google sign-in works. The official browse/title-page comparison still asks for Netflix’s app or blocks playback; the answer does not isolate each route or give an error code. No movie playback, canonical player identity or two-device sync is verified. The system-WebView route remains unsuccessful in the reported configuration. GeckoView is being reviewed as a distinct engine candidate, with no dependency added or Netflix compatibility claimed; see [ANDROID_PLAYER_NEXT_STEP.md](ANDROID_PLAYER_NEXT_STEP.md). The current APK remains 1.3.1.
+
+## Firefox comparison result
+
+November 3, 2026 (UTC): the user reports Firefox also asks for the Netflix app or blocks playback. The exact Firefox mode/version and error were not specified. Together with the earlier Orbit and Chrome results, this supplies no working browser baseline for a GeckoView replacement. The larger screen, keyboard and Google sign-in remain user-confirmed working; Netflix movie playback and automatic sync are blocked/unverified. Keep 1.3.1 as the current APK and do not ship another speculative browser wrapper. See [ANDROID_PLAYER_NEXT_STEP.md](ANDROID_PLAYER_NEXT_STEP.md). The user has been asked which development priority to take next; no changed order has been assumed.

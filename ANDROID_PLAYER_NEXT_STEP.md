@@ -22,9 +22,9 @@ The documented metadata class contains display fields, and its title may be back
 
 ## Lowest-cost preliminary check
 
-A Firefox-on-the-same-Pixel movie-playback comparison has been requested, with normal Netflix authentication and the ordinary Desktop site option if necessary. The user can skip it. No Firefox result has yet been supplied.
+The user reports that Firefox on the same Pixel also asks for Netflix’s app or blocks playback. The exact Firefox version, browser mode and provider error were not supplied. This is a failed baseline result in the reported configuration, not proof that every GeckoView integration is impossible.
 
-A successful Firefox result would justify an isolated GeckoView feasibility experiment; it would not prove Netflix works in a separately embedded app. A failure would not prove every engine/integration impossible, but would provide no basis for calling a GeckoView replacement a fix.
+The Firefox comparison did not provide a successful playback baseline. GeckoView remains technically embeddable, but its controls API is not sufficient evidence to ship it as a Netflix fix. Do not add an engine dependency or issue another browser-only APK without new playback evidence.
 
 If evidence supports an engine experiment, require actual authorized movie frames/audio inside the candidate, observed supported play/pause/seek acknowledgments, paused-state preservation, safe session cleanup and a validated identity source before attaching the shared timeline. Keep provider content and authentication outside the room backend. Ordinary DRM/content protection remains enabled; an API's existence is not Netflix playback authorization.
 
@@ -45,3 +45,11 @@ No new APK, account, permission, backend change, dependency or player engine was
 - [Netflix browser requirements](https://help.netflix.com/en/node/30081)
 - [Netflix device-partner testing context](https://netflixtechblog.com/automated-testing-on-devices-fc5a39f47e24)
 - [Widevine overview](https://www.widevine.com/solutions/widevine-drm)
+
+## Current decision after Firefox feedback
+
+The tested Orbit system-WebView routes, Chrome Desktop site comparison and Firefox comparison have not produced a movie inside a browser on the user’s phone. UI sizing, keyboard behavior and Orbit Google sign-in are confirmed working. Keep 1.3.1 as the current verified artifact; Netflix video, canonical player identity and two-device sync remain blocked/unverified.
+
+A usable player integration or a demonstrated working engine/provider path is required before Netflix synchronization can be completed. This investigation has not identified one that Orbit can deploy. Do not turn that knowledge limit into a claim that all Android embedding is impossible or that a specific paid partnership is mandatory. No new APK, dependency, permission or account change is justified by this Firefox result alone.
+
+The user’s Netflix-first priority is still in effect. A scope decision has been requested: continue Netflix integration investigation, implement YouTube playback/sync next, or implement room text/voice next. No replacement priority has been selected or implemented yet.

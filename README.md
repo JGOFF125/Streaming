@@ -62,3 +62,5 @@ Latest physical-device result (November 3): Netflix sign-in works in the 1.3.0 w
 [NETFLIX_SCREEN_LAYOUT.md](NETFLIX_SCREEN_LAYOUT.md) records the screenshot finding, layout fix, authentication routing, entry-point limits and validation.
 
 Confirmed 1.3.1 phone feedback: the larger screen, keyboard layout and Google sign-in work. Netflix movie playback remains blocked in the reported page-entry test. [ANDROID_PLAYER_NEXT_STEP.md](ANDROID_PLAYER_NEXT_STEP.md) records the separate engine/control/identity gates.
+
+The Firefox comparison also failed to play Netflix in the reported phone configuration. There is no verified browser playback baseline for adding GeckoView as a fix. Orbit 1.3.1 remains the current artifact; a usable Netflix integration has not yet been identified. See [the current integration decision](ANDROID_PLAYER_NEXT_STEP.md).
