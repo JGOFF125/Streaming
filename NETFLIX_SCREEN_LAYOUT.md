@@ -31,8 +31,12 @@ Lint and typecheck pass. The complete app/database suites passed; the added entr
 
 Local web layout preview measured the browser stage at 412×788 in a 412×915 viewport and 320×441 in a 320×568 viewport, with no horizontal overflow. Details open/dismiss and navigation back home were checked; a disposable local notes value survived navigation and was cleared afterwards. These are web layout checks only. No streaming login page was captured during QA, no account was used and no sign-in request was submitted.
 
-The Android cloud build, native test task and release assembly passed. The signed APK passed the permission/backup/signature/bundled-app audit; its manifest declares MainActivity adjustResize and the existing Google callback scheme. Real keyboard behavior, Google sign-in after routing changes and Netflix page-routing results are separate physical-device gates still pending feedback. Movie playback and two-device sync remain unresolved.
+The Android cloud build, native test task and release assembly passed. The signed APK passed the permission/backup/signature/bundled-app audit; its manifest declares MainActivity adjustResize and the existing Google callback scheme. The user confirms real keyboard behavior and Google sign-in after the routing change work. Netflix page routing still asks for its app or blocks playback; the response does not isolate the individual routes. Movie playback and two-device sync remain unresolved.
 
 ## Verified standalone APK
 
 [Download Orbit 1.3.1](https://expo.dev/artifacts/eas/Q9D5EyjGtrEoHwyJsO2lAUERXnDS6xbvl_uQzQbQWZc.apk) · [Build](https://expo.dev/accounts/jgoff/projects/orbit/builds/b44e514e-a32e-4ce4-a92c-33755c7507d5). Source ab6c2c3, Android versionCode 8. Size 91886957 bytes. SHA-256 2b87a1d0a78656a25b635df4e35c42114ad54317f0cf517d4b12173124be4c84. The certificate matches the previously installed Orbit APK; no Expo Go or local server is required. Artifact verification does not establish Netflix compatibility.
+
+## Confirmed 1.3.1 phone feedback
+
+November 3: the user confirms the larger screen and keyboard layout work, and Orbit Google sign-in works. The official browse/title-page comparison still asks for Netflix’s app or blocks playback; the answer does not isolate each route or give an error code. No movie playback, canonical player identity or two-device sync is verified. The system-WebView route remains unsuccessful in the reported configuration. GeckoView is being reviewed as a distinct engine candidate, with no dependency added or Netflix compatibility claimed; see [ANDROID_PLAYER_NEXT_STEP.md](ANDROID_PLAYER_NEXT_STEP.md). The current APK remains 1.3.1.

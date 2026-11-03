@@ -2,7 +2,7 @@
 
 ## Current verified APK: 1.3.1
 
-The [Orbit 1.3.1 standalone APK](https://expo.dev/artifacts/eas/Q9D5EyjGtrEoHwyJsO2lAUERXnDS6xbvl_uQzQbQWZc.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/b44e514e-a32e-4ce4-a92c-33755c7507d5)) is finished. The cloud native tests and release assembly passed. Binary inspection verified the same signing certificate as the prior APK, the standalone app bundle, ARM64 support, disabled backup, no extra declared permissions, the Google callback scheme and MainActivity keyboard adjustResize setting. Physical keyboard behavior, Google sign-in after the routing change and the new Netflix entry-point results still need phone feedback. Movie playback and sync remain unverified. See [NETFLIX_SCREEN_LAYOUT.md](NETFLIX_SCREEN_LAYOUT.md).
+The [Orbit 1.3.1 standalone APK](https://expo.dev/artifacts/eas/Q9D5EyjGtrEoHwyJsO2lAUERXnDS6xbvl_uQzQbQWZc.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/b44e514e-a32e-4ce4-a92c-33755c7507d5)) is finished. The cloud native tests and release assembly passed. Binary inspection verified the same signing certificate as the prior APK, the standalone app bundle, ARM64 support, disabled backup, no extra declared permissions, the Google callback scheme and MainActivity keyboard adjustResize setting. The user confirms the larger screen, keyboard layout and Google sign-in work on the physical phone. Their official-page comparison still asks for Netflix’s app or blocks playback; the exact route/error was not specified. Movie playback and sync remain unverified. See [ANDROID_PLAYER_NEXT_STEP.md](ANDROID_PLAYER_NEXT_STEP.md) for the next integration gate and [NETFLIX_SCREEN_LAYOUT.md](NETFLIX_SCREEN_LAYOUT.md).
 
 Open Netflix inside Orbit → Open Netflix test screen. Open the website, then use Details for the official browse page or a public Netflix title/watch link. The route test may still show Netflix’s app-required page. A selected link is not verified player identity. Source ab6c2c3. APK size 91886957 bytes; SHA-256 2b87a1d0a78656a25b635df4e35c42114ad54317f0cf517d4b12173124be4c84.
 
@@ -14,7 +14,7 @@ The user tested the shipped 1.3.0 APK: Netflix sign-in works, but the website as
 The v2 reporting fix is included in 1.3.1, together with the larger screen and official-page comparison controls. All eleven Netflix diagnostic/operation tests pass, plus authentication routing, room/database tests, lint and typecheck. The older 1.3.0 artifact below remains history. No movie-playback or sync fix has been verified, and no account, database or Google Cloud configuration was changed.
 
 
-Updated November 3, 2026 (UTC). Build/artifact checks are separate from pending physical-device results.
+Updated November 3, 2026 (UTC). Build/artifact checks and confirmed layout/keyboard/Google phone results are separate from the unresolved Netflix movie-playback gate.
 
 ## Current development increment
 

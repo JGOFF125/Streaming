@@ -71,3 +71,7 @@ November 3: the supplied screenshot confirms Netflix’s signed-in mobile app-re
 ## Current 1.3.1 instructions
 
 Use [the 1.3.1 APK](https://expo.dev/artifacts/eas/Q9D5EyjGtrEoHwyJsO2lAUERXnDS6xbvl_uQzQbQWZc.apk). Open Netflix inside Orbit → Open Netflix test screen. The website fills the dedicated screen; Details contains cleanup, official browse/title-link controls and observation reports. Start the website first to enable page controls. A public title link goes only to Netflix’s normal watch page, with parameters removed. Copying a public link from another app before opening the test avoids ending this foreground-only experiment. Check Google sign-in as well after the new navigation is installed. The current binary audit passed; Netflix playback and automatic sync have not been verified.
+
+## Confirmed 1.3.1 phone feedback
+
+November 3: the user confirms the larger screen and keyboard layout work, and Orbit Google sign-in works. The official browse/title-page comparison still asks for Netflix’s app or blocks playback; the answer does not isolate each route or give an error code. No movie playback, canonical player identity or two-device sync is verified. The system-WebView route remains unsuccessful in the reported configuration. GeckoView is being reviewed as a distinct engine candidate, with no dependency added or Netflix compatibility claimed; see [ANDROID_PLAYER_NEXT_STEP.md](ANDROID_PLAYER_NEXT_STEP.md). The current APK remains 1.3.1.
