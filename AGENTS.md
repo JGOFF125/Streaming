@@ -54,3 +54,6 @@ Docs: https://docs.expo.dev/eas/index.md
 
 - The user asks for chat visible beneath video in portrait and hidden during full-screen viewing, with automatic synchronization between users in different locations. Their final embedded-versus-overlapping-app choice is not settled.
 - Investigate the overlapping-app option, but do not claim it fulfills the final experience without user agreement and real playback/sync verification. Automatic approval review rejected adding SYSTEM_ALERT_WINDOW without explicit approval of that persistent permission. No overlay permission/implementation has been added; obtain explicit approval before retrying that rejected change. The independent provider-metadata identity fix adds no permissions.
+
+- Each participant chooses portrait/chat or full-screen locally. Changing one viewer’s presentation must never change the other viewer’s mode or publish a playback command. Preserve unsent drafts when returning to chat. Only one physical phone is currently available: continue local/backend/virtual-client development without claiming a real two-device synchronization test.
+- The user confirms Netflix’s own PiP continues playing above Orbit for 15 seconds on their Pixel. This is a user-reported co-existence result, not embedded Orbit video or verified sync; investigate it without adding Orbit overlay access.
