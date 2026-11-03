@@ -1,5 +1,10 @@
 # Orbit on a real Android phone
 
+## Current source: 1.3.1
+
+The screenshot confirms the mobile app-required landing page and a cramped embedded view. Source now has a dedicated full-width screen, keyboard-resize configuration and a restricted official browse/watch-link comparison. The prior diagnostic fix is included. Android build/artifact checks are pending; the older 1.3.0 APK below does not contain these changes. Playback and sync remain unresolved. See [NETFLIX_SCREEN_LAYOUT.md](NETFLIX_SCREEN_LAYOUT.md).
+
+
 ## Latest device result: November 3, 2026 (UTC)
 
 The user tested the shipped 1.3.0 APK: Netflix sign-in works, but the website asks for its separate app. Chrome with Desktop site on the same phone also requests the app or blocks playback. Embedded movie playback is therefore not working in either reported test. The v1 report ends in background_closed, which records lifecycle cleanup and does not identify the provider restriction or establish a crash. Exact message/screenshot pending. See NETFLIX_EMBEDDED_FEASIBILITY.md.

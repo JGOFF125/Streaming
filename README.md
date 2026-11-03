@@ -2,7 +2,7 @@
 
 Android app built with React Native, Expo SDK 58 and Supabase. Development happens in the existing local checkout used by VS Code and is pushed to this repository at verified milestones.
 
-The intended product plays video inside Orbit alongside text and voice. Version 1.3.0 adds an isolated in-app Netflix website experiment; actual movie playback and synchronization through that surface are not verified. The older external adapter remains a separate diagnostic. See [IN_APP_NETFLIX_TEST.md](IN_APP_NETFLIX_TEST.md). See [NETFLIX_EMBEDDED_FEASIBILITY.md](NETFLIX_EMBEDDED_FEASIBILITY.md).
+The intended product plays video inside Orbit alongside text and voice. Version 1.3.1 moves the isolated in-app Netflix website experiment to a dedicated full-width screen and adds constrained official browse/watch-link entry tests; actual movie playback and synchronization through that surface are not verified. The older external adapter remains a separate diagnostic. See [IN_APP_NETFLIX_TEST.md](IN_APP_NETFLIX_TEST.md). See [NETFLIX_EMBEDDED_FEASIBILITY.md](NETFLIX_EMBEDDED_FEASIBILITY.md).
 
 ## Current capabilities
 
@@ -58,3 +58,5 @@ Never collect streaming passwords, cookies or provider tokens; bypass DRM; extra
 [WATCH_PARTY_RESEARCH.md](WATCH_PARTY_RESEARCH.md) compares Rave, Hearo, Teleparty and Watchly using official workflows and public screenshots. It separates documented facts from proposed architecture and records the next in-app playback experiment.
 
 Latest physical-device result (November 3): Netflix sign-in works in the 1.3.0 website experiment, but playback asks for its separate app. Chrome Desktop site also failed on that phone. Embedded Netflix and two-device sync remain blocked. The newer diagnostic reporting source has not been released in a replacement APK; see [current evidence](NETFLIX_EMBEDDED_FEASIBILITY.md).
+
+[NETFLIX_SCREEN_LAYOUT.md](NETFLIX_SCREEN_LAYOUT.md) records the screenshot finding, layout fix, authentication routing, entry-point limits and validation.

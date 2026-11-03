@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Alert, Linking, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Linking, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import PrivateRoomPanel from './src/components/PrivateRoomPanel';
 import NetflixCheckPanel from './src/components/NetflixCheckPanel';
 import NetflixInsidePanel from './src/components/NetflixInsidePanel';

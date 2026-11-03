@@ -8,6 +8,13 @@ object OrbitProviderPolicy {
   const val START_URL = "https://www.netflix.com/login"
   const val PROTECTED_MEDIA = "android.webkit.resource.PROTECTED_MEDIA_ID"
 
+  // Only fixed public Netflix pages; never accept an arbitrary URL or query.
+  fun commandUrl(command: String): String? = when {
+    command == "browse" -> "https://www.netflix.com/browse"
+    command.matches(Regex("watch_[1-9][0-9]{0,11}")) -> "https://www.netflix.com/watch/" + command.substringAfter("watch_")
+    else -> null
+  }
+
   private fun httpsUri(value: String): URI? = try {
     if (value.length > 16384 || value.any { it.isWhitespace() || it == '\\' || it.code < 32 }) null
     else URI(value).takeIf {

@@ -54,12 +54,14 @@ export function recordBrowserEvent(previous: BrowserHistory, value: unknown): Br
   };
 }
 
-export function embeddedNetflixReport(observation: Observation, history: BrowserHistory): string {
+export type NetflixEntryPoint = 'login' | 'browse' | 'watch_link';
+export function embeddedNetflixReport(observation: Observation, history: BrowserHistory, entryPoint: NetflixEntryPoint = 'login'): string {
   const events = history.events.filter(knownEvent).slice(-12);
   return JSON.stringify({
     diagnostic: 'Orbit in-app Netflix v2',
     playerRoute: 'android_system_webview',
     browserMode: 'default',
+    entryPoint: entryPoint === 'browse' || entryPoint === 'watch_link' ? entryPoint : 'login',
     playback: observations.has(observation) ? observation : 'not_tested',
     evidence: 'user_reported',
     // Preserve page context independently of the app leaving the foreground.

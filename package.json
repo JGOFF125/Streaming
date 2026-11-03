@@ -1,6 +1,6 @@
 {
   "name": "orbit",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "main": "index.ts",
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
@@ -9,11 +9,17 @@
     "expo-constants": "~58.0.14",
     "expo-crypto": "~58.0.7",
     "expo-dev-client": "~58.0.18",
+    "expo-linking": "~58.0.15",
+    "expo-router": "~58.0.29",
     "expo-status-bar": "~58.0.4",
     "expo-web-browser": "~58.0.7",
     "react": "19.3.0",
+    "react-dom": "19.3.0",
     "react-native": "0.88.1",
-    "react-native-url-polyfill": "^4.0.0"
+    "react-native-safe-area-context": "~5.10.1",
+    "react-native-screens": "~4.30.1",
+    "react-native-url-polyfill": "^4.0.0",
+    "react-native-web": "^0.21.4"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.10",
@@ -34,7 +40,7 @@
     "test": "npm run test:unit && npm run test:auth && npm run test:rooms && npm run test:netflix && npm run test:playback",
     "start:go": "expo start --go",
     "start:dev": "expo start --dev-client",
-    "test:auth": "node --experimental-strip-types --test tests/google-auth.test.mjs",
+    "test:auth": "node --experimental-strip-types --test tests/google-auth.test.mjs tests/native-routes.test.mjs",
     "test:netflix": "node --experimental-strip-types --test tests/netflix-diagnostics.test.mjs tests/netflix-operation.test.mjs tests/embedded-netflix-diagnostics.test.mjs",
     "test:playback": "node --experimental-strip-types --test tests/playback-sync.test.mjs tests/playback-database.test.mjs tests/playback-client.test.mjs",
     "check:apk-permissions": "node scripts/check-apk-permissions.mjs"

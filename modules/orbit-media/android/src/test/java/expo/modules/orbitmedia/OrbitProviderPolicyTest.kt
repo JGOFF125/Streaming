@@ -46,4 +46,12 @@ class OrbitProviderPolicyTest {
     assertFalse(OrbitProviderPolicy.allowsProtectedMedia("https://netflix.com", media + "android.webkit.resource.AUDIO_CAPTURE"))
     assertFalse(OrbitProviderPolicy.allowsProtectedMedia("https://netflix.com", listOf("future_permission")))
   }
+  @Test fun publicPageCommandsNeverForwardArbitraryUrlsOrParameters() {
+    assertEquals("https://www.netflix.com/browse", OrbitProviderPolicy.commandUrl("browse"))
+    assertEquals("https://www.netflix.com/watch/80012345", OrbitProviderPolicy.commandUrl("watch_80012345"))
+    listOf("watch_0", "watch_-1", "watch_80012345?token=private", "watch_1234567890123",
+      "https://evil.test", "watch_../login", "browse?private=1", "watch_１").forEach {
+      assertNull(OrbitProviderPolicy.commandUrl(it))
+    }
+  }
 }

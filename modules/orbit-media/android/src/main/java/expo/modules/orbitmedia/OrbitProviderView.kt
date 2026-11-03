@@ -37,6 +37,11 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
       web.settings.apply {
         javaScriptEnabled = true // Netflix's own scripts only; Orbit never injects a script.
         domStorageEnabled = true
+        useWideViewPort = true
+        loadWithOverviewMode = true
+        setSupportZoom(true)
+        builtInZoomControls = true
+        displayZoomControls = false
         allowFileAccess = false
         allowContentAccess = false
         @Suppress("DEPRECATION")
@@ -67,9 +72,12 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
   }
 
   fun command(command: String) {
-    if (disposed || command == lastCommand || !command.matches(Regex("[0-9]{1,10}:(back|reload|allow_media|deny_media)"))) return
+    if (disposed || command == lastCommand || !command.matches(Regex("[0-9]{1,10}:(back|reload|allow_media|deny_media|browse|watch_[1-9][0-9]{0,11})"))) return
     lastCommand = command
-    when (command.substringAfter(':')) {
+    val action = command.substringAfter(':')
+    val target = OrbitProviderPolicy.commandUrl(action)
+    if (target != null) { browser?.loadUrl(target); return }
+    when (action) {
       "back" -> browser?.let { if (it.canGoBack()) it.goBack() }
       "reload" -> browser?.reload()
       "allow_media" -> {

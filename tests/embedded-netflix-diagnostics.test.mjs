@@ -57,3 +57,13 @@ test('unknown native strings and extra fields cannot enter an exported diagnosti
   assert.doesNotMatch(embeddedNetflixReport(secret, dirty), /private_token|example/);
   assert.equal(JSON.parse(embeddedNetflixReport(secret, dirty)).playback, 'not_tested');
 });
+
+test('entry points are fixed labels and never imply verified movie identity', () => {
+  for (const entry of ['login', 'browse', 'watch_link']) {
+    const report = JSON.parse(embeddedNetflixReport('movie_played', initialBrowserHistory(), entry));
+    assert.equal(report.entryPoint, entry);
+    assert.equal(report.titleIdentityVerified, false);
+    assert.equal(report.automaticSyncVerified, false);
+  }
+  assert.equal(JSON.parse(embeddedNetflixReport('sign_in_only', initialBrowserHistory(), 'https://netflix.com/?private=1')).entryPoint, 'login');
+});
