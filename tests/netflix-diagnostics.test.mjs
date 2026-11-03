@@ -43,3 +43,15 @@ test('position display handles missing and invalid native values', () => {
   assert.equal(formatPosition(0),'0:00');
   assert.equal(formatPosition(73499),'1:13');
 });
+
+test('identity diagnostics retain only fixed source labels and presence flags', () => {
+  const good = JSON.parse(netflixReport({...ready,identitySource:'media_uri_watch_url',mediaIdPresent:false,mediaUriPresent:true}, null));
+  assert.equal(good.snapshot.identitySource,'media_uri_watch_url');
+  assert.equal(good.snapshot.mediaUriPresent,true);
+  assert.equal(good.snapshot.mediaIdPresent,false);
+  const secret='private_metadata_url_or_token';
+  const bad=netflixReport({...ready,identitySource:secret,mediaIdPresent:secret,mediaUriPresent:secret,mediaUri:secret},null);
+  assert.doesNotMatch(bad,/private_metadata_url_or_token/);
+  assert.equal(JSON.parse(bad).snapshot.identitySource,'unavailable');
+  assert.equal(JSON.parse(bad).snapshot.mediaIdPresent,false);
+});

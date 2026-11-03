@@ -108,6 +108,7 @@ export default function NetflixCheckPanel() {
       {snapshot?.session === 'active' && <>
         <Text style={s.readout}>Player: {snapshot.state} · Position: {formatPosition(snapshot.positionMs)}</Text>
         <Text style={s.note}>Reported catalog ID: {snapshot.contentId ?? 'unavailable'}</Text>
+        <Text style={s.note}>Identity fields: media ID {snapshot.mediaIdPresent ? 'present' : 'not reported'} · media URI {snapshot.mediaUriPresent ? 'present' : 'not reported'}. Raw values stay private.</Text>
         <Text style={s.note}>Reported controls: play {snapshot.canPlay ? 'yes' : 'no'} · pause {snapshot.canPause ? 'yes' : 'no'} · seek {snapshot.canSeek ? 'yes' : 'no'}</Text>
       </>}
       {snapshot?.access === 'ready' && <>

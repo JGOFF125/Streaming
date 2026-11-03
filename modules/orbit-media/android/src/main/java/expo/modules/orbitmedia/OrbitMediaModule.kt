@@ -141,8 +141,9 @@ class OrbitMediaModule : Module() {
     val actions = state?.actions ?: 0L
     val metadata = controller.metadata
     val duration = metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION)?.takeIf { it > 0 }
-    // Only a strictly numeric public catalog identifier can leave the native layer.
-    val contentId = metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID)?.takeIf { it.matches(Regex("[1-9][0-9]{0,11}")) }
+    val identity = OrbitMediaIdentity.resolve(
+      metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID),
+      metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_URI))
     return mapOf(
       "access" to "ready", "session" to "active",
       "state" to when (state?.state) {
@@ -153,7 +154,9 @@ class OrbitMediaModule : Module() {
         PlaybackState.STATE_ERROR -> "error"
         else -> "unknown"
       },
-      "positionMs" to position(state, duration), "durationMs" to duration, "contentId" to contentId,
+      "positionMs" to position(state, duration), "durationMs" to duration, "contentId" to identity.contentId,
+      "identitySource" to identity.source, "mediaIdPresent" to identity.mediaIdPresent,
+      "mediaUriPresent" to identity.mediaUriPresent,
       "canPlay" to (supports(actions, PlaybackState.ACTION_PLAY) || supports(actions, PlaybackState.ACTION_PLAY_PAUSE)),
       "canPause" to (supports(actions, PlaybackState.ACTION_PAUSE) || supports(actions, PlaybackState.ACTION_PLAY_PAUSE)),
       "canSeek" to supports(actions, PlaybackState.ACTION_SEEK_TO)

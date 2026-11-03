@@ -49,3 +49,8 @@ Docs: https://docs.expo.dev/eas/index.md
 
 - The intended experience is video playing inside Orbit's room alongside text/voice chat. External Netflix launching and MediaSession controls are diagnostics, not fulfillment of that requirement. Embedded Netflix playback needs a verified integration; do not claim a generic WebView or Rave's existence proves compatibility.
 - Minimize app permissions. Keep Google sign-in and core rooms usable without notification access. External controls remain optional and must accurately disclose Android's broad grant. Request microphone access only when a future voice feature is actually used.
+
+## Updated room experience requirement
+
+- The user asks for chat visible beneath video in portrait and hidden during full-screen viewing, with automatic synchronization between users in different locations. Their final embedded-versus-overlapping-app choice is not settled.
+- Investigate the overlapping-app option, but do not claim it fulfills the final experience without user agreement and real playback/sync verification. Automatic approval review rejected adding SYSTEM_ALERT_WINDOW without explicit approval of that persistent permission. No overlay permission/implementation has been added; obtain explicit approval before retrying that rejected change. The independent provider-metadata identity fix adds no permissions.

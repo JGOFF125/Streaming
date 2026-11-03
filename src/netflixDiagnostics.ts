@@ -6,6 +6,9 @@ export type NetflixSnapshot = {
   positionMs?: number | null;
   durationMs?: number | null;
   contentId?: string | null;
+  identitySource?: string;
+  mediaIdPresent?: boolean;
+  mediaUriPresent?: boolean;
   canPlay?: boolean;
   canPause?: boolean;
   canSeek?: boolean;
@@ -63,6 +66,8 @@ export function netflixReport(snapshot: NetflixSnapshot | null, result: NetflixT
     access: value.access, session: value.session, state: value.state,
     positionMs: value.positionMs, durationMs: value.durationMs,
     contentId: typeof value.contentId === 'string' && /^[1-9][0-9]{0,11}$/.test(value.contentId) ? value.contentId : null,
+    identitySource: ['media_id', 'media_id_watch_url', 'media_uri_watch_url', 'matching_fields', 'conflicting_fields', 'unavailable'].includes(value.identitySource ?? '') ? value.identitySource : 'unavailable',
+    mediaIdPresent: value.mediaIdPresent === true, mediaUriPresent: value.mediaUriPresent === true,
     canPlay: value.canPlay, canPause: value.canPause, canSeek: value.canSeek,
   } : null;
   return JSON.stringify({
