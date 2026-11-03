@@ -56,3 +56,5 @@ Never collect streaming passwords, cookies or provider tokens; bypass DRM; extra
 ## Workflow research
 
 [WATCH_PARTY_RESEARCH.md](WATCH_PARTY_RESEARCH.md) compares Rave, Hearo, Teleparty and Watchly using official workflows and public screenshots. It separates documented facts from proposed architecture and records the next in-app playback experiment.
+
+Latest physical-device result (November 3): Netflix sign-in works in the 1.3.0 website experiment, but playback asks for its separate app. Chrome Desktop site also failed on that phone. Embedded Netflix and two-device sync remain blocked. The newer diagnostic reporting source has not been released in a replacement APK; see [current evidence](NETFLIX_EMBEDDED_FEASIBILITY.md).

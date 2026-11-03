@@ -59,3 +59,7 @@ The new browser keeps Netflix-managed sign-in state in app-private WebView stora
 ## Verified APK
 
 [Orbit 1.3.0 standalone APK](https://expo.dev/artifacts/eas/o4C3M1fMeDL6vvq1gtyDKqFRuQitqZXy2X1ezJT8_tw.apk) · [Build](https://expo.dev/accounts/jgoff/projects/orbit/builds/8419489c-93bc-4cf8-9854-2e05d7c59954). Source c0527d1, Android versionCode 7, minimum API 24, target API 36. Size 67547938 bytes. Signature verified with the same certificate as the previously installed app. SHA-256: e0c12a46c216ec717a453f05b1192933048ac7659b7ec178ba87ef0b0c490ae7. The app is not debuggable and contains assets/index.android.bundle. This is artifact verification, not a physical Netflix movie result.
+
+## Reported outcome and next source revision
+
+November 3: the user reports sign-in succeeds in the 1.3.0 panel, but Netflix requests its app; no full movie played inside Orbit. Chrome Desktop site on the same phone also failed to play. The original v1 report overwrote page context with background_closed. A source-only v2 reporting fix now retains a bounded allowlisted event trace and separates page/blocking events from lifecycle closure; observations are frozen when selected. It also names the user-reported app_required outcome. This fix passes lint, typecheck and five new regression tests, alongside five existing Netflix diagnostic/operation tests. It does not change the renderer or solve playback, and has not been shipped in a new APK. Exact provider message/screenshot is pending. See NETFLIX_EMBEDDED_FEASIBILITY.md.

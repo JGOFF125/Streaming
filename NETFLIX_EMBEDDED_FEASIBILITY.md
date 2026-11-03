@@ -48,3 +48,15 @@ See [WATCH_PARTY_RESEARCH.md](WATCH_PARTY_RESEARCH.md) for the November 2 public
 ## Implemented candidate: 1.3.0
 
 The normal Android browser candidate is now implemented as an isolated native surface, with no JS bridge or provider data extraction. It is not connected to the room timeline and is not a verified Netflix player. See [IN_APP_NETFLIX_TEST.md](IN_APP_NETFLIX_TEST.md) for boundaries and physical-device acceptance steps. Success requires actual movie playback rather than page/authentication success.
+
+## Physical-device result: November 3, 2026 (UTC)
+
+The user reports that Orbit 1.3.0 allows Netflix sign-in but then asks for the separate Netflix app. Their v1 diagnostic selected sign_in_only, with background_closed as its final browserEvent and both verification flags false. This is evidence of unsuccessful embedded movie playback in this tested configuration. The final lifecycle code does not establish why Netflix requested the app, a browser/DRM error, or a crash. No exact error code, screenshot or authenticated page URL has been collected.
+
+The user also reports that Netflix in Chrome on the same phone, with Desktop site enabled, still requests the app or blocks playback. This does not establish a successful alternative renderer. Do not issue a user-agent-only Orbit rebuild on the assumption that desktop mode fixes it. Netflix's published browser page covers computers, iPad and Meta Quest; its Android setup guide directs users to its app. These sources are consistent with a compatibility limitation, but neither proves every conceivable Android integration impossible.
+
+The ordinary system-WebView candidate has not passed the first movie-playback gate. A usable Android in-app integration, actual player identity, transport controls and two-device synchronization are still unestablished. Rave's public workflow description and Netflix device-partner SDK articles do not supply an Android app embedding implementation Orbit can deploy. No mandatory partnership requirement has been established either. The exact screenshot/message is the next input for classifying this attempt; preserve normal authentication and content protection.
+
+Source changes after the shipped APK improve reporting only: v2 keeps a bounded allowlisted event trace, page/blocking events separate from lifecycle closure, freezes observations when selected and names app_required explicitly. Lint, typecheck and all ten Netflix diagnostic/operation tests pass. These changes are not in the existing 1.3.0 APK; no new APK or playback-engine change was released for this result.
+
+Sources: [Netflix browser requirements](https://help.netflix.com/en/node/30081), [Netflix Android setup](https://help.netflix.com/en/node/23939), [Chrome desktop mode](https://developer.chrome.com/blog/desktop-mode), [Rave FAQ](https://rave.io/faq), [Netflix device testing background](https://netflixtechblog.com/automated-testing-on-devices-fc5a39f47e24). The device SDK article concerns Netflix's partner/device testing and is not evidence of a publicly usable Android embedding API.

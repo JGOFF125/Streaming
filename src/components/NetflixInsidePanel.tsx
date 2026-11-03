@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { requireNativeView, requireOptionalNativeModule } from 'expo';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import type { NativeSyntheticEvent, ViewProps } from 'react-native';
+import { embeddedNetflixReport, initialBrowserHistory, readBrowserStatus, recordBrowserEvent } from '../embeddedNetflixDiagnostics';
+import type { BrowserStatus, Observation } from '../embeddedNetflixDiagnostics';
 
-type BrowserStatus = { code: string; canGoBack: boolean; mediaPermissionPending: boolean };
 type BrowserProps = ViewProps & {
   active: boolean;
   command: string;
@@ -35,27 +36,30 @@ const messages: Record<string, string> = {
   fullscreen_unavailable: 'Fullscreen is not enabled in this first test. Try playback inside the panel.',
   background_closed: 'The test stopped when Orbit left the foreground. Reopen it to continue.',
 };
-type Observation = 'not_tested' | 'movie_played' | 'sign_in_only' | 'provider_blocked';
 
 export default function NetflixInsidePanel() {
   const [open, setOpen] = useState(false);
   const [clearing, setClearing] = useState(false);
   const [command, setCommand] = useState('0:reload');
-  const [status, setStatus] = useState<BrowserStatus>({ code: '', canGoBack: false, mediaPermissionPending: false });
+  const [status, setStatus] = useState<BrowserStatus | null>(null);
   const [observation, setObservation] = useState<Observation>('not_tested');
   const [notice, setNotice] = useState('');
+  const [history, setHistory] = useState(initialBrowserHistory);
+  const [report, setReport] = useState<string | null>(null);
+  const [attempted, setAttempted] = useState(false);
 
   function act(name: 'back' | 'reload' | 'allow_media' | 'deny_media') {
     setCommand(previous => (Number(previous.split(':')[0]) + 1) + ':' + name);
   }
   function start() {
     setNotice(''); setObservation('not_tested');
+    setHistory(initialBrowserHistory()); setReport(null); setAttempted(true);
     setStatus({ code: 'loading', canGoBack: false, mediaPermissionPending: false });
     setOpen(true);
   }
   function close() {
     setOpen(false);
-    setStatus(previous => ({ ...previous, canGoBack: false, mediaPermissionPending: false }));
+    setStatus(previous => previous ? { ...previous, canGoBack: false, mediaPermissionPending: false } : null);
   }
   async function clear() {
     if (!providerModule || clearing) return;
@@ -82,18 +86,21 @@ export default function NetflixInsidePanel() {
       {/* Remains mounted at zero height when closed so cleanup controls work without loading a page. */}
       <Browser style={{ height: open ? 540 : 0, marginTop: open ? 12 : 0 }} active={open} command={command}
         onStatus={({ nativeEvent }) => {
-          setStatus(nativeEvent);
-          if (nativeEvent.code === 'background_closed' || nativeEvent.code === 'renderer_stopped' ||
-            nativeEvent.code === 'browser_unavailable') setOpen(false);
+          const next = readBrowserStatus(nativeEvent);
+          if (!next) return;
+          setStatus(next);
+          setHistory(previous => recordBrowserEvent(previous, next));
+          if (next.code === 'background_closed' || next.code === 'renderer_stopped' ||
+            next.code === 'browser_unavailable') setOpen(false);
         }} />
-      {!!status.code && <Text accessibilityLiveRegion="polite" style={s.note}>{messages[status.code] ?? 'The browser state changed.'}</Text>}
+      {!!status && <Text accessibilityLiveRegion="polite" style={s.note}>{messages[status.code] ?? 'The browser state changed.'}</Text>}
       {open && <>
         <View style={s.row}>
-          <Button label="Back in Netflix" disabled={!status.canGoBack || clearing} onPress={() => act('back')} />
+          <Button label="Back in Netflix" disabled={!status?.canGoBack || clearing} onPress={() => act('back')} />
           <Button label="Reload" disabled={clearing} onPress={() => act('reload')} />
           <Button label="Close player" disabled={clearing} onPress={close} />
         </View>
-        {status.mediaPermissionPending && <View style={s.consent}>
+        {status?.mediaPermissionPending && <View style={s.consent}>
           <Text style={s.note}>Protected playback may let Netflix use a device identifier for content protection. Allow it only for this Netflix page? Camera, microphone and location remain blocked.</Text>
           <Button label="Allow protected playback" disabled={clearing} onPress={() => act('allow_media')} />
           <Button label="Decline" disabled={clearing} onPress={() => act('deny_media')} />
@@ -103,18 +110,11 @@ export default function NetflixInsidePanel() {
       <Text style={s.label}>What happened inside Orbit?</Text>
       <Text style={s.note}>Choose “Movie played” only if a full movie or episode actually showed video and sound inside this panel, rather than opening Netflix’s separate app.</Text>
       <View style={s.row}>
-        {([['movie_played', 'Movie played'], ['sign_in_only', 'Sign-in / page only'], ['provider_blocked', 'Netflix blocked playback']] as const)
+        {([['movie_played', 'Movie played'], ['sign_in_only', 'Sign-in / page only'], ['app_required', 'Netflix asks for its app'], ['provider_blocked', 'Netflix blocked playback']] as const)
           .map(([value, label]) => <Button key={value} label={label} selected={observation === value}
-            disabled={clearing} onPress={() => setObservation(value)} />)}
+            disabled={clearing || !attempted} onPress={() => { setObservation(value); setReport(embeddedNetflixReport(value, history)); }} />)}
       </View>
-      {observation !== 'not_tested' && <Text selectable style={s.report}>{JSON.stringify({
-        diagnostic: 'Orbit in-app Netflix v1',
-        playback: observation,
-        evidence: 'user_reported',
-        browserEvent: status.code || 'none',
-        titleIdentityVerified: false,
-        automaticSyncVerified: false,
-      }, null, 2)}</Text>}
+      {!!report && <Text selectable style={s.report}>{report}</Text>}
       {!!notice && <Text accessibilityLiveRegion="polite" style={s.note}>{notice}</Text>}
     </>}
   </View>;
