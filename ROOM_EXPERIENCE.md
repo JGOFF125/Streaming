@@ -4,7 +4,7 @@ November 3, 2026 (UTC).
 
 ## User requirement
 
-Two users may be in different countries. Automatic synchronization is required. Chat must be visible in portrait and hidden during full-screen viewing. The user has not yet selected embedded video versus an overlapping-app presentation; do not treat their uncertainty as approval of a persistent Android permission.
+Two users may be in different countries. Automatic synchronization is required. Chat must be visible in portrait and hidden during full-screen viewing. The user approved the layout direction and clarified that each viewer must choose portrait/full-screen independently. Only their phone is currently available for testing. The user has not yet selected embedded video versus an overlapping-app presentation; do not treat their uncertainty as approval of a persistent Android permission.
 
 ## Current UI evidence
 
@@ -15,12 +15,12 @@ Hearo's official iPhone promotions show Start Party/Join and a provider grid, po
 ## Recommended Orbit experience
 
 - **Portrait:** a private-room header, video area, readiness/participant row, conversation and message composer. Separate voice and movie volume. Voice starts muted and requests microphone access only when joined.
-- **Full screen:** video-first viewing with chat/composer hidden. Keep a clear way back to the room and optional compact mute/member controls. Restoring portrait preserves conversation, scroll context and the unsent draft.
+- **Independent full screen:** each viewer chooses locally. One can watch full-screen while the other sees portrait chat; only movie playback/room events are shared. Full-screen viewing hides that viewer’s chat/composer. Keep a clear way back to the room and optional compact mute/member controls. Restoring portrait preserves conversation, scroll context and the unsent draft.
 - **Before play:** each participant signs into the provider on their own device and loads the actual same movie/episode. Show signing in, loading, ready, buffering and reconnecting separately.
 - **Across locations:** each device plays its own authorized stream. Shared room events carry clock-anchored position, playing/paused state, revision, readiness and content identity. Network reconnection must join the latest timeline, not replay old control commands. Existing automated timing/database tests are not two-country Netflix proof.
 - **Add-ons later:** private invitations, episode queue, subtitle/audio choices per viewer, reactions and opt-in voice. Keep provider authentication and media out of the room backend.
 
-The initial prototype uses a fictional title and explicitly local demo messages/timing. It illustrates the desired layout and a proposed buffering policy, not live video, voice, chat, backend transport or verified Netflix sync. Open [design/room-experience.html](design/room-experience.html) locally. Portrait/full-screen toggles preserve drafts; demo messages mirror between the two views. Small-width and interactive browser checks were performed.
+The initial prototype uses a fictional title and explicitly local demo messages/timing. It illustrates the desired layout and a proposed buffering policy, not live video, voice, chat, backend transport or verified Netflix sync. Open [design/room-experience.html](design/room-experience.html) locally. Each view’s full-screen/back button changes only that viewer’s presentation and preserves its draft; demo messages mirror between the two views. Small-width and interactive browser checks were performed.
 
 ## Presentation candidates
 
@@ -44,4 +44,4 @@ Automatic approval review rejected the permission expansion because that exact p
 
 ## What is actually implemented
 
-The room design is a local, clickable prototype. Version 1.3.2 recognizes additional provider-published watch-link identity formats, reports fixed field-presence flags and restores pause after an acknowledged paused seek, while retaining the existing synchronization gate. Its corrected signed Android build is being prepared; see [NETFLIX_IDENTITY_TEST.md](NETFLIX_IDENTITY_TEST.md). Neither the design prototype nor the identity parser proves working two-device Netflix synchronization.
+The room design is a local, clickable prototype. Version 1.3.2 recognizes additional provider-published watch-link identity formats, reports fixed field-presence flags and restores pause after an acknowledged paused seek, while retaining the existing synchronization gate. Its corrected signed Android build is submitted and currently queued; see [NETFLIX_IDENTITY_TEST.md](NETFLIX_IDENTITY_TEST.md). Neither the design prototype nor the identity parser proves working two-device Netflix synchronization.

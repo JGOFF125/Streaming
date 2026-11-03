@@ -25,7 +25,7 @@ button.primary,button[aria-pressed=true]{background:#535de0;border-color:#7e86ff
 .system{color:#b8c3d9;font-size:11px;text-align:center;margin:13px 0}.composer{padding:10px;display:flex;gap:7px;border-top:1px solid #34415c}
 .composer input{min-width:0;flex:1;background:#0c1528;color:#fff;border:1px solid #465273;border-radius:10px;padding:10px;font-size:16px}
 .composer button{padding:7px 10px}.voice{display:flex;justify-content:space-between;align-items:center;padding:0 12px 12px;font-size:12px;color:#bdc9df}.voice button{font-size:12px;min-height:40px}
-.fullscreen .pair{grid-template-columns:1fr}.fullscreen .phone{max-width:850px;border-radius:18px}.fullscreen .roomhead,.fullscreen .roomstatus,.fullscreen .members,.fullscreen .conversation,.fullscreen .composer,.fullscreen .voice{display:none}
+.pair.all-full{grid-template-columns:1fr}.fullscreen .phone{max-width:850px;border-radius:18px}.fullscreen .roomhead,.fullscreen .roomstatus,.fullscreen .members,.fullscreen .conversation,.fullscreen .composer,.fullscreen .voice{display:none}
 .fullscreen .video{aspect-ratio:16/9}.fullscreen .scene strong{font-size:clamp(23px,5vw,45px)}.fullscreen .playerbar{inset:auto 15px 15px}.exit{position:absolute;top:12px;left:12px;z-index:3;display:none}
 .fullscreen .exit{display:block}.fullpresence{position:absolute;right:15px;top:15px;display:none;font-size:12px;color:#e4eaff}.fullscreen .fullpresence{display:block}
 .explainer{margin-top:26px;border-top:1px solid #34415c;padding-top:18px;font-size:14px}.explainer li{margin:9px 0;color:#bdc9df}.disclaimer{background:#202d47;border-left:3px solid #8996ff;padding:12px 16px;border-radius:0 10px 10px 0;font-size:14px}
@@ -37,8 +37,8 @@ button.primary,button[aria-pressed=true]{background:#535de0;border-color:#7e86ff
 <p>One private room. Each person plays their own authorized stream.</p>
 <div class="disclaimer">Interactive layout prototype with demo data. No Netflix video, online chat, microphone access or real synchronization runs here.</div>
 <div class="controls" aria-label="Room preview controls">
-<button id="portrait" class="primary" aria-pressed="true">Portrait + chat</button>
-<button id="fullscreen" aria-pressed="false">Full-screen viewing</button>
+<button id="portrait" aria-pressed="true">Both portrait + chat</button>
+<button id="fullscreen" aria-pressed="false">Both full screen</button>
 <button id="play" aria-pressed="false">Play together · demo</button>
 <button id="buffer" aria-pressed="false">Simulate partner buffering</button>
 </div>
@@ -65,7 +65,7 @@ button.primary,button[aria-pressed=true]{background:#535de0;border-color:#7e86ff
 </div>
 <div class="explainer"><h2>The room experience to build</h2><ul>
 <li>Portrait: video above the people row, conversation and message box. The keyboard must leave the message box usable.</li>
-<li>Full screen: video fills the viewing surface; chat is hidden. Returning to portrait restores the conversation and unsent draft.</li>
+<li>Full screen is a personal choice: one viewer can hide chat while the other keeps chatting. Returning to portrait restores that viewer’s conversation and unsent draft.</li>
 <li>Readiness and reconnection: show who is loading. Seek to the host’s current timeline after rejoining, rather than replaying old commands.</li>
 <li>Distance: each phone receives its own provider stream. Orbit exchanges timing, readiness and room events; it does not relay the movie.</li>
 </ul><p>This design does not choose a player integration. A native in-app player gives Orbit control of the layout. A floating companion depends on Android and the streaming app’s window behavior; it may cover video rather than reserve space below it.</p>
@@ -88,18 +88,22 @@ function render(){
  document.getElementById('buffer').textContent=buffering?'Partner ready again':'Simulate partner buffering';
  status.textContent=buffering?'Partner buffering · both paused in this demo':('Both viewers ready · '+(active?'playing':'paused')+' at '+Math.floor(position/60)+':'+String(position%60).padStart(2,'0'));
 }
-function mode(full){
- root.classList.toggle('fullscreen',full);
- document.getElementById('portrait').setAttribute('aria-pressed',String(!full));
- document.getElementById('fullscreen').setAttribute('aria-pressed',String(full));
+function mode(full,viewer){
+ const viewers=viewer?[viewer]:[...root.querySelectorAll('.viewer')];
+ viewers.forEach(view=>view.classList.toggle('fullscreen',full));
+ const all=[...root.querySelectorAll('.viewer')];
+ const allFull=all.every(view=>view.classList.contains('fullscreen'));
+ root.querySelector('.pair').classList.toggle('all-full',allFull);
+ document.getElementById('portrait').setAttribute('aria-pressed',String(all.every(view=>!view.classList.contains('fullscreen'))));
+ document.getElementById('fullscreen').setAttribute('aria-pressed',String(allFull));
 }
 document.getElementById('portrait').onclick=()=>mode(false);
 document.getElementById('fullscreen').onclick=()=>mode(true);
 document.getElementById('play').onclick=()=>{playing=!playing;render()};
 document.getElementById('buffer').onclick=()=>{buffering=!buffering;render()};
 root.querySelectorAll('.play-local').forEach(x=>x.onclick=()=>{playing=!playing;render()});
-root.querySelectorAll('.expand').forEach(x=>x.onclick=()=>mode(true));
-root.querySelectorAll('.exit').forEach(x=>x.onclick=()=>mode(false));
+root.querySelectorAll('.expand').forEach(x=>x.onclick=()=>mode(true,x.closest('.viewer')));
+root.querySelectorAll('.exit').forEach(x=>x.onclick=()=>mode(false,x.closest('.viewer')));
 root.querySelectorAll('.composer').forEach(form=>form.onsubmit=e=>{
  e.preventDefault();const input=form.querySelector('input');const message=input.value.trim();if(!message)return;
  const sender=form.closest('.phone').dataset.viewer;
