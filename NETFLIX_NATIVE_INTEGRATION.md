@@ -41,6 +41,31 @@ An integration candidate must provide a documented, usable path for all of these
 
 Existing Orbit room timing/revisions can be reused after these inputs exist. Reusing synchronization code does not remove each provider's playback/authentication requirements.
 
+## Expanded provider review: November 3, 2026
+
+The active objective remains protected Netflix, Disney+ and Prime Video playback inside Orbit, with Netflix first. None is delivered. The user has no Prime Video access, so the requested physical-phone Prime browser comparison cannot currently run; no subscription or trial was purchased.
+
+| Provider/path | Evidence from the provider | Consequence for Orbit |
+|---|---|---|
+| Netflix Hailstorm | Netflix describes an Android TV hardware/BSP integration and certification program. | This is not a verified Android phone player SDK for Orbit; do not confuse Android TV certification with app embedding. [Netflix engineering article](https://netflixtechblog.medium.com/hailstorm-the-netflix-scaling-solution-over-android-tv-fd169366f828). |
+| Disney+ ADK / DS-NVE | Disney's 2021 engineering article describes an application kit for licensed distributors and a proprietary Native Video Engine supplied as binaries. | A concrete provider-integration lead, but no current third-party Android phone eligibility, package or control contract was established. It ports Disney's application; embedding only its player in Orbit is not established. [Disney engineering article](https://medium.com/disney-streaming/introducing-the-disney-application-development-kit-adk-ad85ca139073). |
+| Prime Video APIs | Amazon's current APIs cover content submissions/rights and analytics for managed content partners. | These are not subscriber movie playback APIs. Do not onboard Orbit as a content supplier to obtain a player. [Prime Video API hub](https://videocentral.amazon.com/support/prime-video-apis?language=en_US). |
+| Prime browser support | Amazon documents computer browsers on Windows, macOS, Chrome OS and Linux, separately from mobile apps. | This does not establish Android WebView playback; a working phone comparison remains untested. [Browser requirements](https://www.primevideo.com/help?nodeId=GUX9FYHU5D8LC9EJ). |
+
+The Disney partner portal's indexed public entry describes sign-in for existing partner users. It does not establish open SDK enrollment or access for this project. No partner account was created or authentication attempted. The official Disney+ browser-requirements page returned no readable content to the research tool; that fetch cannot support a claim about Android browser support. [Partner entry](https://portal.disneystreaming.com/app/sign-in), [browser help page](https://help.disneyplus.com/article/disneyplus-computer-browser-requirements).
+
+The reviewed Amazon Appstore SDK supports app monetization, licensing and sign-in; it does not establish Prime catalogue playback access. Generic Amazon/AWS video products should likewise not be treated as Prime integrations. [Amazon SDK catalogue](https://developer.amazon.com/apps-and-games/sdks).
+
+### Next evidence that can unlock implementation
+
+For the Disney ADK lead, establish whether a third-party Android watch-party app is eligible and whether a player component, rather than the complete Disney application, can be embedded with per-user authentication and timeline observations/controls. Availability of a proprietary distributor engine alone is not an installable dependency.
+
+For Netflix, a reply or documentation from the contacted developers could identify an available integration. The four current inquiry threads were checked during this review and each contained only the original sent message; a targeted reply/bounce search returned no matching messages. This is a mailbox check, not a live running process or a promise of background monitoring. No duplicate inquiries were sent.
+
+For Prime, require an authorized playback baseline or an available provider integration before choosing an engine. Lack of the user's subscription is a test-access limit, not evidence that playback is incompatible.
+
+No public deployable integration was identified in this review. Do not convert old SDK articles, generic DRM capability or empty search results into proof of Android impossibility or guaranteed partner availability. Application/native code and APK version remain unchanged. The goal is incomplete and remains active.
+
 ## Rave inquiry — sent November 3, 2026
 
 Rave's official company page publishes a business contact. No public embeddable playback SDK was established in the reviewed materials; a vendor answer is a possible next source of evidence, not a promised solution. The user subsequently authorized sending this inquiry and extending outreach to similar apps. The Rave message below was sent through Gmail; see [the outreach record](NETFLIX_INTEGRATION_OUTREACH.md) for confirmed send status and contact provenance. [Rave company/contact page](https://shop.rave.io/pages/about-rave).

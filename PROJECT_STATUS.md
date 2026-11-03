@@ -1,5 +1,10 @@
 # Orbit — current status
 
+## Provider SDK review: November 3, 2026 (UTC)
+
+The expanded investigation found Disney’s documented ADK/proprietary native-video-engine program for licensed distributors. Its availability for an Android watch-party app and a separately embeddable player remain unestablished. Amazon’s Prime APIs serve content submissions and analytics, not subscriber playback. The user has no Prime Video access, so the phone browser comparison was not performed. Inquiry threads currently contain only the sent messages. See [the expanded provider review](NETFLIX_NATIVE_INTEGRATION.md#expanded-provider-review-november-3-2026). Netflix, Disney+ and Prime playback inside Orbit and two-device sync remain incomplete; the goal stays active. No new APK or runtime changes were made.
+
+
 ## Integration outreach: November 3, 2026 (UTC)
 
 The user authorized outreach beyond Rave. Gmail returned SENT for separate inquiries to Rave, Hearo, Teleparty and Watchly at contacts verified through official sites/listings. This confirms submission, not delivery or a reply. The expanded review found a historical Hearo business/white-label venue lead but no currently deployable Netflix SDK. See [NETFLIX_INTEGRATION_OUTREACH.md](NETFLIX_INTEGRATION_OUTREACH.md) for sources, scope and follow-up questions. No player/API integration has been obtained and no new APK was built; Orbit Netflix playback and two-device synchronization remain blocked.
