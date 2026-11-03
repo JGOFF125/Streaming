@@ -1,5 +1,14 @@
 # Orbit — current status
 
+## Renewed investigation and room design: November 3, 2026 (UTC)
+
+The user requested continued investigation, including overlapping apps, then clarified portrait chat, full-screen chat hiding and viewers in different locations. The final embedded-versus-companion presentation is not selected. The user corrected their initial response and confirms Netflix’s own PiP works on the Pixel above other apps; it needs no Orbit overlay permission. This is not yet an observed Orbit room/two-phone sync result. A clickable local room-design prototype and source review are in [ROOM_EXPERIENCE.md](ROOM_EXPERIENCE.md).
+
+A concrete identity-parser gap was fixed: the prior native adapter ignored MEDIA_URI and watch-link-form MEDIA_ID values. Version 1.3.2 (code 9) adds recognized provider watch links with conflict/privacy checks and now restores pause after a settled paused seek, with no new permissions. The first queued APK build 3a257bc3-25c6-46ea-8a16-8dcc642af164 was canceled before delivery to include this correction. A replacement is being prepared. Do not offer a build as finished until verified. The app/database checks, lint/typecheck, updated 27 playback checks and all 23 pure Kotlin tests pass. No real-phone identity recovery or two-device sync is claimed. See [NETFLIX_IDENTITY_TEST.md](NETFLIX_IDENTITY_TEST.md).
+
+Automatic approval review rejected the proposed SYSTEM_ALERT_WINDOW expansion; that command did not run. No overlay source, permission or service was added. The concrete optional test design is documented for review; the safer PiP comparison is being pursued independently.
+
+
 ## Current integration blocker: November 3, 2026 (UTC)
 
 Development is blocked on an obtainable provider-authorized Android in-app playback/session integration. The same condition was revalidated across three consecutive goal turns. The current checkout and origin/main matched c8d0de0 with a clean tree before this status update. All four inquiry threads still contain only the sent messages, and the targeted reply/bounce search returned no matches. No live build, device test or other running process is being waited on.

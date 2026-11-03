@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbit · Room experience preview</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#f5f7ff;font:16px system-ui,sans-serif;line-height:1.5}
+main{max-width:1100px;margin:auto;padding:28px 20px 50px}h1{font-size:clamp(25px,4vw,40px);margin:5px 0 8px}h2{font-size:18px;margin:0}p{color:#bdc9df}a{color:#b6bdff}
+.kicker{color:#aeb8ff;font-size:12px;letter-spacing:.14em}.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:24px 0}
+button,input{font:inherit}button{border:1px solid #465273;background:#253250;color:#fff;border-radius:10px;min-height:44px;padding:9px 15px;cursor:pointer}
+button.primary,button[aria-pressed=true]{background:#535de0;border-color:#7e86ff}button:disabled{opacity:.5;cursor:default}button:focus-visible,input:focus-visible{outline:3px solid #b8c1ff;outline-offset:3px}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;align-items:start}
+.viewer{min-width:0}.caption{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px;color:#bdc9df}
+.phone{background:#172138;border:1px solid #364361;border-radius:25px;overflow:hidden;max-width:390px;margin:auto;box-shadow:0 20px 60px #0004}
+.roomhead{display:flex;justify-content:space-between;align-items:center;padding:13px 16px}.roomhead small{display:block;color:#bac5dd}
+.video{position:relative;aspect-ratio:16/9;background:radial-gradient(ellipse at 70% 35%,#7a68b5 0,transparent 25%),linear-gradient(155deg,#102c46,#26314e 50%,#090f1c);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.video:before{content:"";position:absolute;width:130%;height:50%;background:#123944;transform:rotate(-12deg);bottom:-25%;border-radius:45%}
+.scene{text-align:center;position:relative;z-index:1}.scene strong{display:block;font-size:25px;letter-spacing:.12em}.scene small{color:#d0d9ec}
+.playerbar{position:absolute;inset:auto 12px 10px;z-index:2;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#e0e7f7}
+.playerbar button{font-size:13px;padding:3px 8px;min-height:36px;background:#0b1020cc}.bar{height:3px;background:#ffffff55;flex:1;margin:0 10px}.bar span{display:block;height:100%;width:28%;background:#a3acff}
+.roomstatus{padding:10px 14px;border-bottom:1px solid #34415c;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px}
+.dot{width:8px;height:8px;border-radius:50%;background:#8de0bb}.status{color:#a7eed0}.waiting .dot{background:#ffd58c}.waiting .status{color:#ffd58c}
+.members{display:flex;align-items:center;gap:8px;padding:12px 14px;font-size:13px}.avatar{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:#4b5484;color:#fff}
+.members small{margin-left:auto;color:#b8c5df}.conversation{min-height:208px;padding:4px 14px 14px}.msg{margin:10px 0;font-size:13px;color:#dce4f5}.msg b{display:block;color:#aebcff;font-size:11px}
+.system{color:#b8c3d9;font-size:11px;text-align:center;margin:13px 0}.composer{padding:10px;display:flex;gap:7px;border-top:1px solid #34415c}
+.composer input{min-width:0;flex:1;background:#0c1528;color:#fff;border:1px solid #465273;border-radius:10px;padding:10px;font-size:16px}
+.composer button{padding:7px 10px}.voice{display:flex;justify-content:space-between;align-items:center;padding:0 12px 12px;font-size:12px;color:#bdc9df}.voice button{font-size:12px;min-height:40px}
+.fullscreen .pair{grid-template-columns:1fr}.fullscreen .phone{max-width:850px;border-radius:18px}.fullscreen .roomhead,.fullscreen .roomstatus,.fullscreen .members,.fullscreen .conversation,.fullscreen .composer,.fullscreen .voice{display:none}
+.fullscreen .video{aspect-ratio:16/9}.fullscreen .scene strong{font-size:clamp(23px,5vw,45px)}.fullscreen .playerbar{inset:auto 15px 15px}.exit{position:absolute;top:12px;left:12px;z-index:3;display:none}
+.fullscreen .exit{display:block}.fullpresence{position:absolute;right:15px;top:15px;display:none;font-size:12px;color:#e4eaff}.fullscreen .fullpresence{display:block}
+.explainer{margin-top:26px;border-top:1px solid #34415c;padding-top:18px;font-size:14px}.explainer li{margin:9px 0;color:#bdc9df}.disclaimer{background:#202d47;border-left:3px solid #8996ff;padding:12px 16px;border-radius:0 10px 10px 0;font-size:14px}
+@media(max-width:760px){.pair{grid-template-columns:1fr}.phone{max-width:390px}}@media(max-width:360px){main{padding:20px 12px}.composer{gap:5px}.composer button{padding:7px}.voice{gap:5px;flex-wrap:wrap}}
+</style>
+<main id="orbit-preview">
+<div class="kicker">ORBIT / ROOM DESIGN</div>
+<h1>Your cinema, together.</h1>
+<p>One private room. Each person plays their own authorized stream.</p>
+<div class="disclaimer">Interactive layout prototype with demo data. No Netflix video, online chat, microphone access or real synchronization runs here.</div>
+<div class="controls" aria-label="Room preview controls">
+<button id="portrait" class="primary" aria-pressed="true">Portrait + chat</button>
+<button id="fullscreen" aria-pressed="false">Full-screen viewing</button>
+<button id="play" aria-pressed="false">Play together · demo</button>
+<button id="buffer" aria-pressed="false">Simulate partner buffering</button>
+</div>
+<div id="room-status" aria-live="polite">Both viewers ready · paused at 12:34</div>
+<div class="pair" style="margin-top:18px">
+<section class="viewer"><div class="caption"><strong>Viewer A · host</strong><span>Location A</span></div><div class="phone" data-viewer="a">
+<div class="roomhead"><div><strong>Our movie night</strong><small>Private room · 2 people</small></div><button aria-label="Demo invitation options" onclick="document.getElementById('room-status').textContent='Demo only: invitation controls will share a private Orbit room link.'">Invite</button></div>
+<div class="video"><button class="exit">Back to chat</button><span class="fullpresence">2 in room · voice muted</span><div class="scene"><strong>AFTER THE STARS</strong><small>Fictional title · player placement</small></div><div class="playerbar"><button class="play-local">Play</button><span class="clock">12:34</span><div class="bar"><span></span></div><span>48:12</span><button class="expand" aria-label="Preview full-screen layout">⛶</button></div></div>
+<div class="roomstatus"><span class="dot"></span><span class="status">Both ready · same point</span></div>
+<div class="members"><span class="avatar">A</span><span class="avatar">B</span><span>You and partner</span><small>Voice muted</small></div>
+<div class="conversation"><div class="system">Demo messages · private room</div><div class="msg"><b>Partner</b>Ready when you are ✨</div><div class="msg"><b>You</b>Let’s start together.</div></div>
+<form class="composer"><input aria-label="Demo message from viewer A" placeholder="Write a message…" maxlength="200"><button type="submit">Send</button></form>
+<div class="voice"><span>Video and voice volume separate</span><button class="mute" aria-pressed="false">Voice preview · muted</button></div>
+</div></section>
+<section class="viewer"><div class="caption"><strong>Viewer B · partner</strong><span>Location B</span></div><div class="phone" data-viewer="b">
+<div class="roomhead"><div><strong>Our movie night</strong><small>Private room · 2 people</small></div><button aria-label="Demo room membership" onclick="document.getElementById('room-status').textContent='Demo only: the room roster will show who has joined and who is ready.'">Room</button></div>
+<div class="video"><button class="exit">Back to chat</button><span class="fullpresence">2 in room · voice muted</span><div class="scene"><strong>AFTER THE STARS</strong><small>Fictional title · player placement</small></div><div class="playerbar"><button class="play-local">Play</button><span class="clock">12:34</span><div class="bar"><span></span></div><span>48:12</span><button class="expand" aria-label="Preview full-screen layout">⛶</button></div></div>
+<div class="roomstatus"><span class="dot"></span><span class="status">Both ready · same point</span></div>
+<div class="members"><span class="avatar">A</span><span class="avatar">B</span><span>You and partner</span><small>Voice muted</small></div>
+<div class="conversation"><div class="system">Demo messages · private room</div><div class="msg"><b>You</b>Ready when you are ✨</div><div class="msg"><b>Partner</b>Let’s start together.</div></div>
+<form class="composer"><input aria-label="Demo message from viewer B" placeholder="Write a message…" maxlength="200"><button type="submit">Send</button></form>
+<div class="voice"><span>Video and voice volume separate</span><button class="mute" aria-pressed="false">Voice preview · muted</button></div>
+</div></section>
+</div>
+<div class="explainer"><h2>The room experience to build</h2><ul>
+<li>Portrait: video above the people row, conversation and message box. The keyboard must leave the message box usable.</li>
+<li>Full screen: video fills the viewing surface; chat is hidden. Returning to portrait restores the conversation and unsent draft.</li>
+<li>Readiness and reconnection: show who is loading. Seek to the host’s current timeline after rejoining, rather than replaying old commands.</li>
+<li>Distance: each phone receives its own provider stream. Orbit exchanges timing, readiness and room events; it does not relay the movie.</li>
+</ul><p>This design does not choose a player integration. A native in-app player gives Orbit control of the layout. A floating companion depends on Android and the streaming app’s window behavior; it may cover video rather than reserve space below it.</p>
+<p>Sources: <a href="https://play.google.com/store/apps/details?id=com.wemesh.android">Rave’s official Android screenshots</a> · <a href="https://apps.apple.com/us/app/hearo-watch-together/id1385627895">Hearo’s official screenshots</a>. These are promotional UI references, not proof of their current playback engines.</p>
+</div>
+</main>
+<script>
+const root=document.getElementById('orbit-preview');
+let playing=false, buffering=false, position=754;
+const status=document.getElementById('room-status');
+function render(){
+ const active=playing&&!buffering;
+ root.querySelectorAll('.clock').forEach(x=>x.textContent=Math.floor(position/60)+':'+String(position%60).padStart(2,'0'));
+ root.querySelectorAll('.play-local').forEach(x=>x.textContent=active?'Pause':'Play');
+ root.querySelectorAll('.status').forEach(x=>x.textContent=buffering?'Waiting for partner · demo policy':'Both ready · same point');
+ root.querySelectorAll('.roomstatus').forEach(x=>x.classList.toggle('waiting',buffering));
+ document.getElementById('play').textContent=active?'Pause together · demo':'Play together · demo';
+ document.getElementById('play').setAttribute('aria-pressed',String(active));
+ document.getElementById('buffer').setAttribute('aria-pressed',String(buffering));
+ document.getElementById('buffer').textContent=buffering?'Partner ready again':'Simulate partner buffering';
+ status.textContent=buffering?'Partner buffering · both paused in this demo':('Both viewers ready · '+(active?'playing':'paused')+' at '+Math.floor(position/60)+':'+String(position%60).padStart(2,'0'));
+}
+function mode(full){
+ root.classList.toggle('fullscreen',full);
+ document.getElementById('portrait').setAttribute('aria-pressed',String(!full));
+ document.getElementById('fullscreen').setAttribute('aria-pressed',String(full));
+}
+document.getElementById('portrait').onclick=()=>mode(false);
+document.getElementById('fullscreen').onclick=()=>mode(true);
+document.getElementById('play').onclick=()=>{playing=!playing;render()};
+document.getElementById('buffer').onclick=()=>{buffering=!buffering;render()};
+root.querySelectorAll('.play-local').forEach(x=>x.onclick=()=>{playing=!playing;render()});
+root.querySelectorAll('.expand').forEach(x=>x.onclick=()=>mode(true));
+root.querySelectorAll('.exit').forEach(x=>x.onclick=()=>mode(false));
+root.querySelectorAll('.composer').forEach(form=>form.onsubmit=e=>{
+ e.preventDefault();const input=form.querySelector('input');const message=input.value.trim();if(!message)return;
+ const sender=form.closest('.phone').dataset.viewer;
+ root.querySelectorAll('.conversation').forEach(box=>{
+  const row=document.createElement('div');row.className='msg';
+  const label=document.createElement('b');label.textContent=box.closest('.phone').dataset.viewer===sender?'You':'Partner';
+  row.append(label,document.createTextNode(message));box.append(row);
+ });input.value='';
+});
+root.querySelectorAll('.mute').forEach(button=>button.onclick=()=>{
+ const enabled=button.getAttribute('aria-pressed')!=='true';
+ button.setAttribute('aria-pressed',String(enabled));button.textContent=enabled?'Voice preview · on':'Voice preview · muted';
+ status.textContent='Visual voice state only — no microphone access or audio connection.';
+});
+setInterval(()=>{if(playing&&!buffering){position++;render()}},1000);
+render();
+</script>
+</html>

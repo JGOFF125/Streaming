@@ -69,10 +69,12 @@ export class PlaybackSynchronizer {
     const seek = Math.abs(target - player.positionMs) > 1500;
     const play = timeline.playing && player.state !== 'playing';
     const pause = !timeline.playing && player.state !== 'paused';
-    if (seek && !player.canSeek || play && !player.canPlay || pause && !player.canPause) return blocked('control_unsupported');
+    const pauseAfterSeek = seek && !timeline.playing;
+    if (seek && !player.canSeek || play && !player.canPlay || (pause || pauseAfterSeek) && !player.canPause) return blocked('control_unsupported');
     const actions: PlaybackAction[] = [];
     if (pause) actions.push({ type: 'pause' });
     if (seek) actions.push({ type: 'seek', positionMs: Math.round(target) });
+    if (pauseAfterSeek) actions.push({ type: 'pause' });
     if (play) actions.push({ type: 'play' });
     if (!actions.length) return { status: 'aligned', reason: 'within_tolerance', actions };
     if (this.lastCommandRevision === timeline.revision && nowMs - this.lastCommandAt < 3000) {

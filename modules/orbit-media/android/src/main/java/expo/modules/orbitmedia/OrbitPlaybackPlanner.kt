@@ -33,10 +33,13 @@ internal class OrbitPlaybackPlanner {
     val seek = abs(target - position) > 1500
     val play = timeline.playing && player.state != "playing"
     val pause = !timeline.playing && player.state != "paused"
-    if (seek && !player.canSeek || play && !player.canPlay || pause && !player.canPause) return OrbitPlan("unsupported")
+    // Netflix may resume after a seek even when it started paused.
+    val pauseAfterSeek = seek && !timeline.playing
+    if (seek && !player.canSeek || play && !player.canPlay || (pause || pauseAfterSeek) && !player.canPause) return OrbitPlan("unsupported")
     val actions = mutableListOf<OrbitAction>()
     if (pause) actions.add(OrbitAction("pause"))
     if (seek) actions.add(OrbitAction("seek", target))
+    if (pauseAfterSeek) actions.add(OrbitAction("pause"))
     if (play) actions.add(OrbitAction("play"))
     if (actions.isEmpty()) return OrbitPlan("aligned")
     if (lastCommandRevision == timeline.revision && nowMs - lastCommandAt < 3000) return OrbitPlan("cooldown")

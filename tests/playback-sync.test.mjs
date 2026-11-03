@@ -7,9 +7,9 @@ const snapshot=(patch={})=>({room_id:room,server_time_ms:1700000000000,timeline:
  content_id:'80012345',playing:false,position_ms:20000,anchor_time_ms:1700000000000,revision:1,...patch}});
 const player=(patch={})=>({contentId:'80012345',state:'playing',positionMs:0,canPlay:true,canPause:true,canSeek:true,...patch});
 
-test('paused host timeline pauses then seeks a simulated follower',()=>{
+test('paused host timeline pauses, seeks and restores pause on a simulated follower',()=>{
  const plan=new PlaybackSynchronizer(room).evaluate(snapshot(),time,player());
- assert.equal(plan.status,'apply');assert.deepEqual(plan.actions,[{type:'pause'},{type:'seek',positionMs:20000}]);
+ assert.equal(plan.status,'apply');assert.deepEqual(plan.actions,[{type:'pause'},{type:'seek',positionMs:20000},{type:'pause'}]);
 });
 test('play seeks before resuming and compensates for network transit using a monotonic clock',()=>{
  const plan=new PlaybackSynchronizer(room).evaluate(snapshot({playing:true}),time,player({state:'paused'}));
@@ -67,4 +67,21 @@ test('malformed or credential-bearing payloads are rejected without echoing valu
 test('projected positions are bounded by the timeline position limit',()=>{
  const plan=new PlaybackSynchronizer(room).evaluate(snapshot({playing:true,position_ms:MAX_POSITION_MS-10}),time,player());
  assert.deepEqual(plan.actions,[{type:'seek',positionMs:MAX_POSITION_MS}]);
+});
+
+test('a seek that resumes a paused follower is followed by a restoring pause',()=>{
+ const plan=new PlaybackSynchronizer(room).evaluate(snapshot(),time,player({state:'paused'}));
+ const fake={state:'paused',positionMs:0};
+ for(const action of plan.actions){
+  if(action.type==='seek'){fake.positionMs=action.positionMs;fake.state='playing';}
+  if(action.type==='pause')fake.state='paused';
+ }
+ assert.equal(fake.positionMs,20000);
+ assert.equal(fake.state,'paused');
+});
+
+test('a paused seek is refused when pause cannot be restored',()=>{
+ const plan=new PlaybackSynchronizer(room).evaluate(snapshot(),time,player({state:'paused',canPause:false}));
+ assert.equal(plan.reason,'control_unsupported');
+ assert.deepEqual(plan.actions,[]);
 });

@@ -97,3 +97,7 @@ The user reports a Netflix movie plays inside the official Rave Android app on t
 ## November 3: expanded integration outreach
 
 User-authorized inquiries were sent separately to Rave, Hearo, Teleparty and Watchly using official contact provenance. See [NETFLIX_INTEGRATION_OUTREACH.md](NETFLIX_INTEGRATION_OUTREACH.md) for the historical Hearo business lead, current mobile/desktop distinctions, Watchly infrastructure disclosures and literal TeleTV identity check. No current SDK or working Orbit playback is established.
+
+## November 3: portrait/full-screen room requirements
+
+The user wants chat beneath video in portrait, hidden chat during full-screen viewing, and automatically synchronized users in different locations. Official Rave/Hearo promotional screens were visually rechecked. See [ROOM_EXPERIENCE.md](ROOM_EXPERIENCE.md) for evidence, a clickable local design, provider-owned PiP and overlay tradeoffs. The design does not imply streaming or chat implementation.

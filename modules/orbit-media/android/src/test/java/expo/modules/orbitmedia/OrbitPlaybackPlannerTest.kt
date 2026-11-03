@@ -10,7 +10,7 @@ class OrbitPlaybackPlannerTest {
     planner.plan(timeline, 1700000000000, 1000, 1200, now, player)
 
   @Test fun pauseAndSeekBeforeReconciliation() {
-    assertEquals(listOf(OrbitAction("pause"), OrbitAction("seek", 20000)), plan().actions)
+    assertEquals(listOf(OrbitAction("pause"), OrbitAction("seek", 20000), OrbitAction("pause")), plan().actions)
   }
   @Test fun seekBeforePlayWithTransitCompensation() {
     assertEquals(listOf(OrbitAction("seek", 20100), OrbitAction("play")), plan(timeline = makeTimeline(true), player = makePlayer("paused")).actions)
@@ -44,5 +44,16 @@ class OrbitPlaybackPlannerTest {
   }
   @Test fun neverSeekPastTheKnownMovieDuration() {
     assertEquals("content_bounds", plan(timeline = makeTimeline(position = 100001)).reason)
+  }
+
+  @Test fun pausedSeekRestoresPauseEvenIfSeekResumesThePlayer() {
+    val actions = plan(player = makePlayer("paused")).actions
+    assertEquals(listOf(OrbitAction("seek", 20000), OrbitAction("pause")), actions)
+    var state = "paused"
+    actions.forEach { action -> state = if (action.type == "seek") "playing" else if (action.type == "pause") "paused" else state }
+    assertEquals("paused", state)
+  }
+  @Test fun pausedSeekNeedsPauseCapabilityToRestoreTheIntendedState() {
+    assertEquals("unsupported", plan(player = makePlayer("paused").copy(canPause = false)).reason)
   }
 }

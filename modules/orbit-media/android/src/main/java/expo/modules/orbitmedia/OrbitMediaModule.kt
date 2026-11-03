@@ -215,12 +215,32 @@ class OrbitMediaModule : Module() {
             // Recheck identity immediately before every command, including a seek/play pair.
             val active = controllers().singleOrNull() ?: return finish("no_session")
             if (active.sessionToken != sessionToken) return finish("session_changed")
-            if (player(active).contentId != expectedContentId) return finish("content_mismatch")
+            val activePlayer = player(active)
+            if (activePlayer.contentId != expectedContentId) return finish("content_mismatch")
+            if (action.type == "pause" && !activePlayer.canPause || action.type == "play" && !activePlayer.canPlay ||
+              action.type == "seek" && !activePlayer.canSeek) return finish("unsupported")
             when (action.type) {
               "pause" -> active.transportControls.pause()
               "seek" -> active.transportControls.seekTo(action.positionMs!!)
               "play" -> active.transportControls.play()
             }; commands++
+            // Wait for the observed seek target before restoring pause; commands are asynchronous.
+            if (action.type == "seek" && !timeline.playing) {
+              var settled = false
+              for (attempt in 0 until 12) {
+                delay(250)
+                if (ticket != generation.get()) return finish("cancelled")
+                if (SystemClock.elapsedRealtime() - started >= 60000) return finish("completed")
+                val observedController = controllers().singleOrNull() ?: return finish("no_session")
+                if (observedController.sessionToken != sessionToken) return finish("session_changed")
+                val observed = player(observedController)
+                if (observed.contentId != expectedContentId) return finish("content_mismatch")
+                val observedPosition = observed.positionMs
+                if (observed.state in listOf("playing", "paused") && observedPosition != null &&
+                  abs(observedPosition - action.positionMs!!) <= 1500) { settled = true; break }
+              }
+              if (!settled) return finish("control_not_observed")
+            }
           }
           if (plan.actions.isNotEmpty()) {
             var acknowledged = false

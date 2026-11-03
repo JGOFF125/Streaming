@@ -1,4 +1,4 @@
-# Netflix provider-metadata identity test — 1.3.2
+# Netflix identity and paused-seek corrections — 1.3.2
 
 November 3, 2026 (UTC). This update adds no permissions, player engine, overlay or service.
 
@@ -14,15 +14,15 @@ This may explain some prior contentId:null results, but the user's raw metadata 
 
 The report adds only a fixed identity-source label and two field-presence booleans. It does not include raw metadata, URLs, watch titles, account details or provider session data. The backend and native synchronization identity gates are retained; a pasted room link cannot become player identity.
 
-The same delayed local controls and one-minute room test remain in place. This is still not a movie-length sync service.
+The one-minute room test remains in place. Its follower now waits for a paused seek to reach the observed target, then restores pause and requires full acknowledgment. The planner requires pause capability even if the player was initially paused. This addresses the earlier real-phone seek-induced resume observation; the corrected sequence still needs physical-device confirmation. The standalone local seek test continues to test one seek command. This is not a movie-length sync service.
 
 ## Verification and device acceptance
 
-Six new pure Kotlin tests cover recognized formats, conflict rejection, malformed and credential-bearing inputs, bounded IDs, and non-export of query/opaque data. A JavaScript regression checks fixed-label/boolean export filtering. Lint/typecheck and the app/database suites pass. A signed Android build and its native tests are required before installing this native change.
+Six new pure Kotlin tests cover recognized identity formats, conflict rejection, malformed and credential-bearing inputs, bounded IDs, and non-export of query/opaque data. Two additional native timing tests cover paused seek restoration and the necessary pause capability. All 23 native policy/identity/planner tests pass. A JavaScript regression checks export filtering; two playback regressions simulate seek-induced resume and unavailable pause. Lint/typecheck, the earlier full app/database suite and the updated 27 playback checks pass. A signed Android build and its native tests are required before installing this native change.
 
 On the physical Pixel: start a movie in official Netflix, return to Orbit's Netflix controls check, refresh, and share the diagnostic. The new presence flags determine whether the provider exposes candidate identity fields without exporting their contents. A non-null ID is not by itself two-device sync proof. If it remains null, do not relax the gate or substitute a user-selected title.
 
-The current source version is 1.3.2, Android code 9. Build status and the verified artifact link will be recorded after cloud verification.
+The current source version is 1.3.2, Android code 9. The first queued build 3a257bc3-25c6-46ea-8a16-8dcc642af164 was canceled before delivery to incorporate the paused-seek correction. The replacement build and verified artifact link will be recorded after submission/verification; do not offer the canceled artifact.
 
 ## Current UI direction
 
