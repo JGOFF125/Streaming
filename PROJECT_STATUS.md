@@ -1,8 +1,22 @@
 # Orbit — current status
 
-## Current development: provider display metadata, 1.3.3
+## Saved for resuming — November 3, 2026
 
-The user’s 1.3.2 report confirms both candidate catalog-ID values are absent. They require automatic movie identification and declined a manual confirmation fallback. They also confirm Android’s Netflix media controls display the actual movie/episode name. Version 1.3.3 (code 10) now reads standard display labels locally and compares changes across items while exporting only fixed flags. Native/reporting/playback tests, lint and typecheck pass; the [signed build](https://expo.dev/accounts/jgoff/projects/orbit/builds/d5822f62-814f-4850-83df-1020cf085282) is submitted from source 11598a93d5bfbd475c01c2d96cc506547ca252be. Cloud native tests, binary audit and physical label capture are pending. No identity gate or permission was relaxed. See [NETFLIX_DISPLAY_LABEL_TEST.md](NETFLIX_DISPLAY_LABEL_TEST.md). The latest verified APK remains 1.3.2 below.
+The user asked to save everything and pause for sleep. No 1.3.3 physical-phone result was supplied; the answers to the pending test questions were requests to continue later, not test outcomes. The full Netflix/Disney+/Prime Video integration goal remains unfinished.
+
+When the user returns, show the [verified Orbit 1.3.3 APK](https://expo.dev/artifacts/eas/SxPOeZ9g3XBE8WCwhQD7tVZeu2TqFmrI11mpbXTAqO4.apk) and resume here:
+
+1. Play a TV episode in official Netflix, go Home into PiP, open Orbit → Netflix controls check → Refresh check. Check whether local labels show the actual series and episode.
+2. Tap Remember labels for comparison, start a different episode of the same series in Netflix, return and refresh.
+3. Share diagnostic result and inspect the fixed label-presence/change flags. Do not infer a unique catalog ID or successful synchronization from changed text alone.
+
+Current code is 1.3.3 (Android code 10); its build, native test task and binary audit passed. Local checks passed: lint/typecheck, 14 Netflix reporting/operation tests, 27 playback/client/database tests and 28 pure Kotlin tests. The source checkout is C:/Users/jessu/Downloads/Orbit/Orbit phase 1/orbit and is synchronized with GitHub after this checkpoint. The build is terminal; no build watcher needs restarting.
+
+The approved independent-view room prototype is saved in design/room-experience.html. Its preview was open at http://127.0.0.1:8094/; this local address depends on its preview helper being running. The saved HTML and source remain available if a reboot closes it. Retain the requirements: each viewer chooses full screen or portrait chat independently; only one physical phone is available; automatic movie identification is required; no manual identity fallback or unapproved overlay permission.
+
+## Latest increment: provider display metadata, 1.3.3
+
+The user’s 1.3.2 report confirms both candidate catalog-ID values are absent. They require automatic movie identification and declined a manual confirmation fallback. They also confirm Android’s Netflix media controls display the actual movie/episode name. Version 1.3.3 (code 10) now reads standard display labels locally and compares changes across items while exporting only fixed flags. Native/reporting/playback tests, lint and typecheck pass; the signed build and binary audit have passed. Physical label capture and episode discrimination are pending. No identity gate or permission was relaxed. See [NETFLIX_DISPLAY_LABEL_TEST.md](NETFLIX_DISPLAY_LABEL_TEST.md). The current verified APK is 1.3.3 below.
 
 ## Renewed investigation and room design: November 3, 2026 (UTC)
 
@@ -13,7 +27,13 @@ A concrete identity-parser gap was fixed: the prior native adapter ignored MEDIA
 Automatic approval review rejected the proposed SYSTEM_ALERT_WINDOW expansion; that command did not run. No overlay source, permission or service was added. The concrete optional test design is documented for review; the safer PiP comparison is being pursued independently.
 
 
-## Current verified APK: 1.3.2
+## Current verified APK: 1.3.3
+
+The [Orbit 1.3.3 standalone APK](https://expo.dev/artifacts/eas/SxPOeZ9g3XBE8WCwhQD7tVZeu2TqFmrI11mpbXTAqO4.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/d5822f62-814f-4850-83df-1020cf085282)) is verified, from source 11598a93d5bfbd475c01c2d96cc506547ca252be. The cloud native test task ran without being skipped, Gradle and release assembly succeeded, and binary inspection verified the same signing certificate, bundled app, ARM64 support, disabled backup, keyboard adjustResize and the Google callback scheme. The declared permissions remain INTERNET and the app-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION; the existing optional broad notification-listener grant remains separate. APK size 91889833 bytes; SHA-256 a6cf257940136736b7093f067576113776471cc690b089eb1993ba18bbbe6feb. Physical label capture, reliable automatic movie/episode identification, embedded Netflix playback and two-device sync are not yet verified.
+
+The physical Pixel test asks whether the local labels match a series/episode, then remembers a baseline and compares a different episode of the same series. Shared diagnostics contain only fixed presence/source/change flags. The user declined a manual confirmation fallback; the actual-ID control gate remains intact. See [NETFLIX_DISPLAY_LABEL_TEST.md](NETFLIX_DISPLAY_LABEL_TEST.md).
+
+## Prior verified APK: 1.3.2
 
 The [Orbit 1.3.2 standalone APK](https://expo.dev/artifacts/eas/ltfsvYqAod5cbz3ZZOltRAS-dFVfYm7VYcUDoJXRFcg.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/36b6d4da-15a8-44c9-b000-eadbb91e28fd)) is verified, from source aee10176cb346bdfe4c1971a23f5c19dad17a823. The cloud native test task ran without being skipped, Gradle and release assembly succeeded, and binary inspection verified the same signing certificate, the bundled app and ARM64 support, disabled backup, keyboard adjustResize and the Google callback scheme. The only declared permissions are INTERNET and the app-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION; the existing optional broad notification-listener grant remains a separate Android setting. No overlay, microphone or foreground-service permission was added. APK size 91887613 bytes; SHA-256 b65a507c66471b5b95bad7a0ac9d704c13e989be3d9b5a65231edbba7d83c569. The new physical-phone report returned no catalog ID and reported both candidate ID fields absent. Corrected paused-seek behavior and two-device synchronization remain unverified.
 

@@ -18,9 +18,11 @@ Shared diagnostics v2 export only fixed presence/source flags and comparison boo
 
 ## Verification
 
-Lint/typecheck, 14 Netflix diagnostic/operation tests and 27 playback/client/database tests pass. All 28 pure Kotlin policy/identity/planner/display tests pass, including Unicode bounds, generic-label handling and accidental object-log privacy. The [signed native build](https://expo.dev/accounts/jgoff/projects/orbit/builds/d5822f62-814f-4850-83df-1020cf085282) is submitted from source 11598a93d5bfbd475c01c2d96cc506547ca252be. Cloud native tests, release assembly and binary audit are pending; do not offer an unverified APK. Physical label capture and episode discrimination are untested.
+Lint/typecheck, 14 Netflix diagnostic/operation tests and 27 playback/client/database tests pass. All 28 pure Kotlin policy/identity/planner/display tests pass, including Unicode bounds, generic-label handling and accidental object-log privacy. The signed native build, cloud native test task, release assembly and artifact audit have now passed.
 
-## Physical Pixel acceptance, after a verified APK is available
+The [Orbit 1.3.3 standalone APK](https://expo.dev/artifacts/eas/SxPOeZ9g3XBE8WCwhQD7tVZeu2TqFmrI11mpbXTAqO4.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/d5822f62-814f-4850-83df-1020cf085282)) is verified, from source 11598a93d5bfbd475c01c2d96cc506547ca252be. The cloud native test task ran without being skipped, Gradle and release assembly succeeded, and binary inspection verified the same signing certificate, bundled app, ARM64 support, disabled backup, keyboard adjustResize and the Google callback scheme. The declared permissions remain INTERNET and the app-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION; the existing optional broad notification-listener grant remains separate. APK size 91889833 bytes; SHA-256 a6cf257940136736b7093f067576113776471cc690b089eb1993ba18bbbe6feb. Physical label capture, reliable automatic movie/episode identification, embedded Netflix playback and two-device sync are not yet verified. Physical label capture and episode discrimination are untested.
+
+## Physical Pixel acceptance for the delivered APK
 
 1. Install 1.3.3. Start an actual Netflix movie, go Home into its floating window, open Orbit → Netflix controls check → Refresh check. Check locally whether Netflix’s labels match the current item. Do not paste raw titles or screenshots of account details.
 2. For an available series, start one episode and refresh Orbit. Tap Remember labels for comparison.
