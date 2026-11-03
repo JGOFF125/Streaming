@@ -1,10 +1,10 @@
 # Orbit Android permissions
 
-Verified against the signed standalone Orbit 1.3.0 APK on November 2, 2026 (UTC). [Orbit 1.3.0 standalone APK](https://expo.dev/artifacts/eas/o4C3M1fMeDL6vvq1gtyDKqFRuQitqZXy2X1ezJT8_tw.apk) · [Successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/8419489c-93bc-4cf8-9854-2e05d7c59954). Native compilation/tests, signature, bundled app, disabled-backup and minimal declared-permission checks passed. Source c0527d1. SHA-256: e0c12a46c216ec717a453f05b1192933048ac7659b7ec178ba87ef0b0c490ae7.
+Verified against the signed standalone Orbit 1.3.1 APK on November 3, 2026 (UTC). [APK](https://expo.dev/artifacts/eas/Q9D5EyjGtrEoHwyJsO2lAUERXnDS6xbvl_uQzQbQWZc.apk) · [Successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/b44e514e-a32e-4ce4-a92c-33755c7507d5). Native compilation/tests, signature, bundled app, disabled-backup and minimal declared-permission checks passed. MainActivity adjustResize and the existing Google callback scheme were verified in the merged binary. Source ab6c2c3. SHA-256 2b87a1d0a78656a25b635df4e35c42114ad54317f0cf517d4b12173124be4c84.
 
 ## Declared permissions
 
-The merged APK declares INTERNET for Supabase/Google and its package-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION for internal broadcast protection. The following unused grants were present in 1.2.1 and are absent from both 1.2.2 and 1.3.0:
+The merged APK declares INTERNET for Supabase/Google and its package-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION for internal broadcast protection. The following unused grants were present in 1.2.1 and are absent from 1.2.2, 1.3.0 and 1.3.1:
 
 - SYSTEM_ALERT_WINDOW (draw over other apps)
 - READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE (legacy device storage)
@@ -34,3 +34,5 @@ Previous 1.2.2 audit: build source 8f71340. APK SHA-256: a553abdc98ec8a426af3087
 The new browser keeps Netflix-managed sign-in state in app-private WebView storage until cleared. Android app backup is explicitly disabled through app.json android.allowBackup=false. The finished 1.3.0 APK passed the binary check with --require-no-backup. The older 1.2.2 APK correctly fails this new backup requirement as a negative control. This setting concerns Android application backup; it is not a claim about Android password-manager records or every OEM device-transfer behavior.
 
 The in-app website needs no notification access. Its only possible website grant is an explicit Netflix protected-media request, which may disclose a device identifier for playback licensing. Camera/microphone and unknown resources are denied; no Android runtime permission was added. Browser authentication is provider-managed app-private state, with a clear-sign-in action. See [IN_APP_NETFLIX_TEST.md](IN_APP_NETFLIX_TEST.md).
+
+Version 1.3.1 adds screen/navigation libraries and viewport controls. Its merged APK still declares only INTERNET and the package-scoped internal receiver signature permission. The broad optional notification-access service remains separately disclosed and is not required by the browser screen. No new camera, microphone, overlay or storage permission was added.

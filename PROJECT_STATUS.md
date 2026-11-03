@@ -1,18 +1,20 @@
 # Orbit — current status
 
-## Current source: 1.3.1
+## Current verified APK: 1.3.1
 
-The screenshot confirms the mobile app-required landing page and a cramped embedded view. Source now has a dedicated full-width screen, keyboard-resize configuration and a restricted official browse/watch-link comparison. The prior diagnostic fix is included. Android build/artifact checks are pending; the older 1.3.0 APK below does not contain these changes. Playback and sync remain unresolved. See [NETFLIX_SCREEN_LAYOUT.md](NETFLIX_SCREEN_LAYOUT.md).
+The [Orbit 1.3.1 standalone APK](https://expo.dev/artifacts/eas/Q9D5EyjGtrEoHwyJsO2lAUERXnDS6xbvl_uQzQbQWZc.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/b44e514e-a32e-4ce4-a92c-33755c7507d5)) is finished. The cloud native tests and release assembly passed. Binary inspection verified the same signing certificate as the prior APK, the standalone app bundle, ARM64 support, disabled backup, no extra declared permissions, the Google callback scheme and MainActivity keyboard adjustResize setting. Physical keyboard behavior, Google sign-in after the routing change and the new Netflix entry-point results still need phone feedback. Movie playback and sync remain unverified. See [NETFLIX_SCREEN_LAYOUT.md](NETFLIX_SCREEN_LAYOUT.md).
+
+Open Netflix inside Orbit → Open Netflix test screen. Open the website, then use Details for the official browse page or a public Netflix title/watch link. The route test may still show Netflix’s app-required page. A selected link is not verified player identity. Source ab6c2c3. APK size 91886957 bytes; SHA-256 2b87a1d0a78656a25b635df4e35c42114ad54317f0cf517d4b12173124be4c84.
 
 
 ## Latest device result: November 3, 2026 (UTC)
 
-The user tested the shipped 1.3.0 APK: Netflix sign-in works, but the website asks for its separate app. Chrome with Desktop site on the same phone also requests the app or blocks playback. Embedded movie playback is therefore not working in either reported test. The v1 report ends in background_closed, which records lifecycle cleanup and does not identify the provider restriction or establish a crash. Exact message/screenshot pending. See NETFLIX_EMBEDDED_FEASIBILITY.md.
+The user tested the shipped 1.3.0 APK: Netflix sign-in works, but the website asks for its separate app. Chrome with Desktop site on the same phone also requests the app or blocks playback. Embedded movie playback is therefore not working in either reported test. The v1 report ends in background_closed, which records lifecycle cleanup and does not identify the provider restriction or establish a crash. The screenshot received later shows Netflix’s signed-in mobile app-required landing page; no player error code is shown. See NETFLIX_EMBEDDED_FEASIBILITY.md.
 
-The working source now preserves page/blocking events separately from lifecycle closure and adds an explicit app-required observation, with ten Netflix diagnostic/operation tests passing plus lint/typecheck. This diagnostic-only fix has not been packaged in another APK. The 1.3.0 download below remains the same verified artifact; no playback fix is claimed. No account, database, Google Cloud or permission changes were made.
+The v2 reporting fix is included in 1.3.1, together with the larger screen and official-page comparison controls. All eleven Netflix diagnostic/operation tests pass, plus authentication routing, room/database tests, lint and typecheck. The older 1.3.0 artifact below remains history. No movie-playback or sync fix has been verified, and no account, database or Google Cloud configuration was changed.
 
 
-Verified November 2, 2026 (UTC).
+Updated November 3, 2026 (UTC). Build/artifact checks are separate from pending physical-device results.
 
 ## Current development increment
 

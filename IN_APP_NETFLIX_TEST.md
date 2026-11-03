@@ -1,6 +1,6 @@
 # In-app Netflix playback experiment
 
-Orbit 1.3.0, Android versionCode 7. Implemented November 2, 2026 (UTC). The standalone APK is finished; physical-device playback remains pending. See PHONE_TEST_SETUP.md.
+Orbit 1.3.0, Android versionCode 7. Implemented November 2, 2026 (UTC). The initial standalone APK is finished; the reported phone result is Netflix sign-in followed by its app-required page. The newer 1.3.1 screen and entry-point test are documented in PHONE_TEST_SETUP.md.
 
 ## Purpose and limits
 
@@ -62,8 +62,12 @@ The new browser keeps Netflix-managed sign-in state in app-private WebView stora
 
 ## Reported outcome and next source revision
 
-November 3: the user reports sign-in succeeds in the 1.3.0 panel, but Netflix requests its app; no full movie played inside Orbit. Chrome Desktop site on the same phone also failed to play. The original v1 report overwrote page context with background_closed. A source-only v2 reporting fix now retains a bounded allowlisted event trace and separates page/blocking events from lifecycle closure; observations are frozen when selected. It also names the user-reported app_required outcome. This fix passes lint, typecheck and five new regression tests, alongside five existing Netflix diagnostic/operation tests. It does not change the renderer or solve playback, and has not been shipped in a new APK. Exact provider message/screenshot is pending. See NETFLIX_EMBEDDED_FEASIBILITY.md.
+November 3: the user reports sign-in succeeds in the 1.3.0 panel, but Netflix requests its app; no full movie played inside Orbit. Chrome Desktop site on the same phone also failed to play. The original v1 report overwrote page context with background_closed. The v2 reporting fix retains a bounded allowlisted event trace and separates page/blocking events from lifecycle closure; observations are frozen when selected. It also names the user-reported app_required outcome. This fix passes lint, typecheck and five new regression tests, alongside five existing Netflix diagnostic/operation tests. It does not change the renderer or solve playback, and is now shipped in 1.3.1 alongside the larger screen and constrained official-page comparison. The received screenshot shows the mobile app-required page with no player error code. See NETFLIX_EMBEDDED_FEASIBILITY.md.
 
 ## Screenshot and 1.3.1 screen update
 
-November 3: the supplied screenshot confirms Netflix’s signed-in mobile app-required landing page, not a movie player or an exact DRM/player error. Its authenticated URL is unknown. The cramped 540-point nested browser is being replaced by a full-width dedicated screen with keyboard resizing, separate details/results and normal viewport/zoom support. A constrained official browse/watch-link entry-point test is included; it preserves normal authentication and protection and may still return the app-required page. This does not establish playback or identity. See [NETFLIX_SCREEN_LAYOUT.md](NETFLIX_SCREEN_LAYOUT.md). Android build and device verification are pending.
+November 3: the supplied screenshot confirms Netflix’s signed-in mobile app-required landing page, not a movie player or an exact DRM/player error. Its authenticated URL is unknown. The cramped 540-point nested browser is being replaced by a full-width dedicated screen with keyboard resizing, separate details/results and normal viewport/zoom support. A constrained official browse/watch-link entry-point test is included; it preserves normal authentication and protection and may still return the app-required page. This does not establish playback or identity. See [NETFLIX_SCREEN_LAYOUT.md](NETFLIX_SCREEN_LAYOUT.md). The 1.3.1 Android build/native tests and binary audit passed. The full-width layout, keyboard and official-page comparison still require device feedback.
+
+## Current 1.3.1 instructions
+
+Use [the 1.3.1 APK](https://expo.dev/artifacts/eas/Q9D5EyjGtrEoHwyJsO2lAUERXnDS6xbvl_uQzQbQWZc.apk). Open Netflix inside Orbit → Open Netflix test screen. The website fills the dedicated screen; Details contains cleanup, official browse/title-link controls and observation reports. Start the website first to enable page controls. A public title link goes only to Netflix’s normal watch page, with parameters removed. Copying a public link from another app before opening the test avoids ending this foreground-only experiment. Check Google sign-in as well after the new navigation is installed. The current binary audit passed; Netflix playback and automatic sync have not been verified.
