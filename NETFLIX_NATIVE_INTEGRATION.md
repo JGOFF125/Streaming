@@ -64,7 +64,7 @@ For Netflix, a reply or documentation from the contacted developers could identi
 
 For Prime, require an authorized playback baseline or an available provider integration before choosing an engine. Lack of the user's subscription is a test-access limit, not evidence that playback is incompatible.
 
-No public deployable integration was identified in this review. Do not convert old SDK articles, generic DRM capability or empty search results into proof of Android impossibility or guaranteed partner availability. Application/native code and APK version remain unchanged. The goal is incomplete and remains active.
+No public deployable integration was identified in this review. Do not convert old SDK articles, generic DRM capability or empty search results into proof of Android impossibility or guaranteed partner availability. Application/native code and APK version remain unchanged. The goal is incomplete. The current blocker and concrete resume requirements are recorded at the top of [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
 ## Rave inquiry — sent November 3, 2026
 

@@ -1,8 +1,15 @@
 # Orbit — current status
 
+## Current integration blocker: November 3, 2026 (UTC)
+
+Development is blocked on an obtainable provider-authorized Android in-app playback/session integration. The same condition was revalidated across three consecutive goal turns. The current checkout and origin/main matched c8d0de0 with a clean tree before this status update. All four inquiry threads still contain only the sent messages, and the targeted reply/bounce search returned no matches. No live build, device test or other running process is being waited on.
+
+Netflix, Disney+ and Prime Video movie playback inside Orbit, player-bound identity/acknowledged controls and two-device automatic synchronization remain incomplete. Resume implementation when an available SDK/API with usable authentication/playback documentation, or a reproducible authorized Android playback path, supplies the missing player contract. A generic DRM library, desktop-only extension, vendor marketing claim or another wrapper build does not supply it. See [NETFLIX_NATIVE_INTEGRATION.md](NETFLIX_NATIVE_INTEGRATION.md) and [the outreach record](NETFLIX_INTEGRATION_OUTREACH.md). Orbit remains 1.3.1. No repeated inquiries, purchases, new permissions or runtime changes were made.
+
+
 ## Provider SDK review: November 3, 2026 (UTC)
 
-The expanded investigation found Disney’s documented ADK/proprietary native-video-engine program for licensed distributors. Its availability for an Android watch-party app and a separately embeddable player remain unestablished. Amazon’s Prime APIs serve content submissions and analytics, not subscriber playback. The user has no Prime Video access, so the phone browser comparison was not performed. Inquiry threads currently contain only the sent messages. See [the expanded provider review](NETFLIX_NATIVE_INTEGRATION.md#expanded-provider-review-november-3-2026). Netflix, Disney+ and Prime playback inside Orbit and two-device sync remain incomplete; the goal stays active. No new APK or runtime changes were made.
+The expanded investigation found Disney’s documented ADK/proprietary native-video-engine program for licensed distributors. Its availability for an Android watch-party app and a separately embeddable player remain unestablished. Amazon’s Prime APIs serve content submissions and analytics, not subscriber playback. The user has no Prime Video access, so the phone browser comparison was not performed. Inquiry threads currently contain only the sent messages. See [the expanded provider review](NETFLIX_NATIVE_INTEGRATION.md#expanded-provider-review-november-3-2026). Netflix, Disney+ and Prime playback inside Orbit and two-device sync remained incomplete at that checkpoint; see the current blocker above. No new APK or runtime changes were made.
 
 
 ## Integration outreach: November 3, 2026 (UTC)
