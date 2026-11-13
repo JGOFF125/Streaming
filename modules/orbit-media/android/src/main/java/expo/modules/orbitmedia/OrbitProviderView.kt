@@ -90,6 +90,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
       if (profileMode == "desktop") emit("desktop_profile_applied")
       web.loadUrl(OrbitProviderPolicy.START_URL)
     } catch (_: Exception) {
+      activeRequested=false
       close()
       emit("browser_unavailable")
     }
@@ -196,7 +197,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
     }
 
     override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
-      if (browser === view) { close(); emit("renderer_stopped") }
+      if (browser === view) { activeRequested=false; close(); emit("renderer_stopped") }
       return true
     }
   }
@@ -246,6 +247,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
   }
 
   fun clearAndClose() {
+    activeRequested=false
     browser?.clearCache(true)
     close()
   }

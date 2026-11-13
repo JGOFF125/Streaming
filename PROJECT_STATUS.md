@@ -1,5 +1,9 @@
 # Orbit — current status
 
+## Browser lifecycle correction before delivery
+
+The first 1.3.6 build, 16210190-f066-4bd1-acb2-9b7c0598ec3f, was canceled before delivery to include an inactive-state correction: clearing browser data, startup failure and renderer loss now cancel the pending active request, preventing a later props update from reopening that surface. The signed replacement will use a new build/source identifier. No canceled artifact is offered.
+
 ## 1.3.6 build submitted — November 13, 2026
 
 Build 16210190-f066-4bd1-acb2-9b7c0598ec3f is building version 1.3.6 (Android code 13) from source ced3e725eb9724f66c8985b1bdd116bfaf306dc0. Local checks, the native AndroidX configurator compile and Android/Hermes export passed. Cloud native tests, release assembly and the pinned APK audit remain pending. The build folder is .expo/browser-profile-build. Do not submit a duplicate to check progress.
