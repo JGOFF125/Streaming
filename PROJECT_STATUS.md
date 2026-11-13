@@ -1,8 +1,14 @@
 # Orbit — current status
 
-## 1.3.7 submitted — November 13, 2026
+## Verified 1.3.7 — optional playback error check
 
-Build d365e4b3-5ccb-4914-ae8f-28b1d925947d is building Android 1.3.7 / code 14 from f3fa73ef217c72c77403f225de93ebfc51ad979e. Local checks and export pass. Cloud native tests/release assembly and the pinned APK audit are pending. Private status/artifacts live under .expo/player-evidence-build; do not submit a duplicate. This is opt-in error evidence, not a verified Netflix playback fix.
+November 13, 2026. [Orbit 1.3.7 standalone APK](https://expo.dev/artifacts/eas/FonAGNhlATyPAdbHWf757aDngZ5423Me0w-1tyUwJQQ.apk) ([finished build](https://expo.dev/accounts/jgoff/projects/orbit/builds/d365e4b3-5ccb-4914-ae8f-28b1d925947d)). Android code 14, source f3fa73ef217c72c77403f225de93ebfc51ad979e. Full native debug/release compilation, the non-skipped native test task, release assembly and BUILD SUCCESSFUL were verified. Local lint/typecheck, 115 JavaScript/database/PC-diagnostic tests, 50 pure Kotlin tests and Android/Hermes export pass.
+
+The final APK passed package/version, matching signature, standalone bundle, ARM64, non-debuggable release, disabled backup, keyboard adjustResize and Google callback registration checks. Its declared permissions remain INTERNET and the app-local DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION only; the existing optional broad notification grant remains separate and is unused by this browser check. Actual bundled JS contains Start error check, the desktop profile action, in-app browser v3 (not v2), and external controls v4. Actual DEX contains the diagnostic tag, fixed error category and window marker. Size 91933102 bytes; SHA-256 331ff1d7619b411876df7f2a470ba9fd29b924a91896ab4026382826771d1dca.
+
+This adds opt-in error evidence, not a verified Netflix playback fix. In the new APK, open the desktop profile, complete Netflix sign-in if needed, then Details → Start error check before trying Play. The action returns to Netflix without reloading it or changing playback/DRM/cookie settings. The bounded PC checker v3 reads the fixed categories from the fresh window over an explicitly authorized USB connection. Leave Orbit in the foreground after reproducing the issue. Do not ask for another identical browser v3/external-controls v4 report; those reports do not contain the new PC-side counters.
+
+The Pixel is currently unavailable over USB, so installation and physical collection have not been attempted. A reconnect/unlock/authorization request is pending. No new build or duplicate submission is needed. No live build/artifact-verification process remains. E100/1044, the later Netflix spinner, the successful same-episode official-app control and the unsuccessful clean Orbit-browser session remain the latest physical evidence. Actual Netflix video inside Orbit, automatic unique movie identity and two-device sync remain unverified. See [NETFLIX_E100_INVESTIGATION.md](NETFLIX_E100_INVESTIGATION.md).
 
 ## 1.3.7 prepared — opt-in playback error check
 
