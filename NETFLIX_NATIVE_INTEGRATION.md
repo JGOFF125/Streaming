@@ -1,5 +1,9 @@
 # Netflix native integration investigation
 
+## November 12, 2026 development update
+
+Bounded diagnostic-only active-item inspection is now implemented in source with 36 pure Kotlin and 78 JavaScript/database tests passing. It has not shipped in an APK and does not change verified player identity. The latest delivered APK remains 1.3.3; its phone label comparison is pending. See [active-item investigation](NETFLIX_ACTIVE_ITEM_TEST.md) and [current status](PROJECT_STATUS.md). The dated findings below are historical evidence.
+
 Reviewed November 3, 2026 (UTC). This is an evidence and implementation handoff, not a working player or an APK release.
 
 ## Public catalog evidence while 1.3.3 builds

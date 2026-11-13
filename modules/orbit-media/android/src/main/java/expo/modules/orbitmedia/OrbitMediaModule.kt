@@ -136,7 +136,28 @@ class OrbitMediaModule : Module() {
     }
   }
 
-  private fun describe(controller: MediaController): Map<String, Any?> {
+  private fun queueEvidence(controller: MediaController, state: PlaybackState?, identity: OrbitMediaIdentityResult): OrbitQueueEvidence {
+    val before = state?.activeQueueItemId
+    // A provider may expose no queue at all. This optional diagnostic cannot break normal controls.
+    if (before == null || before < 0) return OrbitQueueEvidence("no_active_item")
+    return try {
+      val queue = controller.queue
+      if (queue != null && queue.size > OrbitQueueIdentity.MAX_ITEMS) return OrbitQueueEvidence("queue_too_large")
+      val after = controller.playbackState?.activeQueueItemId
+      val evidence = OrbitQueueIdentity.inspect(before, after, queue?.map { it.queueId }, identity) { index ->
+        val description = queue!![index].description
+        description.mediaId to description.mediaUri?.toString()
+      }
+      // Recheck after reading the description; never export stale candidates during a transition.
+      if (controller.playbackState?.activeQueueItemId != before) OrbitQueueEvidence("active_item_changed") else evidence
+    } catch (error: SecurityException) {
+      throw error
+    } catch (_: RuntimeException) {
+      OrbitQueueEvidence("read_failed")
+    }
+  }
+
+  private fun describe(controller: MediaController, includeQueue: Boolean = true): Map<String, Any?> {
     val state = controller.playbackState
     val actions = state?.actions ?: 0L
     val metadata = controller.metadata
@@ -144,6 +165,7 @@ class OrbitMediaModule : Module() {
     val identity = OrbitMediaIdentity.resolve(
       metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID),
       metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_URI))
+    val queue = if (includeQueue) queueEvidence(controller, state, identity) else null
     val labels = OrbitDisplayMetadata.read(
       metadata?.getText(MediaMetadata.METADATA_KEY_DISPLAY_TITLE),
       metadata?.getText(MediaMetadata.METADATA_KEY_TITLE),
@@ -165,6 +187,9 @@ class OrbitMediaModule : Module() {
         "descriptionLabel" to labels.descriptionLabel, "titleSource" to labels.titleSource,
         "titlePresent" to labels.titlePresent, "displayTitlePresent" to labels.displayTitlePresent,
         "subtitlePresent" to labels.subtitlePresent, "descriptionPresent" to labels.descriptionPresent),
+      // Evidence remains diagnostic: player() still uses metadata identity only.
+      "queueEvidence" to queue?.let { mapOf("status" to it.status, "candidateContentId" to it.candidateContentId,
+        "mediaIdPresent" to it.mediaIdPresent, "mediaUriPresent" to it.mediaUriPresent) },
       "identitySource" to identity.source, "mediaIdPresent" to identity.mediaIdPresent,
       "mediaUriPresent" to identity.mediaUriPresent,
       "canPlay" to (supports(actions, PlaybackState.ACTION_PLAY) || supports(actions, PlaybackState.ACTION_PLAY_PAUSE)),
@@ -174,7 +199,7 @@ class OrbitMediaModule : Module() {
   }
 
   private fun player(controller: MediaController): OrbitPlayer {
-    val snapshot = describe(controller)
+    val snapshot = describe(controller, includeQueue = false)
     return OrbitPlayer(snapshot["contentId"] as? String, snapshot["state"] as String,
       snapshot["positionMs"] as? Long, snapshot["durationMs"] as? Long,
       snapshot["canPlay"] == true, snapshot["canPause"] == true, snapshot["canSeek"] == true)

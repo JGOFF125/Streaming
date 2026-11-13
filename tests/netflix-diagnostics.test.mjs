@@ -81,3 +81,36 @@ test('label comparisons distinguish episodes without inventing catalog identity'
   assert.deepEqual(compareNetflixLabels(first,null),{available:false,titleChanged:false,subtitleChanged:false,descriptionChanged:false});
   assert.equal(compareNetflixLabels(first,{titleLabel:''}).available,false);
 });
+
+
+test('active-queue evidence exports only bounded candidates and fixed flags', () => {
+  const secret='private_queue_url_token_and_title';
+  const queueEvidence={status:'candidate',candidateContentId:'80012345',mediaIdPresent:false,mediaUriPresent:true,
+    mediaUri:secret,title:secret,queueKey:secret};
+  const snapshot={...ready,contentId:null,queueEvidence};
+  const report=netflixReport(snapshot,{command:'pause',status:'observed',reason:'state_changed',before:snapshot,after:snapshot});
+  assert.doesNotMatch(report,/private_queue_url_token_and_title|queueKey|mediaUri"|title"/);
+  const parsed=JSON.parse(report);
+  assert.deepEqual(parsed.snapshot.queueEvidence,{status:'candidate',candidateContentId:'80012345',mediaIdPresent:false,mediaUriPresent:true});
+  assert.equal(parsed.snapshot.contentId,null);
+  assert.equal(parsed.lastTest.before.queueEvidence.candidateContentId,'80012345');
+  assert.equal(parsed.automaticMovieIdentificationVerified,false);
+  assert.equal(parsed.automaticSyncVerified,false);
+});
+
+test('queue diagnostics reject opaque candidates and suppress conflicted identities', () => {
+  const secret='private_queue_value';
+  for (const candidate of [secret,'0','00123','1234567890123',123]) {
+    const parsed=JSON.parse(netflixReport({...ready,queueEvidence:{status:'candidate',candidateContentId:candidate,mediaIdPresent:secret}},null));
+    assert.equal(parsed.snapshot.queueEvidence.candidateContentId,null);
+    assert.equal(parsed.snapshot.queueEvidence.mediaIdPresent,false);
+  }
+  for (const status of ['conflicting_fields','metadata_conflict','active_item_changed','ambiguous_active_item',secret]) {
+    const report=netflixReport({...ready,queueEvidence:{status,candidateContentId:'80012345',mediaUri:secret}},null);
+    assert.doesNotMatch(report,/private_queue_value/);
+    const parsed=JSON.parse(report);
+    assert.equal(parsed.snapshot.queueEvidence.candidateContentId,null);
+    assert.equal(parsed.snapshot.queueEvidence.status,status===secret?'unavailable':status);
+  }
+  assert.equal(JSON.parse(netflixReport(ready,null)).snapshot.queueEvidence,null);
+});

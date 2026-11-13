@@ -49,3 +49,6 @@ coverage/
 # Supabase CLI local cache and branch state
 /supabase/.temp/
 /supabase/.branches/
+
+# Native module build cache (may contain local machine paths)
+.gradle/

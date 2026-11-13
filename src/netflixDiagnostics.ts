@@ -13,6 +13,9 @@ export function compareNetflixLabels(before: NetflixDisplayLabels | null, after:
     subtitleChanged: available && (before!.subtitleLabel ?? null) !== (after!.subtitleLabel ?? null),
     descriptionChanged: available && (before!.descriptionLabel ?? null) !== (after!.descriptionLabel ?? null) };
 }
+export type NetflixQueueEvidence = {
+  status?: string; candidateContentId?: string | null; mediaIdPresent?: boolean; mediaUriPresent?: boolean;
+};
 export type NetflixSnapshot = {
   access: 'permission_required' | 'connecting' | 'ready';
   session: 'none' | 'active' | 'ambiguous';
@@ -22,6 +25,7 @@ export type NetflixSnapshot = {
   contentId?: string | null;
   identitySource?: string;
   displayMetadata?: NetflixDisplayLabels;
+  queueEvidence?: NetflixQueueEvidence;
   mediaIdPresent?: boolean;
   mediaUriPresent?: boolean;
   canPlay?: boolean;
@@ -83,6 +87,12 @@ export function netflixReport(snapshot: NetflixSnapshot | null, result: NetflixT
     contentId: typeof value.contentId === 'string' && /^[1-9][0-9]{0,11}$/.test(value.contentId) ? value.contentId : null,
     identitySource: ['media_id', 'media_id_watch_url', 'media_uri_watch_url', 'matching_fields', 'conflicting_fields', 'unavailable'].includes(value.identitySource ?? '') ? value.identitySource : 'unavailable',
     mediaIdPresent: value.mediaIdPresent === true, mediaUriPresent: value.mediaUriPresent === true,
+    queueEvidence: value.queueEvidence ? {
+      status: ['no_active_item', 'active_item_changed', 'queue_unavailable', 'queue_too_large', 'active_item_missing',
+        'ambiguous_active_item', 'conflicting_fields', 'metadata_conflict', 'no_canonical_identity', 'candidate', 'read_failed'].includes(value.queueEvidence.status ?? '') ? value.queueEvidence.status : 'unavailable',
+      candidateContentId: value.queueEvidence.status === 'candidate' && typeof value.queueEvidence.candidateContentId === 'string' && /^[1-9][0-9]{0,11}$/.test(value.queueEvidence.candidateContentId) ? value.queueEvidence.candidateContentId : null,
+      mediaIdPresent: value.queueEvidence.mediaIdPresent === true, mediaUriPresent: value.queueEvidence.mediaUriPresent === true,
+    } : null,
     displayEvidence: value.displayMetadata ? {
       titleSource: ['display_title', 'title', 'unavailable'].includes(value.displayMetadata.titleSource ?? '') ? value.displayMetadata.titleSource : 'unavailable',
       titlePresent: value.displayMetadata.titlePresent === true, displayTitlePresent: value.displayMetadata.displayTitlePresent === true,

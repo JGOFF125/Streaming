@@ -1,5 +1,14 @@
 # Orbit — current status
 
+## Resumed November 12, 2026 — active-item identity evidence
+
+The user resumed development. The latest saved source commit matched GitHub main at ff5fbb0 before this increment. An existing local edit in NetflixCheckPanel.tsx was preserved and is not part of this increment. The previously generated native Gradle cache is now ignored.
+
+Added diagnostic-only inspection of Android's active queue item. It reads only the uniquely matching active description, bounds queue size, checks the active key again after reading, accepts only canonical Netflix watch URLs as candidate catalog IDs, and rejects conflicting metadata. Queue keys, numeric-only description IDs, labels and duration never become verified identity. It does not change the playback identity gate or add permissions. Shared reports export only a bounded candidate ID and fixed status/presence flags; raw queue values stay out of reports. The control planner does not query the queue.
+
+Verification: lint/typecheck and all 78 JavaScript/database tests passed; all 36 pure Kotlin tests passed. This increment has not been compiled into a new Android APK or exercised on the phone. Orbit 1.3.3 remains the latest verified delivered APK, and its pending episode-label check below is still the next phone action. A new build should combine useful findings from that report rather than replace the missing physical evidence with another speculative release. No embedded Netflix playback or two-device synchronization is verified. See [NETFLIX_ACTIVE_ITEM_TEST.md](NETFLIX_ACTIVE_ITEM_TEST.md).
+
+
 ## Saved for resuming — November 3, 2026
 
 The user asked to save everything and pause for sleep. No 1.3.3 physical-phone result was supplied; the answers to the pending test questions were requests to continue later, not test outcomes. The full Netflix/Disney+/Prime Video integration goal remains unfinished.
