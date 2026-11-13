@@ -1,5 +1,14 @@
 # Orbit — current status
 
+## Phone version clarified — November 13, 2026
+
+The user supplied another v2 report and the two local display lines. Those lines contain an episode title plus a season/episode designation with the same episode title; no series name is present. Raw user-supplied labels are stored only in ignored local device-test evidence. No series, catalog identity or cross-user match was inferred.
+
+The report has null labelComparison, no catalog metadata IDs, no alternate-title evidence and no queueEvidence. Inspection of assets/index.android.bundle in both previously audited APKs confirms 1.3.3 contains the v2 marker and no alternate-title/queue markers; 1.3.4 contains the v3 marker and both new markers, with no v2 marker. The user then checked Android app info and selected 1.3.3 or earlier. This is an installed-version mismatch, not a failed 1.3.4 Netflix test. There is no need for another build or uninstall.
+
+Next action: install the existing verified [1.3.4 APK](https://expo.dev/artifacts/eas/kr4Un0yU-CVd0rxNq28Jkgug96udFXP_VFvcX4RmV4c.apk) using Android's Update action, launch Orbit from its icon, play Netflix in PiP, refresh and share a fresh v3 report. If installation fails, ask for its error text before changing signing/version configuration. Physical active-item/alternate-title evidence is still pending. Actual movie identity, embedded playback and real sync remain unverified.
+
+
 ## Current verified APK — 1.3.4, November 12, 2026
 
 The [Orbit 1.3.4 standalone APK](https://expo.dev/artifacts/eas/kr4Un0yU-CVd0rxNq28Jkgug96udFXP_VFvcX4RmV4c.apk) ([finished cloud build](https://expo.dev/accounts/jgoff/projects/orbit/builds/474dd23a-6fdf-4ceb-81fa-8d04ca160aaf)) passed native compilation, the non-skipped native test task, release assembly and binary audit. Source cda81ffaac4e1df4c7ef5efc8bc07cd2429eb840; Android code 11. Local lint/typecheck, all 79 JavaScript/database tests and all 37 pure Kotlin tests passed. APK size 91891281 bytes; SHA-256 2ab2b9264d791ff2c4eadc49a7674cc873942c27dd6a5069291a38ee72753ffa. The signature matches previous Orbit releases; ARM64, the bundled app, disabled backup, keyboard adjustResize and the Google callback scheme were verified. Only INTERNET and the app-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION are declared. The existing optional broad notification-access grant remains separate; no overlay, microphone or foreground-service permission was added.

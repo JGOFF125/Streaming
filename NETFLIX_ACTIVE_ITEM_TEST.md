@@ -1,5 +1,14 @@
 # Netflix active-item identity investigation
 
+## Phone version clarified — November 13, 2026
+
+The user supplied another v2 report and the two local display lines. Those lines contain an episode title plus a season/episode designation with the same episode title; no series name is present. Raw user-supplied labels are stored only in ignored local device-test evidence. No series, catalog identity or cross-user match was inferred.
+
+The report has null labelComparison, no catalog metadata IDs, no alternate-title evidence and no queueEvidence. Inspection of assets/index.android.bundle in both previously audited APKs confirms 1.3.3 contains the v2 marker and no alternate-title/queue markers; 1.3.4 contains the v3 marker and both new markers, with no v2 marker. The user then checked Android app info and selected 1.3.3 or earlier. This is an installed-version mismatch, not a failed 1.3.4 Netflix test. There is no need for another build or uninstall.
+
+Next action: install the existing verified [1.3.4 APK](https://expo.dev/artifacts/eas/kr4Un0yU-CVd0rxNq28Jkgug96udFXP_VFvcX4RmV4c.apk) using Android's Update action, launch Orbit from its icon, play Netflix in PiP, refresh and share a fresh v3 report. If installation fails, ask for its error text before changing signing/version configuration. Physical active-item/alternate-title evidence is still pending. Actual movie identity, embedded playback and real sync remain unverified.
+
+
 November 12, 2026. Included in the verified 1.3.4 APK; physical results are pending. The prior 1.3.3 APK does not include this diagnostic.
 
 ## Current verified APK — 1.3.4, November 12, 2026
