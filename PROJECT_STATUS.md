@@ -1,5 +1,10 @@
 # Orbit — current status
 
+## 1.3.4 build submitted — November 12, 2026
+
+Cloud build 474dd23a-6fdf-4ceb-81fa-8d04ca160aaf is building version 1.3.4 (Android code 11) from cda81ffaac4e1df4c7ef5efc8bc07cd2429eb840. Local lint/typecheck, 79 application/database tests and 37 pure Kotlin tests passed before submission. Native cloud compilation and the final APK/signature/permissions audit are pending. No new download is verified yet. Build status and inspection files are kept locally under .expo/active-queue-build, with exact build/source/version/certificate checks prepared. The next phone report should use the new v3 diagnostic only after artifact verification.
+
+
 ## Next native build — 1.3.4 (code 11)
 
 Prepared from the episode-change evidence. The previous source-only active-item diagnostic is included. The standard metadata TITLE is now retained separately from the preferred display title so that provider-published series context, if present, is not silently discarded. It is shown locally when different; shared v3 diagnostics export only presence, equality and change flags. This adds no identity fallback, permissions, services or dependencies, and makes no raw-label uploads. The pre-existing local settings-help note is preserved in intent with corrected spelling and a clear experimental-test statement.
