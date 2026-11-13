@@ -1,0 +1,31 @@
+# Netflix E100 / 1044 investigation
+
+November 13, 2026. Physical 1.3.6 result received; playback is blocked, not fixed.
+
+## Observed evidence
+
+The user reports successful Netflix sign-in and catalog browsing inside Orbit's optional desktop profile, followed by a protected-media prompt that they accepted. Playback then displays E100 with detail 1044 and the message that the title is not available to watch instantly. Their separate in-app v3 report records desktopApplied/clientHintsOverridden/formFactorsOverridden true, browse entry, provider_blocked, page_loaded, no observed native blocking event and no background closure. Native profile flags establish applied settings, not the server's acceptance or actual playback. The exact user report is retained only in ignored .expo/device-tests/pixel-1.3.6-browser-report.json.
+
+The current trace contains no permission event. This does not contradict consent in an earlier attempt: opening a fresh attempt resets history, and Android defines the grant as valid for that WebView. It neither proves an omitted prompt is a bug nor establishes license success. The current same-title/same-connection official-app comparison is not answered; earlier official-app playback did work. Do not silently treat that old result as a fresh control.
+
+## Findings and limits
+
+[Android PermissionRequest](https://developer.android.com/reference/android/webkit/PermissionRequest#RESOURCE_PROTECTED_MEDIA_ID) documents that the protected-media identifier grant allows the origin to use EME APIs to generate license requests. Orbit grants only that exact resource for allowed Netflix origins; it does not grant the entire requested resource array. Permission acceptance is not Netflix license approval, decoder compatibility or movie playback. No verified permission-handling defect is established by this report.
+
+The [Netflix supported-browser page](https://help.netflix.com/en/node/30081) covers specific operating systems/browsers and does not establish Android WebView compatibility. Its [tvq-pb-101 (E100) help article](https://help.netflix.com/en/node/111824) is about TV/device variants; do not assume it diagnoses this web E100/1044. An [upstream Wolvic E100 report](https://github.com/Igalia/wolvic/issues/1880) discusses a decoder observation whose causal role a maintainer questions. Other platforms' errors cannot establish this Pixel's root cause. No unsupported engine, identity swap, DRM alteration or permission relaxation is justified yet.
+
+[Android WebViewClient](https://developer.android.com/reference/android/webkit/WebViewClient#shouldInterceptRequest(android.webkit.WebView,%20android.webkit.WebResourceRequest)) explicitly excludes blob URLs from the interception callback. Do not assume the HTTPS-only request helper intercepted a video blob without evidence. HTTPS CDN resources remain allowed.
+
+## Read-only investigation using the installed APK
+
+The development tool scripts/inspect-orbit-playback.mjs needs one authorized USB Android phone and an open Orbit main process. It uses adb -d, a fixed app package, a validated single PID, the main log buffer, warning/error-only allowlisted Android media/Chromium tags, and a bounded recent snapshot (2000 lines, 2 MiB, 15-second query timeout). The parser independently checks the tag, priority and PID. Only fixed category counts and validated Orbit/current-WebView versions are exported. Raw message text, URLs, account data, device serials, PIDs, opaque errors and log timestamps are not exported or written to disk. Raw selected-process log text exists only transiently while parsing. No root, global bugreport, cookie/app-data read, log clearing, console forwarding, WebView debugging, system setting change, network/license interception or APK update is performed.
+
+Run: node scripts/inspect-orbit-playback.mjs after reproducing E100 inside Orbit while connected. If a safe JSON result is retained, save only that result under ignored .expo/device-tests. Do not request or save a full phone log. This snapshot excludes renderer and DRM-service processes and can miss filtered or absent release logs. A no_classified_signal result is inconclusive, not a healthy DRM result or evidence that no network/license request failed. Even a matched category is an observation, not a verified Netflix rejection reason.
+
+The five new tests cover process/tag exclusion, secret stripping, bounded counts/input and version-field filtering. They are included in test:netflix. Local lint/typecheck and all 112 application/database/developer-diagnostic tests pass. No new APK or native change was made. The Pixel is now authorized over USB, running Orbit 1.3.6. An initial bounded snapshot returned one matching warning line and no classified signal, which is inconclusive. A fresh reproduction was requested; that outcome has not yet been confirmed.
+
+## Next step
+
+Connect the Pixel, authorize USB debugging, reproduce E100 in the installed 1.3.6 desktop-profile screen and run the bounded checker. Keep credentials inside Netflix. Use concrete error evidence before changing the player. Actual Netflix video, automatic movie identity and real two-device sync remain unverified.
+
+The classifier stage patterns were checked against the [Chromium source matching the observed WebView release](https://chromium.googlesource.com/chromium/src/+/156.0.8078.47/media/base/android/java/src/org/chromium/media/MediaDrmBridge.java). No platform log message or opaque diagnostic value is published; only fixed stage names and counts leave the checker.
