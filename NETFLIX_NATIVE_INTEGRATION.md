@@ -1,5 +1,22 @@
 # Netflix native integration investigation
 
+## New public-catalog reader — November 13, 2026
+
+A concrete new source was recovered: Netflix's public title-page markup contains literal SeasonsConnection / EpisodesConnection records with canonical episode videoId, explicit season numbering, episode number, localized title and exact runtimeSec. Earlier JSON-only inspection missed them because the public payload uses JavaScript string escapes. The new tool parses only bounded public catalog syntax using the existing TypeScript compiler; it never executes site scripts or reads account/playback objects.
+
+Live verification succeeded on two official reference catalogs: series 80997085 (3 seasons / 30 episodes) and 80057281 (5 seasons / 42 episodes). In the first catalog, episode 3 of season 1 has canonical ID 80130306 and runtime 4087 seconds. The locally retained observed labels/number/duration produce that candidate; the user independently confirmed the reference series for this development test. This is a successful one-case catalog lookup, not production series binding or globally verified automatic identity.
+
+Source additions: scripts/lib/netflix-public-catalog.mjs, scripts/inspect-netflix-catalog.mjs and src/netflixCatalog.ts. The reusable matcher requires the supported observed subtitle format, consistent episode title/numbering and exact duration, returns ambiguity for cross-series collisions, and always leaves identityVerified and commandsAllowed false. No new native module, dependency, permission, server schema or APK was created. Neither the catalog tool nor matcher is wired into the shipped mobile app. Lint/typecheck and all 91 application/database tests pass. See [NETFLIX_CATALOG_IDENTITY.md](NETFLIX_CATALOG_IDENTITY.md).
+
+Next engineering work: establish independent series context and adequate catalog coverage, then design a validated binding to the actual player before allowing controls. Runtime/localization equality and a single match in a partial index are insufficient proof. Netflix's robots file publishes /sitemap/index; a bounded exploratory read exceeded its 1 MiB cap and was stopped. No child sitemap, background crawler, room upload or global index was started. A desktop-profile/WebView API review still supplies no new Netflix playback evidence, so no speculative browser build was made.
+
+## First 1.3.4 phone result — November 13, 2026
+
+The supplied v3 report confirms ready access, one active playing Netflix session, position 299771 ms, duration 4087000 ms and reported play/pause/seek capability. contentId remains null; both metadata ID fields are absent. The active-item diagnostic returns no_active_item, so its guard does not read a queue description. This does not establish that Netflix never publishes a queue; it establishes no usable active queue key in this snapshot. The standard title is usable but matches the preferred display title, so it supplies no additional series context in this test. No control test was run (lastTest null).
+
+The earlier version mismatch is resolved. Do not ask the user to reinstall 1.3.4 or repeat the same check. The report and supplied local labels are preserved only in ignored device-test files. The actual-ID control gate remains unchanged.
+
+
 ## November 12, 2026 development update
 
 The 1.3.3 physical comparison now confirms title/subtitle changes between two tested episodes, without a catalog ID. Bounded diagnostic-only active-item inspection and a separate standard-title readout are shipped in the verified 1.3.4 APK. All 37 pure Kotlin and 79 JavaScript/database tests pass; cloud native tests and the signed binary audit passed. Physical 1.3.4 results are pending and the actual player-identity gate is unchanged. See [active-item investigation](NETFLIX_ACTIVE_ITEM_TEST.md) and [current status](PROJECT_STATUS.md). The dated findings below are historical evidence.

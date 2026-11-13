@@ -1,5 +1,12 @@
 # Netflix active-item identity investigation
 
+## First 1.3.4 phone result — November 13, 2026
+
+The supplied v3 report confirms ready access, one active playing Netflix session, position 299771 ms, duration 4087000 ms and reported play/pause/seek capability. contentId remains null; both metadata ID fields are absent. The active-item diagnostic returns no_active_item, so its guard does not read a queue description. This does not establish that Netflix never publishes a queue; it establishes no usable active queue key in this snapshot. The standard title is usable but matches the preferred display title, so it supplies no additional series context in this test. No control test was run (lastTest null).
+
+The earlier version mismatch is resolved. Do not ask the user to reinstall 1.3.4 or repeat the same check. The report and supplied local labels are preserved only in ignored device-test files. The actual-ID control gate remains unchanged.
+
+
 ## Phone version clarified — November 13, 2026
 
 The user supplied another v2 report and the two local display lines. Those lines contain an episode title plus a season/episode designation with the same episode title; no series name is present. Raw user-supplied labels are stored only in ignored local device-test evidence. No series, catalog identity or cross-user match was inferred.
