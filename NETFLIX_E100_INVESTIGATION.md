@@ -39,3 +39,7 @@ The classifier stage patterns were checked against the [Chromium source matching
 The [1.3.7/code 14 APK](https://expo.dev/artifacts/eas/FonAGNhlATyPAdbHWf757aDngZ5423Me0w-1tyUwJQQ.apk) is verified from build d365e4b3-5ccb-4914-ae8f-28b1d925947d, source f3fa73ef217c72c77403f225de93ebfc51ad979e. Its matching signature, unchanged declared permissions, standalone/ARM64 release, keyboard/callback configuration and actual JS/DEX diagnostic markers passed inspection. The native error check is inactive until Details → Start error check; a process-local window number excludes stale windows and is omitted from exported summaries. The browser report stays in-app v3; PC tool v3 carries the new fixed counter evidence. No raw console text/source/line, URL/headers/body or DRM material is retained/exported by the recorder. No playback/DRM setting was relaxed.
 
 The USB phone is currently unavailable; installation and the new physical check are pending reconnection. Keep the existing app data, install as an update, sign in only through Netflix if needed, start the error check before trying Play and leave Orbit open for the bounded PC read. Do not claim the update resolves E100 or ask for another old report.
+
+## Connected installation
+
+The user reconnected/authorized the Pixel. The hash-pinned 1.3.7 APK was installed successfully using adb install -r, without clearing app data; package metadata confirms 1.3.7/code14, and Orbit was launched. The opt-in check-before-Play reproduction was requested. No new physical playback or counter outcome has been received yet.
