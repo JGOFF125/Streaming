@@ -2,7 +2,7 @@
 
 ## Browser lifecycle correction before delivery
 
-The first 1.3.6 build, 16210190-f066-4bd1-acb2-9b7c0598ec3f, was canceled before delivery to include an inactive-state correction: clearing browser data, startup failure and renderer loss now cancel the pending active request, preventing a later props update from reopening that surface. The signed replacement will use a new build/source identifier. No canceled artifact is offered.
+The first 1.3.6 build, 16210190-f066-4bd1-acb2-9b7c0598ec3f, was canceled before delivery to include an inactive-state correction: clearing browser data, startup failure, invalid top-level navigation and renderer loss now cancel the pending active request, preventing a later props update from reopening that surface. The signed replacement will use a new build/source identifier. No canceled artifact is offered.
 
 ## 1.3.6 build submitted — November 13, 2026
 

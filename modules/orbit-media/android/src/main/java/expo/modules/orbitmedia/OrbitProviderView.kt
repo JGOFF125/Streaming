@@ -155,6 +155,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
       pageFailed = false
       if (url == null || !OrbitProviderPolicy.allowsNavigation(url)) {
         pageFailed = true
+        activeRequested=false
         close()
         emit("navigation_blocked")
       } else {
