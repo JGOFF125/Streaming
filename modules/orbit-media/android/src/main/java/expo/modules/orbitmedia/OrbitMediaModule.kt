@@ -183,7 +183,7 @@ class OrbitMediaModule : Module() {
       },
       "positionMs" to position(state, duration), "durationMs" to duration, "contentId" to identity.contentId,
       // These labels are local UI evidence only, excluded from shared diagnostics and room requests.
-      "displayMetadata" to mapOf("titleLabel" to labels.titleLabel, "subtitleLabel" to labels.subtitleLabel,
+      "displayMetadata" to mapOf("titleLabel" to labels.titleLabel, "standardTitleLabel" to labels.standardTitleLabel, "subtitleLabel" to labels.subtitleLabel,
         "descriptionLabel" to labels.descriptionLabel, "titleSource" to labels.titleSource,
         "titlePresent" to labels.titlePresent, "displayTitlePresent" to labels.displayTitlePresent,
         "subtitlePresent" to labels.subtitlePresent, "descriptionPresent" to labels.descriptionPresent),

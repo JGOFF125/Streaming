@@ -69,16 +69,16 @@ test('display evidence never exports raw titles, episode details, or arbitrary f
   assert.equal(parsed.automaticMovieIdentificationVerified,false);
   assert.equal(parsed.snapshot.displayEvidence.titleSource,'display_title');
   assert.equal(parsed.lastTest.before.displayEvidence.subtitlePresent,true);
-  assert.deepEqual(parsed.labelComparison,{available:true,titleChanged:true,subtitleChanged:false,descriptionChanged:true});
+  assert.deepEqual(parsed.labelComparison,{available:true,titleChanged:true,subtitleChanged:false,descriptionChanged:true,standardTitleChanged:false});
 });
 
 
 test('label comparisons distinguish episodes without inventing catalog identity', () => {
   const first={titleLabel:'Fictional series',subtitleLabel:'Episode one',descriptionLabel:null};
-  assert.deepEqual(compareNetflixLabels(first,{...first}),{available:true,titleChanged:false,subtitleChanged:false,descriptionChanged:false});
-  assert.deepEqual(compareNetflixLabels(first,{...first,subtitleLabel:'Episode two'}),{available:true,titleChanged:false,subtitleChanged:true,descriptionChanged:false});
+  assert.deepEqual(compareNetflixLabels(first,{...first}),{available:true,standardTitleChanged:false,titleChanged:false,subtitleChanged:false,descriptionChanged:false});
+  assert.deepEqual(compareNetflixLabels(first,{...first,subtitleLabel:'Episode two'}),{available:true,standardTitleChanged:false,titleChanged:false,subtitleChanged:true,descriptionChanged:false});
   assert.equal(compareNetflixLabels(first,{...first,titleLabel:'Different movie'}).titleChanged,true);
-  assert.deepEqual(compareNetflixLabels(first,null),{available:false,titleChanged:false,subtitleChanged:false,descriptionChanged:false});
+  assert.deepEqual(compareNetflixLabels(first,null),{available:false,standardTitleChanged:false,titleChanged:false,subtitleChanged:false,descriptionChanged:false});
   assert.equal(compareNetflixLabels(first,{titleLabel:''}).available,false);
 });
 
@@ -113,4 +113,26 @@ test('queue diagnostics reject opaque candidates and suppress conflicted identit
     assert.equal(parsed.snapshot.queueEvidence.status,status===secret?'unavailable':status);
   }
   assert.equal(JSON.parse(netflixReport(ready,null)).snapshot.queueEvidence,null);
+});
+
+
+test('alternate provider titles remain local while equality and changes are exportable', () => {
+  const secret='private_alternate_title';
+  const first={titleLabel:'Episode one',standardTitleLabel:secret,subtitleLabel:'S1 E1'};
+  const second={titleLabel:'Episode two',standardTitleLabel:secret,subtitleLabel:'S1 E2'};
+  const comparison=compareNetflixLabels(first,second);
+  assert.equal(comparison.titleChanged,true);
+  assert.equal(comparison.standardTitleChanged,false);
+  assert.equal(compareNetflixLabels(first,{...second,standardTitleLabel:'Other series'}).standardTitleChanged,true);
+  const snapshot={...ready,displayMetadata:first};
+  const report=netflixReport(snapshot,{command:'pause',status:'observed',reason:'state_changed',before:snapshot,after:snapshot},comparison);
+  assert.doesNotMatch(report,/private_alternate_title|standardTitleLabel/);
+  const parsed=JSON.parse(report);
+  assert.equal(parsed.snapshot.displayEvidence.usableStandardTitlePresent,true);
+  assert.equal(parsed.snapshot.displayEvidence.standardTitleMatchesPrimary,false);
+  assert.equal(parsed.lastTest.before.displayEvidence.standardTitleMatchesPrimary,false);
+  assert.equal(parsed.labelComparison.standardTitleChanged,false);
+  assert.equal(parsed.diagnostic,'Orbit Netflix controls v3');
+  assert.equal(JSON.parse(netflixReport({...ready,displayMetadata:{titleLabel:secret,standardTitleLabel:secret}},null)).snapshot.displayEvidence.standardTitleMatchesPrimary,true);
+  assert.equal(JSON.parse(netflixReport({...ready,displayMetadata:{titleLabel:'Episode'}},null)).snapshot.displayEvidence.standardTitleMatchesPrimary,null);
 });

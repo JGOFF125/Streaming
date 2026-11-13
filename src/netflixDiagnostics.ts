@@ -1,15 +1,15 @@
 export type MediaCommand = 'play' | 'pause' | 'seek';
 export type NetflixDisplayLabels = {
   // Raw labels stay in local screen memory; netflixReport exports only evidence flags.
-  titleLabel?: string | null; subtitleLabel?: string | null; descriptionLabel?: string | null;
+  titleLabel?: string | null; standardTitleLabel?: string | null; subtitleLabel?: string | null; descriptionLabel?: string | null;
   titleSource?: string; titlePresent?: boolean; displayTitlePresent?: boolean;
   subtitlePresent?: boolean; descriptionPresent?: boolean;
 };
-export type NetflixLabelComparison = { available: boolean; titleChanged: boolean; subtitleChanged: boolean; descriptionChanged: boolean };
+export type NetflixLabelComparison = { available: boolean; titleChanged: boolean; subtitleChanged: boolean; descriptionChanged: boolean; standardTitleChanged?: boolean };
 export function compareNetflixLabels(before: NetflixDisplayLabels | null, after: NetflixDisplayLabels | null): NetflixLabelComparison {
   const available = typeof before?.titleLabel === 'string' && !!before.titleLabel &&
     typeof after?.titleLabel === 'string' && !!after.titleLabel;
-  return { available, titleChanged: available && before!.titleLabel !== after!.titleLabel,
+  return { available, standardTitleChanged: available && (before!.standardTitleLabel ?? null) !== (after!.standardTitleLabel ?? null), titleChanged: available && before!.titleLabel !== after!.titleLabel,
     subtitleChanged: available && (before!.subtitleLabel ?? null) !== (after!.subtitleLabel ?? null),
     descriptionChanged: available && (before!.descriptionLabel ?? null) !== (after!.descriptionLabel ?? null) };
 }
@@ -98,13 +98,16 @@ export function netflixReport(snapshot: NetflixSnapshot | null, result: NetflixT
       titlePresent: value.displayMetadata.titlePresent === true, displayTitlePresent: value.displayMetadata.displayTitlePresent === true,
       subtitlePresent: value.displayMetadata.subtitlePresent === true, descriptionPresent: value.displayMetadata.descriptionPresent === true,
       usableTitleLabelPresent: typeof value.displayMetadata.titleLabel === 'string' && !!value.displayMetadata.titleLabel,
+      usableStandardTitlePresent: typeof value.displayMetadata.standardTitleLabel === 'string' && !!value.displayMetadata.standardTitleLabel,
+      standardTitleMatchesPrimary: typeof value.displayMetadata.standardTitleLabel === 'string' && !!value.displayMetadata.standardTitleLabel && typeof value.displayMetadata.titleLabel === 'string' && !!value.displayMetadata.titleLabel
+        ? value.displayMetadata.standardTitleLabel === value.displayMetadata.titleLabel : null,
     } : null,
     canPlay: value.canPlay, canPause: value.canPause, canSeek: value.canSeek,
   } : null;
   return JSON.stringify({
-    diagnostic: 'Orbit Netflix controls v2',
+    diagnostic: 'Orbit Netflix controls v3',
     automaticMovieIdentificationVerified: false,
-    labelComparison: comparison ? { available: comparison.available === true, titleChanged: comparison.titleChanged === true, subtitleChanged: comparison.subtitleChanged === true, descriptionChanged: comparison.descriptionChanged === true } : null,
+    labelComparison: comparison ? { available: comparison.available === true, titleChanged: comparison.titleChanged === true, subtitleChanged: comparison.subtitleChanged === true, descriptionChanged: comparison.descriptionChanged === true, standardTitleChanged: comparison.standardTitleChanged === true } : null,
     automaticSyncVerified: false,
     snapshot: describe(snapshot),
     lastTest: result ? {

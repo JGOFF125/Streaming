@@ -48,7 +48,7 @@ export default function NetflixCheckPanel() {
       'This optional Android notification-access grant is broad and is not restricted to Netflix. Orbit ignores notification text and uses access only for Netflix media controls. Google sign-in and rooms work without it. You can review or revoke access in Android settings at any time.', [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Open Android settings', onPress: () => {
-          void netflixMedia?.openAccessSettings().catch(() => setMessage('Open Android Settings and search for Notification access, then choose Orbit Netflix controls.'));
+          void netflixMedia?.openAccessSettings().catch(() => setMessage('Open Android Settings and search for Notification access, then choose Orbit Netflix controls. These controls are experimental tests.'));
         } },
       ]);
   }
@@ -114,6 +114,10 @@ export default function NetflixCheckPanel() {
         {snapshot.displayMetadata && <>
           <Text style={s.note}>Netflix’s display labels · local to this screen</Text>
           <Text numberOfLines={3} style={s.readout}>{snapshot.displayMetadata.titleLabel ?? 'No useful title label reported'}</Text>
+          {!!snapshot.displayMetadata.standardTitleLabel && snapshot.displayMetadata.standardTitleLabel !== snapshot.displayMetadata.titleLabel && <>
+            <Text style={s.note}>Alternate title reported by Netflix</Text>
+            <Text numberOfLines={3} style={s.readout}>{snapshot.displayMetadata.standardTitleLabel}</Text>
+          </>}
           {!!snapshot.displayMetadata.subtitleLabel && <Text numberOfLines={3} style={s.note}>{snapshot.displayMetadata.subtitleLabel}</Text>}
           {!!snapshot.displayMetadata.descriptionLabel && <Text numberOfLines={4} style={s.note}>{snapshot.displayMetadata.descriptionLabel}</Text>}
           <Text style={s.note}>These are Netflix’s reported labels, not a verified unique movie/episode ID. Automatic sync still requires verified identity. Raw labels stay in memory and are excluded from shared diagnostics.</Text>
@@ -122,11 +126,14 @@ export default function NetflixCheckPanel() {
           }} />
           {!!labelComparison && <>
             <Text style={s.note}>{labelComparison.available
-              ? 'Compared with remembered labels: title ' + (labelComparison.titleChanged ? 'changed' : 'same') + ' · subtitle ' + (labelComparison.subtitleChanged ? 'changed' : 'same') + ' · description ' + (labelComparison.descriptionChanged ? 'changed' : 'same')
+              ? 'Compared with remembered labels: title ' + (labelComparison.titleChanged ? 'changed' : 'same') + ' · subtitle ' + (labelComparison.subtitleChanged ? 'changed' : 'same') + ' · alternate title ' + (labelComparison.standardTitleChanged ? 'changed' : 'same') + ' · description ' + (labelComparison.descriptionChanged ? 'changed' : 'same')
               : 'Comparison unavailable: a useful title label is missing.'}</Text>
             <Button label="Forget remembered labels" disabled={testing} onPress={() => setLabelBaseline(null)} />
           </>}
         </>}
+        {snapshot.queueEvidence && <Text style={s.note}>{snapshot.queueEvidence.status === 'candidate'
+          ? 'Active Netflix item reports candidate catalog ID ' + snapshot.queueEvidence.candidateContentId + '. This is not yet verified for synchronization.'
+          : 'The active Netflix item has not supplied a usable catalog ID. The shared diagnostic includes the result of this check.'}</Text>}
         <Text style={s.note}>Reported controls: play {snapshot.canPlay ? 'yes' : 'no'} · pause {snapshot.canPause ? 'yes' : 'no'} · seek {snapshot.canSeek ? 'yes' : 'no'}</Text>
       </>}
       {snapshot?.access === 'ready' && <>

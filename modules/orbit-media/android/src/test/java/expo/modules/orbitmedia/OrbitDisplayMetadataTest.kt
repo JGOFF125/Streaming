@@ -7,6 +7,7 @@ class OrbitDisplayMetadataTest {
   @Test fun prefersProviderDisplayTitleAndKeepsEpisodeDetailsSeparate() {
     val labels=OrbitDisplayMetadata.read("Series", "Other formatting", "S1 E2", "Episode title")
     assertEquals("Series", labels.titleLabel)
+    assertEquals("Other formatting", labels.standardTitleLabel)
     assertEquals("display_title", labels.titleSource)
     assertEquals("S1 E2", labels.subtitleLabel)
     assertEquals("Episode title", labels.descriptionLabel)
@@ -32,7 +33,13 @@ class OrbitDisplayMetadataTest {
     assertEquals("x".repeat(511)+"🌙",OrbitDisplayMetadata.read("x".repeat(511)+"🌙Z",null,null,null).titleLabel)
   }
   @Test fun objectDiagnosticsDoNotIncludeRawProviderLabels() {
-    val labels=OrbitDisplayMetadata.read("Private title",null,"Private episode","Private description")
+    val labels=OrbitDisplayMetadata.read("Private title","Private alternate title","Private episode","Private description")
     assertFalse(labels.toString().contains("Private"))
+  }
+  @Test fun keepsAlternateTitleBoundedAndRejectsGenericValues() {
+    assertNull(OrbitDisplayMetadata.read("Episode", "Netflix", null, null).standardTitleLabel)
+    assertNull(OrbitDisplayMetadata.read("Episode", "x".repeat(4097), null, null).standardTitleLabel)
+    assertEquals(512, OrbitDisplayMetadata.read("Episode", "x".repeat(1000), null, null).standardTitleLabel!!.length)
+    assertEquals("Café", OrbitDisplayMetadata.read("Episode", "Café", null, null).standardTitleLabel)
   }
 }

@@ -4,7 +4,7 @@ import java.text.Normalizer
 
 /** Display evidence only. Never creates a catalog identity or enters the shared timeline. */
 internal class OrbitDisplayLabels(
-  val titleLabel: String?, val subtitleLabel: String?, val descriptionLabel: String?,
+  val titleLabel: String?, val standardTitleLabel: String?, val subtitleLabel: String?, val descriptionLabel: String?,
   val titleSource: String, val titlePresent: Boolean, val displayTitlePresent: Boolean,
   val subtitlePresent: Boolean, val descriptionPresent: Boolean
 ) {
@@ -16,7 +16,7 @@ internal object OrbitDisplayMetadata {
   fun read(displayTitle: CharSequence?, title: CharSequence?, subtitle: CharSequence?, description: CharSequence?): OrbitDisplayLabels {
     val display = clean(displayTitle); val standard = clean(title)
     val primary = useful(display) ?: useful(standard)
-    return OrbitDisplayLabels(primary, useful(clean(subtitle)), useful(clean(description)),
+    return OrbitDisplayLabels(primary, useful(standard), useful(clean(subtitle)), useful(clean(description)),
       when { useful(display) != null -> "display_title"; useful(standard) != null -> "title"; else -> "unavailable" },
       standard != null, display != null, clean(subtitle) != null, clean(description) != null)
   }

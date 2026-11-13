@@ -1,5 +1,12 @@
 # Netflix display-label evidence — 1.3.3
 
+## Different-episode result — November 12, 2026
+
+The user supplied the follow-up 1.3.3 report after the requested episode change. The remembered-label comparison is available: titleChanged and subtitleChanged are true; descriptionChanged is false (description remains absent). The new playing session has position 15869 ms and duration 4087000 ms; the earlier same-episode report had duration 3492000 ms. Both reports expose useful DISPLAY_TITLE and subtitle fields, no MEDIA_ID/MEDIA_URI and null contentId.
+
+This establishes observed label discrimination across these two tested episodes on this phone. It does not establish globally unique identity, cross-language matching, a catalog resolver, embedded Netflix playback or two-device sync. No raw names were included. The pending local-title clarification asks whether the labels also identify the series; no series identity is inferred from season/episode numbers alone.
+
+
 ## Physical label result — November 12, 2026
 
 The user reports the 1.3.3 local display shows the episode name, season and episode number. The supplied v2 report confirms DISPLAY_TITLE was selected, title/display-title/subtitle fields are present, description is absent and the title is usable. The playing session reports position 27440 ms, duration 3492000 ms and play/pause/seek support. MEDIA_ID and MEDIA_URI remain absent; contentId is null.
