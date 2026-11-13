@@ -1,5 +1,9 @@
 # Orbit — current status
 
+## 1.3.5 build submitted — November 13, 2026
+
+Build 5625c7ba-5626-43bc-aead-37f32f35df6f is building version 1.3.5 (Android code 12) from source 40d122601f976828c117d9dcc8ce2391c0a2dc45. Local checks and Android/Hermes export passed. Cloud native tests, release assembly and the pinned APK audit remain pending. The artifact is not yet verified for delivery. Private build files are in .expo/recognition-build; do not resubmit this build just to check its status.
+
 ## 1.3.5 prepared — local automatic candidates and provider context
 
 November 13, 2026. Version 1.3.5 (Android code 12) now connects the public-catalog matcher to the phone diagnostic panel. It automatically checks fresh player snapshots against two explicit development reference series, with 72 unique episodes / 144 localized Spanish-English records. Context fields ALBUM, ARTIST and ALBUM_ARTIST are read only through the existing authorized Netflix-filtered MediaController; they are generic media fields, not documented Netflix series IDs. A distinct standard title can also supply context evidence. Missing, repeated, contradictory or ambiguous context cannot establish identity. The native control planner skips the extra evidence fields and still requires its original actual catalog ID.
