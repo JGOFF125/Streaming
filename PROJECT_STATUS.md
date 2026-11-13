@@ -1,5 +1,18 @@
 # Orbit — current status
 
+## Current verified APK — 1.3.5, November 13, 2026
+
+The [Orbit 1.3.5 standalone APK](https://expo.dev/artifacts/eas/NqXW_052iDqGIz72-kIWeFG6qpDm9O0L4w5uw0nT0AM.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/5625c7ba-5626-43bc-aead-37f32f35df6f)) passed full native compilation, the non-skipped native test task, release assembly and the final binary audit. Source 40d122601f976828c117d9dcc8ce2391c0a2dc45; Android code 12. Local lint/typecheck, all 104 JavaScript/database tests, all 42 pure Kotlin tests and Android Metro/Hermes export passed.
+
+APK size 91913337 bytes; SHA-256 7550604abd0be842a9042a1aca1b2827d3f0e227fa55f2f47ab040d50788459d. Its signing certificate matches prior Orbit APKs. The standalone app, ARM64, disabled backup, non-debuggable release, keyboard adjustResize and Google callback scheme were verified. Declared permissions remain only INTERNET and the app-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION. The existing optional broad Android notification-listener grant remains separate; no overlay, microphone or foreground-service permission was added. Inspection of the actual bundled JavaScript confirms v4 (not v3), the automatic local candidate panel, context evidence and installed-build reporting.
+
+The new local check runs automatically on fresh active-player snapshots against two public development reference series (Narcos: Mexico and Stranger Things), 72 unique episode IDs / 144 localized records in Spanish and English. It reports episode candidates and distinct-context support/conflicts, with every identityVerified and commandsAllowed flag remaining false. Standard ALBUM/ARTIST/ALBUM_ARTIST context is inspected locally but its availability/series meaning on the physical phone is unknown. Raw labels are excluded from shared reports, and no phone labels are uploaded to a backend or search engine by this feature. The actual-ID native playback gate is unchanged.
+
+Next phone action: install the 1.3.5 update, play a reference-series episode in official Netflix, Home into PiP, Orbit → Netflix controls check → Refresh check → Share diagnostic result. The panel should say v4 / installed 1.3.5 / build 12; inspect catalogRecognition and contextEvidence, and ask whether any additional local label actually names the series. Remember labels is not needed. This is not the earlier v3 active-queue test. Physical local recognition/context, automatic unique movie identity, embedded Netflix rendering and real two-device synchronization are still unverified. See [NETFLIX_RECOGNITION_TEST.md](NETFLIX_RECOGNITION_TEST.md).
+
+No live build watcher or artifact verifier remains. The checkout and GitHub are synchronized after this record. No Google/Supabase settings, database schema, streaming account, dependency or service was changed.
+
+
 ## 1.3.5 build submitted — November 13, 2026
 
 Build 5625c7ba-5626-43bc-aead-37f32f35df6f is building version 1.3.5 (Android code 12) from source 40d122601f976828c117d9dcc8ce2391c0a2dc45. Local checks and Android/Hermes export passed. Cloud native tests, release assembly and the pinned APK audit remain pending. The artifact is not yet verified for delivery. Private build files are in .expo/recognition-build; do not resubmit this build just to check its status.
