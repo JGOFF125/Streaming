@@ -1,6 +1,6 @@
 # Optional desktop compatibility profile — 1.3.6
 
-November 13, 2026. Prepared implementation; signed build and physical playback checks pending. No working Netflix movie or sync is claimed.
+November 13, 2026. Signed [Orbit 1.3.6 APK](https://expo.dev/artifacts/eas/a57UvL-jBjoYrtb0GlEvuc5Wa03UDNXSyV2Uj2rVaA0.apk) verified: build 200f743a-78c7-4a81-b7ff-2f2cdf784279, source 2377c3520b2eaf4b9ec37b61afe730d33874771a, Android code 13. Physical playback remains pending. No working Netflix movie or sync is claimed.
 
 ## Evidence and reason for the experiment
 
@@ -23,7 +23,7 @@ Android documents that user-agent metadata controls WebView Client Hints and rec
 
 ## Verification and one-phone acceptance
 
-Local lint/typecheck, 107 JavaScript/database tests, 46 pure Kotlin tests, the AndroidX configurator compile and Android Metro/Hermes export passed. Full cloud native build and signed APK audit are pending; use the verified APK link only after delivery is recorded here.
+Local lint/typecheck, 107 JavaScript/database tests, 46 pure Kotlin tests, the AndroidX configurator compile and Android Metro/Hermes export passed. Full cloud native tests/release assembly and the signed APK audit also passed. The signature matches earlier Orbit updates, no declared permission was added, and actual bundled JavaScript contains the new action and in-app v3 report. These checks do not verify physical playback.
 
 After delivery: install 1.3.6 as an update, open Netflix inside Orbit → Open Netflix test screen → Try desktop compatibility profile. Stay inside Orbit, sign in only on Netflix's official page if needed, and attempt actual episode video and sound. If Netflix requests protected playback, the existing separate consent is required. Movie played means real protected program video/audio inside Orbit, not a trailer, sign-in page, external app or PiP.
 

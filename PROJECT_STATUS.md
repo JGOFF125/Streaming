@@ -1,8 +1,20 @@
 # Orbit — current status
 
+## Verified delivery — 1.3.6, November 13, 2026
+
+[Orbit 1.3.6 standalone APK](https://expo.dev/artifacts/eas/a57UvL-jBjoYrtb0GlEvuc5Wa03UDNXSyV2Uj2rVaA0.apk) ([finished Android build](https://expo.dev/accounts/jgoff/projects/orbit/builds/200f743a-78c7-4a81-b7ff-2f2cdf784279)). Version 1.3.6 / code 13; source 2377c3520b2eaf4b9ec37b61afe730d33874771a. Full debug/release native compilation, the non-skipped native test task, release assembly and BUILD SUCCESSFUL were verified. Final-source lint/typecheck pass; 107 JavaScript/database tests, 46 pure Kotlin tests, the AndroidX configurator compile and Android/Hermes export passed during preparation. No physical 1.3.6 playback result has been received.
+
+The actual APK passed signature, package/version, standalone bundle, ARM64, non-debuggable release, disabled backup, keyboard adjustResize and Google callback registration checks. Its certificate matches prior updates. Size 91932550 bytes; SHA-256 03a24e3a37d3eada5086aa5b29d59aadf4633ac6f6c65e1565c87300b5cd9882. Declared permissions remain INTERNET and the app-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION only. The existing optional broad notification-listener grant remains separate; this browser test does not use it. No overlay, microphone or foreground-service permission was added. Actual bundled JavaScript contains the desktop-profile action, profile evidence, in-app Netflix v3 (not v2), and the separate external-controls v4 report.
+
+This release adds only an optional browser compatibility experiment and lifecycle corrections, not working Netflix playback or synchronization. The user’s physical 1.3.5 candidate-only result is saved; independent series context and actual catalog identity remain absent. The actual-ID control gate stays unchanged. Default browser, Chrome Desktop site and Firefox failures remain valid evidence; an applied profile or loaded page does not prove a movie plays. Text/voice chat and real two-device sync remain unfinished.
+
+Next one-phone action: Install 1.3.6 as an update, then Netflix inside Orbit → Open Netflix test screen → Try desktop compatibility profile. Stay in Orbit, sign in only on Netflix’s official page if needed, and try actual movie/episode video with sound. In Results select the observed outcome and copy the Orbit in-app Netflix v3 report; include any short provider error without passwords or login codes. Do not repeat the external controls v4 snapshot or count official-app/PiP playback as this result.
+
+All build/artifact verification processes are terminal; no live build watcher remains. The existing VS Code checkout and GitHub contain the implementation. Four existing vendor-inquiry threads were checked November 13: each still contains only its sent inquiry, with no reply or new follow-up. No Supabase, Google, database schema or streaming-account settings were changed. See [NETFLIX_DESKTOP_PROFILE_TEST.md](NETFLIX_DESKTOP_PROFILE_TEST.md).
+
 ## Browser lifecycle correction before delivery
 
-The first 1.3.6 build, 16210190-f066-4bd1-acb2-9b7c0598ec3f, was canceled before delivery to include an inactive-state correction: clearing browser data, startup failure, invalid top-level navigation and renderer loss now cancel the pending active request, preventing a later props update from reopening that surface. The signed replacement will use a new build/source identifier. No canceled artifact is offered.
+The first 1.3.6 build, 16210190-f066-4bd1-acb2-9b7c0598ec3f, was canceled before delivery to include an inactive-state correction: clearing browser data, startup failure, invalid top-level navigation and renderer loss now cancel the pending active request, preventing a later props update from reopening that surface. The verified replacement is build 200f743a-78c7-4a81-b7ff-2f2cdf784279 from source 2377c3520b2eaf4b9ec37b61afe730d33874771a. No canceled artifact is offered.
 
 ## Replacement 1.3.6 build submitted — November 13, 2026
 
@@ -26,7 +38,7 @@ The user supplied a v4 report with installed Orbit 1.3.5 / code 12. The on-phone
 All ALBUM/ARTIST/ALBUM_ARTIST presence and usable flags are false; distinctContextPresent is false and matchedContextSeriesCount is zero. Standard title equals preferred display title, metadata ID/URI remain absent and no active queue key is reported. This snapshot supplies no independent series context or trusted movie ID. lastTest is null: no new play/pause/seek acknowledgment was tested. Unchanged remembered-label flags are not an episode-transition failure without a known comparison baseline. No repeat of this same metadata test is requested.
 
 
-## Current verified APK — 1.3.5, November 13, 2026
+## Earlier verified APK — 1.3.5, November 13, 2026
 
 The [Orbit 1.3.5 standalone APK](https://expo.dev/artifacts/eas/NqXW_052iDqGIz72-kIWeFG6qpDm9O0L4w5uw0nT0AM.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/5625c7ba-5626-43bc-aead-37f32f35df6f)) passed full native compilation, the non-skipped native test task, release assembly and the final binary audit. Source 40d122601f976828c117d9dcc8ce2391c0a2dc45; Android code 12. Local lint/typecheck, all 104 JavaScript/database tests, all 42 pure Kotlin tests and Android Metro/Hermes export passed.
 
@@ -34,7 +46,7 @@ APK size 91913337 bytes; SHA-256 7550604abd0be842a9042a1aca1b2827d3f0e227fa55f2f
 
 The new local check runs automatically on fresh active-player snapshots against two public development reference series (Narcos: Mexico and Stranger Things), 72 unique episode IDs / 144 localized records in Spanish and English. It reports episode candidates and distinct-context support/conflicts, with every identityVerified and commandsAllowed flag remaining false. Standard ALBUM/ARTIST/ALBUM_ARTIST context is inspected locally but its availability/series meaning on the physical phone is unknown. Raw labels are excluded from shared reports, and no phone labels are uploaded to a backend or search engine by this feature. The actual-ID native playback gate is unchanged.
 
-Next phone action: install the 1.3.5 update, play a reference-series episode in official Netflix, Home into PiP, Orbit → Netflix controls check → Refresh check → Share diagnostic result. The panel should say v4 / installed 1.3.5 / build 12; inspect catalogRecognition and contextEvidence, and ask whether any additional local label actually names the series. Remember labels is not needed. This is not the earlier v3 active-queue test. Physical local recognition/context, automatic unique movie identity, embedded Netflix rendering and real two-device synchronization are still unverified. See [NETFLIX_RECOGNITION_TEST.md](NETFLIX_RECOGNITION_TEST.md).
+The physical 1.3.5 v4 result has now been received and recorded above: candidate lookup worked, independent context did not appear. Do not repeat that metadata snapshot. Embedded playback, automatic unique identity and real sync remain unverified. See NETFLIX_RECOGNITION_TEST.md.
 
 No live build watcher or artifact verifier remains. The checkout and GitHub are synchronized after this record. No Google/Supabase settings, database schema, streaming account, dependency or service was changed.
 
@@ -79,7 +91,7 @@ The report has null labelComparison, no catalog metadata IDs, no alternate-title
 Next action: install the existing verified [1.3.4 APK](https://expo.dev/artifacts/eas/kr4Un0yU-CVd0rxNq28Jkgug96udFXP_VFvcX4RmV4c.apk) using Android's Update action, launch Orbit from its icon, play Netflix in PiP, refresh and share a fresh v3 report. If installation fails, ask for its error text before changing signing/version configuration. Physical active-item/alternate-title evidence is still pending. Actual movie identity, embedded playback and real sync remain unverified.
 
 
-## Current verified APK — 1.3.4, November 12, 2026
+## Earlier verified APK — 1.3.4, November 12, 2026
 
 The [Orbit 1.3.4 standalone APK](https://expo.dev/artifacts/eas/kr4Un0yU-CVd0rxNq28Jkgug96udFXP_VFvcX4RmV4c.apk) ([finished cloud build](https://expo.dev/accounts/jgoff/projects/orbit/builds/474dd23a-6fdf-4ceb-81fa-8d04ca160aaf)) passed native compilation, the non-skipped native test task, release assembly and binary audit. Source cda81ffaac4e1df4c7ef5efc8bc07cd2429eb840; Android code 11. Local lint/typecheck, all 79 JavaScript/database tests and all 37 pure Kotlin tests passed. APK size 91891281 bytes; SHA-256 2ab2b9264d791ff2c4eadc49a7674cc873942c27dd6a5069291a38ee72753ffa. The signature matches previous Orbit releases; ARM64, the bundled app, disabled backup, keyboard adjustResize and the Google callback scheme were verified. Only INTERNET and the app-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION are declared. The existing optional broad notification-access grant remains separate; no overlay, microphone or foreground-service permission was added.
 
@@ -154,7 +166,7 @@ A concrete identity-parser gap was fixed: the prior native adapter ignored MEDIA
 Automatic approval review rejected the proposed SYSTEM_ALERT_WINDOW expansion; that command did not run. No overlay source, permission or service was added. The concrete optional test design is documented for review; the safer PiP comparison is being pursued independently.
 
 
-## Current verified APK: 1.3.3
+## Earlier verified APK: 1.3.3
 
 The [Orbit 1.3.3 standalone APK](https://expo.dev/artifacts/eas/SxPOeZ9g3XBE8WCwhQD7tVZeu2TqFmrI11mpbXTAqO4.apk) ([successful build](https://expo.dev/accounts/jgoff/projects/orbit/builds/d5822f62-814f-4850-83df-1020cf085282)) is verified, from source 11598a93d5bfbd475c01c2d96cc506547ca252be. The cloud native test task ran without being skipped, Gradle and release assembly succeeded, and binary inspection verified the same signing certificate, bundled app, ARM64 support, disabled backup, keyboard adjustResize and the Google callback scheme. The declared permissions remain INTERNET and the app-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION; the existing optional broad notification-listener grant remains separate. APK size 91889833 bytes; SHA-256 a6cf257940136736b7093f067576113776471cc690b089eb1993ba18bbbe6feb. Physical label capture, reliable automatic movie/episode identification, embedded Netflix playback and two-device sync are not yet verified.
 
