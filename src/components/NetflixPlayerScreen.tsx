@@ -4,8 +4,8 @@ import { Keyboard, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableO
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { embeddedNetflixReport, initialBrowserHistory, readBrowserStatus, recordBrowserEvent } from '../embeddedNetflixDiagnostics';
 import { netflixContentId } from '../playbackClient';
-import type { BrowserStatus, Observation, NetflixEntryPoint } from '../embeddedNetflixDiagnostics';
-import { NetflixProviderView as Browser, providerModule, directPageCommandsReady } from './NetflixProviderView';
+import type { BrowserStatus, Observation, NetflixEntryPoint, BrowserProfile } from '../embeddedNetflixDiagnostics';
+import { NetflixProviderView as Browser, providerModule, directPageCommandsReady, desktopProfileReady } from './NetflixProviderView';
 
 const messages: Record<string, string> = {
   loading: 'Loading Netflix…',
@@ -27,10 +27,13 @@ const messages: Record<string, string> = {
   file_upload_blocked: 'File uploads are disabled.',
   fullscreen_unavailable: 'Use the page inside this screen; website fullscreen is unavailable.',
   background_closed: 'Orbit left the foreground. Reopen the website to continue.',
+  desktop_profile_applied: 'Desktop compatibility settings applied · playback unverified',
+  browser_profile_unavailable: 'This WebView could not apply the desktop profile. The standard profile remains available.',
 };
 
 export default function NetflixPlayerScreen() {
   const [open, setOpen] = useState(false);
+  const [browserProfile, setBrowserProfile] = useState<BrowserProfile>('system');
   const [clearing, setClearing] = useState(false);
   const [command, setCommand] = useState('');
   const [status, setStatus] = useState<BrowserStatus | null>(null);
@@ -46,7 +49,9 @@ export default function NetflixPlayerScreen() {
   function act(name: string) {
     setCommand(previous => (Number(previous.split(':')[0]) + 1) + ':' + name);
   }
-  function start() {
+  function start(profile:BrowserProfile) {
+    if(profile==='desktop' && !desktopProfileReady)return;
+    setBrowserProfile(profile);
     setHistory(initialBrowserHistory()); setReport(null); setObservation('not_tested');
     setAttempted(true); setNotice(''); setCommand(''); setDetails(false); setEntryPoint('login');
     setStatus({ code: 'loading', canGoBack: false, mediaPermissionPending: false });
@@ -88,7 +93,7 @@ export default function NetflixPlayerScreen() {
       <Button label="Back" onPress={back} disabled={clearing} />
       <View style={s.heading}>
         <Text style={s.title}>Netflix</Text>
-        <Text style={s.subtitle}>Browser test · sync unavailable</Text>
+        <Text style={s.subtitle}>{browserProfile==='desktop'?'Desktop compatibility test · sync unavailable':'Standard browser test · sync unavailable'}</Text>
       </View>
       <Button label="Details" onPress={() => setDetails(true)} disabled={clearing} />
     </View>
@@ -108,18 +113,22 @@ export default function NetflixPlayerScreen() {
     <View testID="netflix-browser-frame" style={s.stage}
       pointerEvents={details ? 'none' : 'auto'} accessibilityElementsHidden={details}
       importantForAccessibility={details ? 'no-hide-descendants' : 'auto'}>
-      {open && Browser ? <Browser style={s.browser} active command={command} onStatus={({ nativeEvent }) => {
+      {open && Browser ? <Browser style={s.browser} active {...(desktopProfileReady?{profile:browserProfile}:{})} command={command} onStatus={({ nativeEvent }) => {
         const next = readBrowserStatus(nativeEvent);
         if (!next) return;
         setStatus(next);
         setHistory(previous => recordBrowserEvent(previous, next));
         if (next.code === 'background_closed' || next.code === 'renderer_stopped' ||
-          next.code === 'browser_unavailable') setOpen(false);
+          next.code === 'browser_unavailable' || next.code === 'browser_profile_unavailable') setOpen(false);
       }} /> : <ScrollView contentContainerStyle={s.empty}>
         <Text style={s.badge}>PLAYBACK NOT AVAILABLE YET</Text>
-        <Text style={s.emptyTitle}>A bigger space for Netflix</Text>
-        <Text style={s.emptyText}>Netflix’s website signed in on the tested phone, then asked for its app to watch. This screen improves the page layout; movie playback remains unresolved.</Text>
-        {Browser ? <Button label={attempted ? 'Reopen Netflix website' : 'Open Netflix website'} disabled={clearing} onPress={start} primary />
+        <Text style={s.emptyTitle}>Test Netflix inside Orbit</Text>
+        <Text style={s.emptyText}>The standard website signed in on the tested phone, then asked for its app to watch. The optional desktop profile is a separate compatibility experiment; actual movie playback remains unverified.</Text>
+        {Browser ? <>
+          <Button label="Open standard website" disabled={clearing} onPress={()=>start('system')} />
+          <Button label="Try desktop compatibility profile" disabled={clearing || !desktopProfileReady} onPress={()=>start('desktop')} primary />
+          <Text style={s.emptyText}>The optional profile adjusts the browser identifier and supported Client Hints together. The engine, phone and content protection remain Android. Netflix may still block playback. It does not need notification access.</Text>
+        </>
           : <Text style={s.emptyText}>{Platform.OS === 'android'
             ? 'Install the updated standalone Orbit APK to use the native browser.'
             : 'This browser test needs the Android Orbit app. This preview shows the screen layout only.'}</Text>}
@@ -139,6 +148,9 @@ export default function NetflixPlayerScreen() {
         <Button label="Done" disabled={clearing} onPress={() => setDetails(false)} />
       </View>
       <ScrollView contentContainerStyle={s.detailsBody} keyboardShouldPersistTaps="handled">
+        <Text style={s.sectionTitle}>Compatibility profile</Text>
+        <Text style={s.note}>{browserProfile==='desktop'?'Desktop profile requested':'Standard mobile profile requested'} · native browser experiment {providerModule?.experimentVersion ?? 'unavailable'}.</Text>
+        <Text style={s.note}>Use Close website before choosing another profile. The optional test changes supported browser signals, not the Android device, DRM or subscription checks. It injects no scripts and does not read page content or cookies.</Text>
         <Text style={s.sectionTitle}>Current playback limit</Text>
         <Text style={s.note}>The reported Netflix page says its app is required on mobile. The same phone also failed to play in Chrome Desktop site. Sign-in alone is not a successful movie test.</Text>
         <Text style={s.sectionTitle}>Try the official browse or title page</Text>

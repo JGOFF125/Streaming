@@ -20,6 +20,9 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
   override val shouldUseAndroidLayout = true
   private val onStatus by EventDispatcher()
   private var browser: WebView? = null
+  private var activeRequested = false
+  private var profileMode = "system"
+  private var profileEvidence = OrbitBrowserProfileEvidence("system")
   private var pendingMedia: PermissionRequest? = null
   private var mediaAllowed = false
   private var lastCommand = ""
@@ -28,8 +31,20 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
 
   fun setActive(active: Boolean) {
     if (disposed) return
-    if (!active) { close(); return }
-    if (browser != null) return
+    activeRequested=active
+    if (!active) close()
+  }
+
+  fun setProfile(mode: String) {
+    if (disposed || mode !in listOf("system","desktop") || mode == profileMode) return
+    profileMode=mode
+    close()
+    profileEvidence=OrbitBrowserProfileEvidence(mode)
+  }
+
+  // Wait for all props so a desktop attempt never first navigates with mobile settings.
+  fun applyProps() {
+    if (disposed || !activeRequested || browser != null) return
     try {
       val web = WebView(context)
       browser = web
@@ -56,7 +71,15 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
         @Suppress("DEPRECATION")
         saveFormData = false
         if (Build.VERSION.SDK_INT >= 26) safeBrowsingEnabled = true
-        // Keep Android's real default user agent and normal content protections.
+        // The system profile leaves the default agent untouched; protections stay enabled.
+      }
+      profileEvidence=OrbitBrowserProfileEvidence(profileMode)
+      try { profileEvidence=OrbitBrowserConfigurator.apply(web,profileMode) }
+      catch (_: Exception) {
+        activeRequested=false
+        close()
+        emit("browser_profile_unavailable")
+        return
       }
       CookieManager.getInstance().setAcceptThirdPartyCookies(web, false)
       web.setDownloadListener { _, _, _, _, _ -> emit("download_blocked") }
@@ -64,6 +87,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
       web.webViewClient = client()
       addView(web)
       // A source prop cannot replace this URL. No app tokens/headers enter the browser.
+      if (profileMode == "desktop") emit("desktop_profile_applied")
       web.loadUrl(OrbitProviderPolicy.START_URL)
     } catch (_: Exception) {
       close()
@@ -100,6 +124,10 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
   private fun emit(code: String) {
     if (!disposed) onStatus(mapOf(
       "code" to code,
+      "browserProfile" to profileEvidence.mode,
+      "desktopApplied" to profileEvidence.desktopApplied,
+      "clientHintsOverridden" to profileEvidence.clientHintsOverridden,
+      "formFactorsOverridden" to profileEvidence.formFactorsOverridden,
       "canGoBack" to (browser?.canGoBack() == true),
       "mediaPermissionPending" to (pendingMedia != null)
     ))
@@ -213,6 +241,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
   }
 
   fun background() {
+    activeRequested=false
     if (browser != null) { close(); emit("background_closed") }
   }
 
@@ -235,6 +264,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
   }
 
   fun dispose() {
+    activeRequested=false
     close()
     disposed = true
   }

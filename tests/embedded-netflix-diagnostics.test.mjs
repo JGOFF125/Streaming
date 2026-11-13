@@ -67,3 +67,25 @@ test('entry points are fixed labels and never imply verified movie identity', ()
   }
   assert.equal(JSON.parse(embeddedNetflixReport('sign_in_only', initialBrowserHistory(), 'https://netflix.com/?private=1')).entryPoint, 'login');
 });
+
+
+test('desktop profile evidence survives validation, page events and background closure',()=>{
+ const native={...event('desktop_profile_applied'),browserProfile:'desktop',desktopApplied:true,clientHintsOverridden:true,formFactorsOverridden:true};
+ let history=recordBrowserEvent(initialBrowserHistory(),readBrowserStatus(native));
+ history=recordBrowserEvent(history,{...native,code:'page_loaded'});history=recordBrowserEvent(history,{...native,code:'background_closed'});
+ const report=JSON.parse(embeddedNetflixReport('sign_in_only',history));
+ assert.equal(report.diagnostic,'Orbit in-app Netflix v3');assert.equal(report.browserMode,'desktop_compatibility');
+ assert.deepEqual(report.browserProfileEvidence,{mode:'desktop',desktopApplied:true,clientHintsOverridden:true,formFactorsOverridden:true});
+ assert.equal(report.browserEvent,'page_loaded');assert.equal(report.lifecycleEvent,'background_closed');assert.equal(report.titleIdentityVerified,false);assert.equal(report.automaticSyncVerified,false);
+});
+test('unsupported and incomplete profiles never appear as successfully applied',()=>{
+ const history=recordBrowserEvent(initialBrowserHistory(),{...event('browser_profile_unavailable'),browserProfile:'desktop',desktopApplied:true,clientHintsOverridden:false,formFactorsOverridden:true});
+ const parsed=JSON.parse(embeddedNetflixReport('not_tested',history));assert.equal(parsed.lastBlockingEvent,'browser_profile_unavailable');assert.equal(parsed.browserProfileEvidence.desktopApplied,false);assert.equal(parsed.browserProfileEvidence.formFactorsOverridden,false);
+ const standard=recordBrowserEvent(initialBrowserHistory(),{...event('page_loaded'),browserProfile:'system',desktopApplied:true,clientHintsOverridden:true});assert.equal(JSON.parse(embeddedNetflixReport('not_tested',standard)).browserProfileEvidence.desktopApplied,false);
+ assert.equal(initialBrowserHistory().profileEvidence,undefined);
+});
+test('profile reports cannot export raw agents, cookies, URLs or arbitrary native extras',()=>{
+ const secret='private_browser_profile_value';const native={...event('page_loaded'),browserProfile:'desktop',desktopApplied:true,clientHintsOverridden:true,userAgent:secret,cookies:secret,url:secret};
+ const history=recordBrowserEvent(initialBrowserHistory(),native);const report=embeddedNetflixReport('provider_blocked',{...history,profileEvidence:{...history.profileEvidence,rawData:secret}});assert.doesNotMatch(report,/private_browser_profile_value|userAgent|cookies|rawData/);
+ const invalid=recordBrowserEvent(initialBrowserHistory(),{...native,browserProfile:secret});assert.equal(JSON.parse(embeddedNetflixReport('not_tested',invalid)).browserProfileEvidence,null);
+});

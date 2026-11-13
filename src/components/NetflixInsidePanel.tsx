@@ -11,7 +11,7 @@ export default function NetflixInsidePanel() {
         <Text style={s.buttonText}>Open Netflix test screen</Text>
       </TouchableOpacity>
     </Link>
-    <Text style={s.note}>The website now has its own full-width screen. Test details and results stay outside the page.</Text>
+    <Text style={s.note}>The test screen includes standard and optional desktop compatibility profiles. Test details and results stay outside Netflix’s page.</Text>
   </View>;
 }
 const s = StyleSheet.create({

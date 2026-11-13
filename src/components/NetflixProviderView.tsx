@@ -5,13 +5,16 @@ import type { BrowserStatus } from '../embeddedNetflixDiagnostics';
 
 type BrowserProps = ViewProps & {
   active: boolean;
+  profile?: 'system' | 'desktop';
   command: string;
   onStatus: (event: NativeSyntheticEvent<BrowserStatus>) => void;
 };
 type BrowserModule = { experimentVersion: number; clearBrowserData(): Promise<void> };
 export const providerModule = Platform.OS === 'android'
   ? requireOptionalNativeModule<BrowserModule>('OrbitProvider') : null;
-export const NetflixProviderView = providerModule && [1, 2].includes(providerModule.experimentVersion)
+export const NetflixProviderView = providerModule && [1, 2, 3].includes(providerModule.experimentVersion)
   ? requireNativeView<BrowserProps>('OrbitProvider') : null;
 
 export const directPageCommandsReady = (providerModule?.experimentVersion ?? 0) >= 2;
+
+export const desktopProfileReady = (providerModule?.experimentVersion ?? 0) >= 3;

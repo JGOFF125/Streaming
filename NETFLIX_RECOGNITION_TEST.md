@@ -1,5 +1,12 @@
 # Local Netflix catalog recognition — 1.3.5
 
+## Physical 1.3.5 result — November 13, 2026
+
+The user supplied a v4 report with installed Orbit 1.3.5 / code 12. The on-phone candidate check returned series 80997085, candidate episode 80130308, season 1 episode 5, from 2 reference series / 72 unique episodes. The active playing player reports position 21391 ms and duration 4078000 ms. This confirms the local lookup ran in the actual app. identityVerified and commandsAllowed remain false.
+
+All ALBUM/ARTIST/ALBUM_ARTIST presence and usable flags are false; distinctContextPresent is false and matchedContextSeriesCount is zero. Standard title equals preferred display title, metadata ID/URI remain absent and no active queue key is reported. This snapshot supplies no independent series context or trusted movie ID. lastTest is null: no new play/pause/seek acknowledgment was tested. Unchanged remembered-label flags are not an episode-transition failure without a known comparison baseline. No repeat of this same metadata test is requested.
+
+
 November 13, 2026. Signed build and binary audit passed; physical test pending. This increment makes automatic local candidate matching visible; it does not enable trusted identity or automatic synchronization.
 
 ## Current verified APK — 1.3.5, November 13, 2026

@@ -1,5 +1,22 @@
 # Netflix native integration investigation
 
+## Physical 1.3.5 result — November 13, 2026
+
+The user supplied a v4 report with installed Orbit 1.3.5 / code 12. The on-phone candidate check returned series 80997085, candidate episode 80130308, season 1 episode 5, from 2 reference series / 72 unique episodes. The active playing player reports position 21391 ms and duration 4078000 ms. This confirms the local lookup ran in the actual app. identityVerified and commandsAllowed remain false.
+
+All ALBUM/ARTIST/ALBUM_ARTIST presence and usable flags are false; distinctContextPresent is false and matchedContextSeriesCount is zero. Standard title equals preferred display title, metadata ID/URI remain absent and no active queue key is reported. This snapshot supplies no independent series context or trusted movie ID. lastTest is null: no new play/pause/seek acknowledgment was tested. Unchanged remembered-label flags are not an episode-transition failure without a known comparison baseline. No repeat of this same metadata test is requested.
+
+## 1.3.6 prepared — optional desktop compatibility profile
+
+The external metadata route remains without independent series context. A bounded anonymous watch-link comparison, using representative request headers derived from the local Chrome version, observed a mobile intent-scheme redirect versus desktop HTTPS navigation to a public catalog page. Both profiles could reach login; no authentication, cookie jar, HTML retention or movie playback was involved. This is navigation-layer evidence only, not proof of Android WebView/Chrome equivalence or Netflix playback. Actual Chrome/Firefox Desktop-site failures still stand; their exact signals were not captured.
+
+Version 1.3.6 / Android code 13 adds a fixed opt-in desktop profile to the existing official-site surface. It derives a generic Linux desktop agent from the default WebView's engine-version token and configures supported User-Agent Client Hints through stable AndroidX WebKit 1.18.0. The official Google Maven AAR was inspected: minimum Android API 24 / compile API 33, compatible with this project. The actual metadata-builder API and configurator compilation were checked locally. Default mode retains the unmodified Android agent. Unsupported profile/engine features stop the optional attempt explicitly rather than silently falling back. No scripts, DOM reads, cookie/header reads, DRM changes, copied device identity or notification access are used by this browser test. Legacy browser/device characteristics remain Android; this is not a real desktop engine.
+
+The in-app browser report is now Orbit in-app Netflix v3 and carries fixed requested/applied profile flags; the separate Netflix controls report remains v4. Old/new native experiment versions stay compatible. Existing origin, protected-media consent, TLS, file, popup, camera/mic/location, third-party-cookie and background-cleanup boundaries remain. The actual-ID room/control gate and 1.3.5 candidate scope remain unchanged.
+
+Local lint/typecheck, all 107 JavaScript/database tests, all 46 pure Kotlin tests, the AndroidX configurator compile and Android Metro/Hermes export passed. Cloud native build and signed APK audit are pending. No new APK is verified yet. See [NETFLIX_DESKTOP_PROFILE_TEST.md](NETFLIX_DESKTOP_PROFILE_TEST.md).
+
+
 ## New public-catalog reader — November 13, 2026
 
 A concrete new source was recovered: Netflix's public title-page markup contains literal SeasonsConnection / EpisodesConnection records with canonical episode videoId, explicit season numbering, episode number, localized title and exact runtimeSec. Earlier JSON-only inspection missed them because the public payload uses JavaScript string escapes. The new tool parses only bounded public catalog syntax using the existing TypeScript compiler; it never executes site scripts or reads account/playback objects.

@@ -18,13 +18,14 @@ class OrbitProviderModule : Module() {
 
   override fun definition() = ModuleDefinition {
     Name("OrbitProvider")
-    Constant("experimentVersion") { 2 }
+    Constant("experimentVersion") { 3 }
 
     View(OrbitProviderView::class) {
       Events("onStatus")
       Prop("active") { view: OrbitProviderView, active: Boolean -> view.setActive(active) }
+      Prop("profile") { view: OrbitProviderView, profile: String -> view.setProfile(profile) }
       Prop("command") { view: OrbitProviderView, command: String -> view.command(command) }
-      OnViewDidUpdateProps { view: OrbitProviderView -> views.add(view) }
+      OnViewDidUpdateProps { view: OrbitProviderView -> views.add(view); view.applyProps() }
       OnViewDestroys { view: OrbitProviderView ->
         views.remove(view)
         view.dispose()
