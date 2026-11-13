@@ -1,5 +1,9 @@
 # Orbit — current status
 
+## 1.3.6 build submitted — November 13, 2026
+
+Build 16210190-f066-4bd1-acb2-9b7c0598ec3f is building version 1.3.6 (Android code 13) from source ced3e725eb9724f66c8985b1bdd116bfaf306dc0. Local checks, the native AndroidX configurator compile and Android/Hermes export passed. Cloud native tests, release assembly and the pinned APK audit remain pending. The build folder is .expo/browser-profile-build. Do not submit a duplicate to check progress.
+
 ## 1.3.6 prepared — optional desktop compatibility profile
 
 The external metadata route remains without independent series context. A bounded anonymous watch-link comparison, using representative request headers derived from the local Chrome version, observed a mobile intent-scheme redirect versus desktop HTTPS navigation to a public catalog page. Both profiles could reach login; no authentication, cookie jar, HTML retention or movie playback was involved. This is navigation-layer evidence only, not proof of Android WebView/Chrome equivalence or Netflix playback. Actual Chrome/Firefox Desktop-site failures still stand; their exact signals were not captured.
