@@ -1,5 +1,7 @@
 # Netflix display-label evidence — 1.3.3
 
+The two November 12 phone reports below complete this increment’s same-item/different-episode label comparison. The next test uses the [verified 1.3.4 active-item and alternate-title APK](NETFLIX_ACTIVE_ITEM_TEST.md). These observations do not establish a catalog resolver or automatic sync.
+
 ## Different-episode result — November 12, 2026
 
 The user supplied the follow-up 1.3.3 report after the requested episode change. The remembered-label comparison is available: titleChanged and subtitleChanged are true; descriptionChanged is false (description remains absent). The new playing session has position 15869 ms and duration 4087000 ms; the earlier same-episode report had duration 3492000 ms. Both reports expose useful DISPLAY_TITLE and subtitle fields, no MEDIA_ID/MEDIA_URI and null contentId.

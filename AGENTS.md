@@ -59,3 +59,5 @@ Docs: https://docs.expo.dev/eas/index.md
 - The user confirms Netflix’s own PiP continues playing above Orbit for 15 seconds on their Pixel. This is a user-reported co-existence result, not embedded Orbit video or verified sync; investigate it without adding Orbit overlay access.
 
 - The 1.3.2 physical Pixel report shows contentId null and both MEDIA_ID / MEDIA_URI absent despite working position/control capability. The user explicitly rejected one-time manual movie confirmation: retain automatic actual movie/episode identification. Do not substitute a selected link, manual acknowledgment, session token or matching duration for actual player identity.
+
+- November 12 phone evidence: 1.3.3 title/subtitle labels stayed unchanged on the same episode and changed across two tested episodes. This is observed label discrimination, not a unique catalog identity. Verified APK 1.3.4 adds diagnostic-only active-item and separate standard-title evidence; keep these candidates out of the control identity gate until actual identity is established. See NETFLIX_ACTIVE_ITEM_TEST.md.

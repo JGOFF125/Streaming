@@ -1,5 +1,16 @@
 # Orbit — current status
 
+## Current verified APK — 1.3.4, November 12, 2026
+
+The [Orbit 1.3.4 standalone APK](https://expo.dev/artifacts/eas/kr4Un0yU-CVd0rxNq28Jkgug96udFXP_VFvcX4RmV4c.apk) ([finished cloud build](https://expo.dev/accounts/jgoff/projects/orbit/builds/474dd23a-6fdf-4ceb-81fa-8d04ca160aaf)) passed native compilation, the non-skipped native test task, release assembly and binary audit. Source cda81ffaac4e1df4c7ef5efc8bc07cd2429eb840; Android code 11. Local lint/typecheck, all 79 JavaScript/database tests and all 37 pure Kotlin tests passed. APK size 91891281 bytes; SHA-256 2ab2b9264d791ff2c4eadc49a7674cc873942c27dd6a5069291a38ee72753ffa. The signature matches previous Orbit releases; ARM64, the bundled app, disabled backup, keyboard adjustResize and the Google callback scheme were verified. Only INTERNET and the app-scoped DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION are declared. The existing optional broad notification-access grant remains separate; no overlay, microphone or foreground-service permission was added.
+
+The user's 1.3.3 phone reports confirm useful episode labels, no changes while staying on the same episode, and changed title/subtitle after the requested different-episode test. Both catalog metadata fields remain absent. Version 1.3.4 adds diagnostic-only active-item inspection and retains the separate standard TITLE locally. A queue candidate or label alone cannot populate contentId or enable synchronization. Shared v3 reports omit raw labels/URLs. Physical 1.3.4 availability and series context are pending; actual catalog identity, embedded playback and two-device sync remain unverified.
+
+Next phone action: install 1.3.4 as an update, play a Netflix episode in PiP above Orbit, then Netflix controls check → Refresh check → Share diagnostic result. Inspect queueEvidence and displayEvidence, and ask whether any alternate title identifies the series. No repeat of the 1.3.3 comparison is needed just to establish that its title/subtitle changed. No new control commands are requested by this read-only check.
+
+The public Supabase Auth settings endpoint returned HTTP 200 with Google enabled during this session. This is an endpoint/configuration health check, not a fresh signed-in room or Google callback test. The four existing vendor-inquiry threads still contain only their sent inquiries; no reply, duplicate inquiry or follow-up was sent. No live build watcher remains.
+
+
 ## 1.3.4 build submitted — November 12, 2026
 
 Cloud build 474dd23a-6fdf-4ceb-81fa-8d04ca160aaf is building version 1.3.4 (Android code 11) from cda81ffaac4e1df4c7ef5efc8bc07cd2429eb840. Local lint/typecheck, 79 application/database tests and 37 pure Kotlin tests passed before submission. Native cloud compilation and the final APK/signature/permissions audit are pending. No new download is verified yet. Build status and inspection files are kept locally under .expo/active-queue-build, with exact build/source/version/certificate checks prepared. The next phone report should use the new v3 diagnostic only after artifact verification.
