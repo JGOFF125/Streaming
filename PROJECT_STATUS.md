@@ -1,5 +1,14 @@
 # Orbit — current status
 
+## Physical label result — November 12, 2026
+
+The user reports the 1.3.3 local display shows the episode name, season and episode number. The supplied v2 report confirms DISPLAY_TITLE was selected, title/display-title/subtitle fields are present, description is absent and the title is usable. The playing session reports position 27440 ms, duration 3492000 ms and play/pause/seek support. MEDIA_ID and MEDIA_URI remain absent; contentId is null.
+
+All three comparison flags are false. The user explicitly clarified they stayed on the same episode after remembering the labels, so this is the expected unchanged-item result, not a failed episode-change test. Capture of useful episode labels is user-confirmed; cross-episode discrimination, unique catalog mapping, embedded playback and real two-device sync remain unverified. No raw titles were supplied or retained.
+
+Next phone action: keep the remembered baseline, play a different episode of that same series, return and refresh, then share the report and say whether the visible name/number updated. Do not press Remember again before exporting the comparison. The active-item diagnostic added in source is not installed in 1.3.3, so its missing queueEvidence field is expected.
+
+
 ## Resumed November 12, 2026 — active-item identity evidence
 
 The user resumed development. The latest saved source commit matched GitHub main at ff5fbb0 before this increment. An existing local edit in NetflixCheckPanel.tsx was preserved and is not part of this increment. The previously generated native Gradle cache is now ignored.
