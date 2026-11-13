@@ -18,7 +18,7 @@ class OrbitProviderModule : Module() {
 
   override fun definition() = ModuleDefinition {
     Name("OrbitProvider")
-    Constant("experimentVersion") { 3 }
+    Constant("experimentVersion") { 4 }
 
     View(OrbitProviderView::class) {
       Events("onStatus")

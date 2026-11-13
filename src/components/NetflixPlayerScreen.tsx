@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { embeddedNetflixReport, initialBrowserHistory, readBrowserStatus, recordBrowserEvent } from '../embeddedNetflixDiagnostics';
 import { netflixContentId } from '../playbackClient';
 import type { BrowserStatus, Observation, NetflixEntryPoint, BrowserProfile } from '../embeddedNetflixDiagnostics';
-import { NetflixProviderView as Browser, providerModule, directPageCommandsReady, desktopProfileReady } from './NetflixProviderView';
+import { NetflixProviderView as Browser, providerModule, directPageCommandsReady, desktopProfileReady, nativeErrorCheckReady } from './NetflixProviderView';
 
 const messages: Record<string, string> = {
   loading: 'Loading Netflix…',
@@ -151,6 +151,9 @@ export default function NetflixPlayerScreen() {
         <Text style={s.sectionTitle}>Compatibility profile</Text>
         <Text style={s.note}>{browserProfile==='desktop'?'Desktop profile requested':'Standard mobile profile requested'} · native browser experiment {providerModule?.experimentVersion ?? 'unavailable'}.</Text>
         <Text style={s.note}>Use Close website before choosing another profile. The optional test changes supported browser signals, not the Android device, DRM or subscription checks. It injects no scripts and does not read page content or cookies.</Text>
+        <Text style={s.sectionTitle}>Check a playback issue</Text>
+        <Text style={s.note}>For a connected computer: start a fresh error check, then try playing or use Reload. This records error categories, not page text or account data. Netflix stays open. Leaving Orbit ends the check.</Text>
+        <Button label="Start error check" disabled={!open || !nativeErrorCheckReady || clearing} onPress={() => { act('diagnostic'); setDetails(false); }} />
         <Text style={s.sectionTitle}>Current playback limit</Text>
         <Text style={s.note}>The reported Netflix page says its app is required on mobile. The same phone also failed to play in Chrome Desktop site. Sign-in alone is not a successful movie test.</Text>
         <Text style={s.sectionTitle}>Try the official browse or title page</Text>

@@ -7,17 +7,21 @@ import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
 import android.os.Message
+import android.util.Log
 import android.view.View
 import android.webkit.*
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
 import java.io.ByteArrayInputStream
+import java.util.concurrent.atomic.AtomicInteger
 
 /** A fixed official-site surface with no JS/native bridge, injection or stream extraction. */
 @SuppressLint("SetJavaScriptEnabled")
 class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
   override val shouldUseAndroidLayout = true
+  private companion object { val nextDiagnosticAttempt = AtomicInteger() }
+  private var diagnosticAttempt = 0
   private val onStatus by EventDispatcher()
   private var browser: WebView? = null
   private var activeRequested = false
@@ -28,6 +32,19 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
   private var lastCommand = ""
   private var pageFailed = false
   private var disposed = false
+  private val diagnostics = OrbitBrowserDiagnosticCounters()
+
+  private fun recordSignal(key: String) {
+    if (diagnosticAttempt == 0) return
+    diagnostics.record(key)?.let { Log.i("OrbitBrowserDiag", it.replaceFirst("signal:", "signal:" + diagnosticAttempt + ":")) }
+  }
+
+  private fun beginDiagnostic() {
+    if (browser == null) return
+    diagnostics.reset()
+    diagnosticAttempt = nextDiagnosticAttempt.updateAndGet { if (it >= 999999) 1 else it + 1 }
+    Log.i("OrbitBrowserDiag", "begin:" + diagnosticAttempt)
+  }
 
   fun setActive(active: Boolean) {
     if (disposed) return
@@ -83,7 +100,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
       }
       CookieManager.getInstance().setAcceptThirdPartyCookies(web, false)
       web.setDownloadListener { _, _, _, _, _ -> emit("download_blocked") }
-      web.webChromeClient = chrome()
+      web.webChromeClient = chrome(web)
       web.webViewClient = client()
       addView(web)
       // A source prop cannot replace this URL. No app tokens/headers enter the browser.
@@ -97,12 +114,13 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
   }
 
   fun command(command: String) {
-    if (disposed || command == lastCommand || !command.matches(Regex("[0-9]{1,10}:(back|reload|allow_media|deny_media|browse|watch_[1-9][0-9]{0,11})"))) return
+    if (disposed || command == lastCommand || !command.matches(Regex("[0-9]{1,10}:(back|reload|allow_media|deny_media|diagnostic|browse|watch_[1-9][0-9]{0,11})"))) return
     lastCommand = command
     val action = command.substringAfter(':')
     val target = OrbitProviderPolicy.commandUrl(action)
     if (target != null) { browser?.loadUrl(target); return }
     when (action) {
+      "diagnostic" -> beginDiagnostic()
       "back" -> browser?.let { if (it.canGoBack()) it.goBack() }
       "reload" -> browser?.reload()
       "allow_media" -> {
@@ -111,12 +129,14 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
         if (OrbitProviderPolicy.allowsProtectedMedia(request.origin.toString(), request.resources.toList())) {
           mediaAllowed = true
           request.grant(arrayOf(OrbitProviderPolicy.PROTECTED_MEDIA))
+          recordSignal("protected_media_grant_called")
           emit("protected_media_allowed")
-        } else { request.deny(); emit("permission_blocked") }
+        } else { request.deny(); recordSignal("permission_request_blocked"); emit("permission_blocked") }
       }
       "deny_media" -> {
         pendingMedia?.deny()
         pendingMedia = null
+        recordSignal("protected_media_denied")
         emit("protected_media_denied")
       }
     }
@@ -153,6 +173,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
       if (browser !== view) return
       pageFailed = false
+      recordSignal("page_started")
       if (url == null || !OrbitProviderPolicy.allowsNavigation(url)) {
         pageFailed = true
         activeRequested=false
@@ -169,20 +190,32 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
     }
 
     override fun onPageFinished(view: WebView, url: String?) {
-      if (browser === view && !pageFailed) emit("page_loaded")
+      if (browser === view && !pageFailed) { recordSignal("page_finished"); emit("page_loaded") }
       // A loaded page is deliberately NOT classified as video playback.
     }
 
     override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
-      if (browser === view && request.isForMainFrame) { pageFailed = true; emit("network_error") }
+      if (browser !== view) return
+      recordSignal(when (error.errorCode) {
+        WebViewClient.ERROR_HOST_LOOKUP -> "network_dns"
+        WebViewClient.ERROR_CONNECT -> "network_connect"
+        WebViewClient.ERROR_TIMEOUT -> "network_timeout"
+        WebViewClient.ERROR_FAILED_SSL_HANDSHAKE -> "network_tls"
+        else -> "network_other"
+      })
+      if (request.isForMainFrame) { pageFailed = true; emit("network_error") }
     }
 
     override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, response: WebResourceResponse) {
-      if (browser === view && request.isForMainFrame) { pageFailed = true; emit("http_error") }
+      if (browser !== view) return
+      OrbitBrowserDiagnosticCounters.httpSignal(response.statusCode, request.isForMainFrame)?.let { recordSignal(it) }
+      if (request.isForMainFrame) { pageFailed = true; emit("http_error") }
     }
 
     override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
       handler.cancel()
+      if (browser !== view) return
+      recordSignal("network_tls")
       pageFailed = true
       emit("certificate_error")
     }
@@ -203,14 +236,18 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
     }
   }
 
-  private fun chrome() = object : WebChromeClient() {
+  private fun chrome(web: WebView) = object : WebChromeClient() {
     override fun onPermissionRequest(request: PermissionRequest) {
+      if (browser !== web) { request.deny(); return }
+      if (request.resources.contains(OrbitProviderPolicy.PROTECTED_MEDIA)) recordSignal("protected_media_requested")
       // Do not grant camera, microphone, geolocation, MIDI, or future unknown resources.
       if (browser == null || !OrbitProviderPolicy.allowsProtectedMedia(request.origin.toString(), request.resources.toList())) {
         request.deny()
+        recordSignal("permission_request_blocked")
         emit("permission_blocked")
       } else if (mediaAllowed) {
         request.grant(arrayOf(OrbitProviderPolicy.PROTECTED_MEDIA))
+        recordSignal("protected_media_grant_called")
       } else {
         pendingMedia?.deny()
         pendingMedia = request
@@ -219,7 +256,7 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
     }
 
     override fun onPermissionRequestCanceled(request: PermissionRequest) {
-      if (pendingMedia === request) { pendingMedia = null; emit("protected_media_cancelled") }
+      if (pendingMedia === request) { pendingMedia = null; recordSignal("protected_media_cancelled"); emit("protected_media_cancelled") }
     }
 
     override fun onCreateWindow(view: WebView, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message): Boolean {
@@ -238,8 +275,13 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
       emit("fullscreen_unavailable")
     }
 
-    // Provider console output can contain private data; do not forward it to app logs.
-    override fun onConsoleMessage(message: ConsoleMessage): Boolean = true
+    // Never forward the message/source/line. Only fixed, bounded error categories leave this callback.
+    override fun onConsoleMessage(message: ConsoleMessage): Boolean {
+      if (diagnosticAttempt != 0 && browser === web && message.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
+        OrbitBrowserDiagnosticCounters.consoleSignals(message.message(), true).forEach { recordSignal(it) }
+      }
+      return true
+    }
   }
 
   fun background() {
@@ -259,6 +301,8 @@ class OrbitProviderView(context: Context, appContext: AppContext) : ExpoView(con
     mediaAllowed = false
     val web = browser ?: return
     browser = null // Ignore callbacks from the destroyed page.
+    if (diagnosticAttempt != 0) Log.i("OrbitBrowserDiag", "end:" + diagnosticAttempt)
+    diagnosticAttempt = 0
     web.stopLoading()
     web.onPause()
     web.clearHistory()

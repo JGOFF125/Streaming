@@ -1,6 +1,6 @@
 # Optional desktop compatibility profile — 1.3.6
 
-November 13, 2026. Signed [Orbit 1.3.6 APK](https://expo.dev/artifacts/eas/a57UvL-jBjoYrtb0GlEvuc5Wa03UDNXSyV2Uj2rVaA0.apk) verified: build 200f743a-78c7-4a81-b7ff-2f2cdf784279, source 2377c3520b2eaf4b9ec37b61afe730d33874771a, Android code 13. Physical playback remains pending. No working Netflix movie or sync is claimed.
+November 13, 2026. Signed [Orbit 1.3.6 APK](https://expo.dev/artifacts/eas/a57UvL-jBjoYrtb0GlEvuc5Wa03UDNXSyV2Uj2rVaA0.apk) verified: build 200f743a-78c7-4a81-b7ff-2f2cdf784279, source 2377c3520b2eaf4b9ec37b61afe730d33874771a, Android code 13. Physical testing reached the catalog but playback returned E100/1044 and later stayed on Netflix’s spinner. See NETFLIX_E100_INVESTIGATION.md; actual video remains unverified. No working Netflix movie or sync is claimed.
 
 ## Evidence and reason for the experiment
 
