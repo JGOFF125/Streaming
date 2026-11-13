@@ -1,5 +1,9 @@
 # Orbit — current status
 
+## 1.3.7 submitted — November 13, 2026
+
+Build d365e4b3-5ccb-4914-ae8f-28b1d925947d is building Android 1.3.7 / code 14 from f3fa73ef217c72c77403f225de93ebfc51ad979e. Local checks and export pass. Cloud native tests/release assembly and the pinned APK audit are pending. Private status/artifacts live under .expo/player-evidence-build; do not submit a duplicate. This is opt-in error evidence, not a verified Netflix playback fix.
+
 ## 1.3.7 prepared — opt-in playback error check
 
 The user’s clean Orbit browser session still remains on Netflix’s spinner. The exact same episode plays in the official app on the same connection. Existing Android main/owned-renderer warning snapshots remain inconclusive. No E100/DRM root cause or playback correction has been verified.
