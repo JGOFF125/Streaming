@@ -1,5 +1,7 @@
 # Public Netflix episode catalog — candidate matching
 
+The pending 1.3.5 increment now wires candidate matching into the local phone diagnostic panel with two explicit public reference series and separate provider-context evidence. It remains untrusted and cannot enable sync. See [NETFLIX_RECOGNITION_TEST.md](NETFLIX_RECOGNITION_TEST.md); prior tooling-only results below are history.
+
 November 13, 2026. Developer tooling and a pure candidate matcher, not a shipped mobile identity feature.
 
 ## Observed result

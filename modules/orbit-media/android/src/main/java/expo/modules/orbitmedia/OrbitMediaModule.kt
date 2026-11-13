@@ -31,7 +31,7 @@ class OrbitMediaModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("OrbitMedia")
 
-    AsyncFunction("getSnapshot") { snapshot() }
+    AsyncFunction("getSnapshot") { snapshot() + mapOf("appBuild" to appBuild()) }
 
     AsyncFunction("openAccessSettings") {
       val context = context()
@@ -96,6 +96,14 @@ class OrbitMediaModule : Module() {
   }
 
   private fun context(): Context = appContext.reactContext ?: throw IllegalStateException("APP_UNAVAILABLE")
+  @Suppress("DEPRECATION")
+  private fun appBuild(): Map<String, Any?> {
+    val context=context()
+    val info=context.packageManager.getPackageInfo(context.packageName,0)
+    val code=if (Build.VERSION.SDK_INT >= 28) info.longVersionCode else info.versionCode.toLong()
+    return mapOf("version" to info.versionName, "code" to code)
+  }
+
   private fun component() = ComponentName(context(), OrbitMediaListener::class.java)
   private fun hasAccess(): Boolean {
     val context = context()
@@ -157,7 +165,7 @@ class OrbitMediaModule : Module() {
     }
   }
 
-  private fun describe(controller: MediaController, includeQueue: Boolean = true): Map<String, Any?> {
+  private fun describe(controller: MediaController, includeEvidence: Boolean = true): Map<String, Any?> {
     val state = controller.playbackState
     val actions = state?.actions ?: 0L
     val metadata = controller.metadata
@@ -165,7 +173,11 @@ class OrbitMediaModule : Module() {
     val identity = OrbitMediaIdentity.resolve(
       metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID),
       metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_URI))
-    val queue = if (includeQueue) queueEvidence(controller, state, identity) else null
+    val queue = if (includeEvidence) queueEvidence(controller, state, identity) else null
+    val contextLabels = if (includeEvidence) OrbitContextMetadata.read(
+      metadata?.getText(MediaMetadata.METADATA_KEY_ALBUM),
+      metadata?.getText(MediaMetadata.METADATA_KEY_ARTIST),
+      metadata?.getText(MediaMetadata.METADATA_KEY_ALBUM_ARTIST)) else null
     val labels = OrbitDisplayMetadata.read(
       metadata?.getText(MediaMetadata.METADATA_KEY_DISPLAY_TITLE),
       metadata?.getText(MediaMetadata.METADATA_KEY_TITLE),
@@ -187,6 +199,10 @@ class OrbitMediaModule : Module() {
         "descriptionLabel" to labels.descriptionLabel, "titleSource" to labels.titleSource,
         "titlePresent" to labels.titlePresent, "displayTitlePresent" to labels.displayTitlePresent,
         "subtitlePresent" to labels.subtitlePresent, "descriptionPresent" to labels.descriptionPresent),
+      // Context labels are local diagnostic data, never identity or shared room payloads.
+      "contextMetadata" to contextLabels?.let { mapOf("albumLabel" to it.albumLabel,
+        "artistLabel" to it.artistLabel, "albumArtistLabel" to it.albumArtistLabel,
+        "albumPresent" to it.albumPresent, "artistPresent" to it.artistPresent, "albumArtistPresent" to it.albumArtistPresent) },
       // Evidence remains diagnostic: player() still uses metadata identity only.
       "queueEvidence" to queue?.let { mapOf("status" to it.status, "candidateContentId" to it.candidateContentId,
         "mediaIdPresent" to it.mediaIdPresent, "mediaUriPresent" to it.mediaUriPresent) },
@@ -199,7 +215,7 @@ class OrbitMediaModule : Module() {
   }
 
   private fun player(controller: MediaController): OrbitPlayer {
-    val snapshot = describe(controller, includeQueue = false)
+    val snapshot = describe(controller, includeEvidence = false)
     return OrbitPlayer(snapshot["contentId"] as? String, snapshot["state"] as String,
       snapshot["positionMs"] as? Long, snapshot["durationMs"] as? Long,
       snapshot["canPlay"] == true, snapshot["canPause"] == true, snapshot["canSeek"] == true)

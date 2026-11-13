@@ -1,5 +1,14 @@
 # Orbit — current status
 
+## 1.3.5 prepared — local automatic candidates and provider context
+
+November 13, 2026. Version 1.3.5 (Android code 12) now connects the public-catalog matcher to the phone diagnostic panel. It automatically checks fresh player snapshots against two explicit development reference series, with 72 unique episodes / 144 localized Spanish-English records. Context fields ALBUM, ARTIST and ALBUM_ARTIST are read only through the existing authorized Netflix-filtered MediaController; they are generic media fields, not documented Netflix series IDs. A distinct standard title can also supply context evidence. Missing, repeated, contradictory or ambiguous context cannot establish identity. The native control planner skips the extra evidence fields and still requires its original actual catalog ID.
+
+The local panel shows candidate public IDs, scope and context status without a confirmation fallback or backend upload. Shared v4 diagnostics export fixed evidence/status flags and public candidate IDs, excluding all raw provider labels. They also report Android's actual installed app version/code, read from this app's own package record, to resolve future old-build reports. No device identifier, notification text, custom session extras, account data, new dependency or permission was added.
+
+Checks passed: lint/typecheck; all 104 JavaScript/database tests; all 42 pure Kotlin tests; Android Metro/Hermes export. Native cloud compilation, signed APK and physical checks are pending. Latest verified delivered APK remains 1.3.4. Actual automatic identity, embedded Netflix playback, two-device sync, text and voice are unfinished. See [NETFLIX_RECOGNITION_TEST.md](NETFLIX_RECOGNITION_TEST.md).
+
+
 ## New public-catalog reader — November 13, 2026
 
 A concrete new source was recovered: Netflix's public title-page markup contains literal SeasonsConnection / EpisodesConnection records with canonical episode videoId, explicit season numbering, episode number, localized title and exact runtimeSec. Earlier JSON-only inspection missed them because the public payload uses JavaScript string escapes. The new tool parses only bounded public catalog syntax using the existing TypeScript compiler; it never executes site scripts or reads account/playback objects.

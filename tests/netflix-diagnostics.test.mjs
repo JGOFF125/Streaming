@@ -132,7 +132,24 @@ test('alternate provider titles remain local while equality and changes are expo
   assert.equal(parsed.snapshot.displayEvidence.standardTitleMatchesPrimary,false);
   assert.equal(parsed.lastTest.before.displayEvidence.standardTitleMatchesPrimary,false);
   assert.equal(parsed.labelComparison.standardTitleChanged,false);
-  assert.equal(parsed.diagnostic,'Orbit Netflix controls v3');
+  assert.equal(parsed.diagnostic,'Orbit Netflix controls v4');
   assert.equal(JSON.parse(netflixReport({...ready,displayMetadata:{titleLabel:secret,standardTitleLabel:secret}},null)).snapshot.displayEvidence.standardTitleMatchesPrimary,true);
   assert.equal(JSON.parse(netflixReport({...ready,displayMetadata:{titleLabel:'Episode'}},null)).snapshot.displayEvidence.standardTitleMatchesPrimary,null);
+});
+
+
+test('installed build and context evidence exclude raw provider labels in every snapshot',()=>{
+ const secret='private_context_value';
+ const value={...ready,appBuild:{version:'1.3.5',code:12,deviceId:secret},contextMetadata:{albumLabel:secret,artistLabel:secret,albumArtistLabel:secret,albumPresent:true,artistPresent:true,albumArtistPresent:true,extra:secret}};
+ const report=netflixReport(value,{command:'pause',status:'observed',reason:'state_changed',before:value,after:value});
+ assert.doesNotMatch(report,/private_context_value|albumLabel|artistLabel|albumArtistLabel|deviceId/);
+ const parsed=JSON.parse(report);assert.deepEqual(parsed.snapshot.appBuild,{version:'1.3.5',code:12});assert.equal(parsed.lastTest.before.contextEvidence.usableAlbumPresent,true);assert.equal(parsed.lastTest.after.contextEvidence.artistPresent,true);
+ const invalid=netflixReport({...value,appBuild:{version:secret,code:secret}},null);assert.doesNotMatch(invalid,/private_context_value/);assert.deepEqual(JSON.parse(invalid).snapshot.appBuild,{version:null,code:null});
+});
+test('shared recognition output contains only fixed statuses and bounded public candidates',()=>{
+ const secret='private_recognition_value';
+ const recognition={status:'episode_candidate_only',catalogSeriesCount:2,catalogEpisodeCount:72,distinctContextPresent:true,matchedContextSeriesCount:0,candidates:[{seriesId:'101',contentId:'201',season:1,episode:3,rawTitle:secret},null,{seriesId:secret,contentId:secret}],identityVerified:true,commandsAllowed:true,rawContext:secret};
+ const report=netflixReport(ready,null,null,recognition);assert.doesNotMatch(report,/private_recognition_value|rawTitle|rawContext/);
+ const parsed=JSON.parse(report);assert.equal(parsed.catalogRecognition.status,'episode_candidate_only');assert.deepEqual(parsed.catalogRecognition.candidates,[{seriesId:'101',contentId:'201',season:1,episode:3}]);assert.equal(parsed.catalogRecognition.identityVerified,false);assert.equal(parsed.catalogRecognition.commandsAllowed,false);assert.equal(parsed.automaticSyncVerified,false);
+ assert.equal(JSON.parse(netflixReport(ready,null,null,{...recognition,status:secret})).catalogRecognition.status,'unavailable');
 });

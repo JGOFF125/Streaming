@@ -1,3 +1,4 @@
+import type {NetflixRecognition} from './netflixRecognition';
 export type MediaCommand = 'play' | 'pause' | 'seek';
 export type NetflixDisplayLabels = {
   // Raw labels stay in local screen memory; netflixReport exports only evidence flags.
@@ -16,7 +17,10 @@ export function compareNetflixLabels(before: NetflixDisplayLabels | null, after:
 export type NetflixQueueEvidence = {
   status?: string; candidateContentId?: string | null; mediaIdPresent?: boolean; mediaUriPresent?: boolean;
 };
+export type NetflixContextLabels = {albumLabel?:string|null;artistLabel?:string|null;albumArtistLabel?:string|null;albumPresent?:boolean;artistPresent?:boolean;albumArtistPresent?:boolean};
 export type NetflixSnapshot = {
+  appBuild?:{version?:string|null;code?:number|null};
+  contextMetadata?:NetflixContextLabels;
   access: 'permission_required' | 'connecting' | 'ready';
   session: 'none' | 'active' | 'ambiguous';
   state?: 'playing' | 'paused' | 'buffering' | 'stopped' | 'error' | 'unknown';
@@ -80,8 +84,16 @@ export function formatPosition(ms: number | null | undefined): string {
 
 // Explicit allowlist: reports cannot accidentally include identities, tokens, titles,
 // session handles, or notification content if the native snapshot changes later.
-export function netflixReport(snapshot: NetflixSnapshot | null, result: NetflixTestResult | null, comparison: NetflixLabelComparison | null = null): string {
+export function netflixReport(snapshot: NetflixSnapshot | null, result: NetflixTestResult | null, comparison: NetflixLabelComparison | null = null, recognition: NetflixRecognition | null = null): string {
   const describe = (value: NetflixSnapshot | null | undefined) => value ? {
+    appBuild: value.appBuild ? {
+      version: typeof value.appBuild.version==='string' && /^[0-9]{1,3}(?:\.[0-9]{1,3}){1,3}$/.test(value.appBuild.version)?value.appBuild.version:null,
+      code: Number.isSafeInteger(value.appBuild.code) && value.appBuild.code!>0 && value.appBuild.code!<=2147483647?value.appBuild.code:null,
+    }:null,
+    contextEvidence: value.contextMetadata ? {albumPresent:value.contextMetadata.albumPresent===true,artistPresent:value.contextMetadata.artistPresent===true,albumArtistPresent:value.contextMetadata.albumArtistPresent===true,
+      usableAlbumPresent:typeof value.contextMetadata.albumLabel==='string' && !!value.contextMetadata.albumLabel,
+      usableArtistPresent:typeof value.contextMetadata.artistLabel==='string' && !!value.contextMetadata.artistLabel,
+      usableAlbumArtistPresent:typeof value.contextMetadata.albumArtistLabel==='string' && !!value.contextMetadata.albumArtistLabel}:null,
     access: value.access, session: value.session, state: value.state,
     positionMs: value.positionMs, durationMs: value.durationMs,
     contentId: typeof value.contentId === 'string' && /^[1-9][0-9]{0,11}$/.test(value.contentId) ? value.contentId : null,
@@ -105,7 +117,16 @@ export function netflixReport(snapshot: NetflixSnapshot | null, result: NetflixT
     canPlay: value.canPlay, canPause: value.canPause, canSeek: value.canSeek,
   } : null;
   return JSON.stringify({
-    diagnostic: 'Orbit Netflix controls v3',
+    diagnostic: 'Orbit Netflix controls v4',
+    catalogRecognition: recognition ? {
+      status:['player_unavailable','unusable_observation','catalog_rejected','no_candidate','episode_candidate_only','ambiguous','context_conflict','context_supports_candidate'].includes(recognition.status)?recognition.status:'unavailable',
+      catalogSeriesCount:Number.isSafeInteger(recognition.catalogSeriesCount) && recognition.catalogSeriesCount>=0 && recognition.catalogSeriesCount<=1000?recognition.catalogSeriesCount:null,
+      catalogEpisodeCount:Number.isSafeInteger(recognition.catalogEpisodeCount) && recognition.catalogEpisodeCount>=0 && recognition.catalogEpisodeCount<=10000?recognition.catalogEpisodeCount:null,
+      distinctContextPresent:recognition.distinctContextPresent===true,
+      matchedContextSeriesCount:Number.isSafeInteger(recognition.matchedContextSeriesCount) && recognition.matchedContextSeriesCount>=0 && recognition.matchedContextSeriesCount<=1000?recognition.matchedContextSeriesCount:null,
+      candidates:Array.isArray(recognition.candidates)?recognition.candidates.slice(0,100).filter(c=>c && typeof c==='object' && typeof c.seriesId==='string' && /^[1-9][0-9]{0,11}$/.test(c.seriesId) && typeof c.contentId==='string' && /^[1-9][0-9]{0,11}$/.test(c.contentId) && Number.isSafeInteger(c.season) && c.season>0 && c.season<1000 && Number.isSafeInteger(c.episode) && c.episode>0 && c.episode<10000).map(c=>({seriesId:c.seriesId,contentId:c.contentId,season:c.season,episode:c.episode})):[],
+      identityVerified:false,commandsAllowed:false,
+    }:null,
     automaticMovieIdentificationVerified: false,
     labelComparison: comparison ? { available: comparison.available === true, titleChanged: comparison.titleChanged === true, subtitleChanged: comparison.subtitleChanged === true, descriptionChanged: comparison.descriptionChanged === true, standardTitleChanged: comparison.standardTitleChanged === true } : null,
     automaticSyncVerified: false,

@@ -83,5 +83,17 @@ export function parsePublicNetflixEpisodes(html,sourceUrl,seriesId) {
       if(episodes.length>10000) throw invalid();
     }
   }
-  return {seriesId,sourceUrl:url.href,seasonCount:seasons.length,completeWithinSeries:true,episodes};
+  const names=new Set();
+  for(const match of html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    let data; try { data=JSON.parse(match[1]); } catch { continue; }
+    for(const entry of Array.isArray(data)?data:[data]) {
+      if(entry?.['@type']!=='TVSeries' || typeof entry.name!=='string' || typeof entry.url!=='string') continue;
+      let link; try { link=new URL(entry.url); } catch { continue; }
+      if(link.protocol==='https:' && ['netflix.com','www.netflix.com'].includes(link.hostname) && !link.username && !link.password && !link.port && !link.search && !link.hash && new RegExp('^/(?:[a-z]{2}(?:-[a-z]{2})?/)?title/'+seriesId+'$').test(link.pathname)) {
+        const name=entry.name.normalize('NFC').trim();
+        if(name && name.length<=512 && !/[\p{Cc}\p{Cf}]/u.test(name)) names.add(name);
+      }
+    }
+  }
+  return {seriesId,seriesTitle:names.size===1?[...names][0]:null,sourceUrl:url.href,seasonCount:seasons.length,completeWithinSeries:true,episodes};
 }

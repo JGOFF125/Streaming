@@ -4,7 +4,7 @@ const input=process.argv[2];
 let url; try { url=new URL(input); } catch { throw Error('Provide one official Netflix title URL.'); }
 const path=/^\/(?:[a-z]{2}(?:-[a-z]{2})?\/)?title\/([1-9][0-9]{0,11})$/.exec(url.pathname);
 if(process.argv.length!==3 || !path || url.protocol!=='https:' || url.hostname!=='www.netflix.com' || url.username || url.password || url.port || url.search || url.hash) throw Error('Only a canonical www.netflix.com title URL is accepted.');
-const response=await fetch(url,{redirect:'error',headers:{Accept:'text/html'},signal:AbortSignal.timeout(20000)});
+let response;try{response=await fetch(url,{redirect:'error',headers:{Accept:'text/html'},signal:AbortSignal.timeout(20000)});}catch{console.error('Public catalog request failed or redirected. Use an explicit canonical locale URL.');process.exit(1);}
 if(!response.ok) throw Error('The public catalog request failed.');
 const reader=response.body.getReader();const chunks=[];let size=0;
 for(;;){const {value,done}=await reader.read();if(done)break;size+=value.length;if(size>8388608){await reader.cancel();throw Error('Public catalog response exceeds inspection bound.');}chunks.push(value);}

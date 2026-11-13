@@ -1,0 +1,1335 @@
+{
+  "coverage": "development_references_only",
+  "generatedAt": "2026-11-13T09:33:18.034Z",
+  "sources": [
+    {
+      "url": "https://www.netflix.com/mx/title/80997085",
+      "reviewedAt": "2026-11-13T09:31:33.563Z"
+    },
+    {
+      "url": "https://www.netflix.com/ca/title/80997085",
+      "reviewedAt": "2026-11-13T09:32:06.916Z"
+    },
+    {
+      "url": "https://www.netflix.com/mx/title/80057281",
+      "reviewedAt": "2026-11-13T09:31:34.758Z"
+    },
+    {
+      "url": "https://www.netflix.com/ca/title/80057281",
+      "reviewedAt": "2026-11-13T09:32:08.078Z"
+    }
+  ],
+  "series": [
+    {
+      "seriesId": "80997085",
+      "names": [
+        "Narcos: México",
+        "Narcos: Mexico"
+      ]
+    },
+    {
+      "seriesId": "80057281",
+      "names": [
+        "Stranger Things"
+      ]
+    }
+  ],
+  "episodes": [
+    {
+      "seriesId": "80997085",
+      "contentId": "80130304",
+      "season": 1,
+      "episode": 1,
+      "title": "Camelot",
+      "runtimeSec": 3492,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130305",
+      "season": 1,
+      "episode": 2,
+      "title": "El sistema de plazas",
+      "runtimeSec": 3556,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130306",
+      "season": 1,
+      "episode": 3,
+      "title": "El Padrino",
+      "runtimeSec": 4087,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130307",
+      "season": 1,
+      "episode": 4,
+      "title": "¡Rafa, Rafa, Rafa!",
+      "runtimeSec": 3318,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130308",
+      "season": 1,
+      "episode": 5,
+      "title": "La conexión colombiana",
+      "runtimeSec": 4078,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130309",
+      "season": 1,
+      "episode": 6,
+      "title": "La última frontera",
+      "runtimeSec": 3356,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130310",
+      "season": 1,
+      "episode": 7,
+      "title": "Jefe de jefes",
+      "runtimeSec": 3800,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130311",
+      "season": 1,
+      "episode": 8,
+      "title": "Solo di que no",
+      "runtimeSec": 3725,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130312",
+      "season": 1,
+      "episode": 9,
+      "title": "881 Lope de Vega",
+      "runtimeSec": 3319,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130313",
+      "season": 1,
+      "episode": 10,
+      "title": "Leyenda",
+      "runtimeSec": 4192,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80186925",
+      "season": 2,
+      "episode": 1,
+      "title": "Salva al tigre",
+      "runtimeSec": 3960,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025457",
+      "season": 2,
+      "episode": 2,
+      "title": "Alea iacta est",
+      "runtimeSec": 3861,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025458",
+      "season": 2,
+      "episode": 3,
+      "title": "Rubén Zuno Arce",
+      "runtimeSec": 3455,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025459",
+      "season": 2,
+      "episode": 4,
+      "title": "Los túneles",
+      "runtimeSec": 3645,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025460",
+      "season": 2,
+      "episode": 5,
+      "title": "Organización de Arellano Félix",
+      "runtimeSec": 3319,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025461",
+      "season": 2,
+      "episode": 6,
+      "title": "El dedazo",
+      "runtimeSec": 3237,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025462",
+      "season": 2,
+      "episode": 7,
+      "title": "Verdad y reconciliación",
+      "runtimeSec": 3390,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025463",
+      "season": 2,
+      "episode": 8,
+      "title": "Se cayó el sistema",
+      "runtimeSec": 3437,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025464",
+      "season": 2,
+      "episode": 9,
+      "title": "Crecimiento, prosperidad y liberación",
+      "runtimeSec": 2771,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025465",
+      "season": 2,
+      "episode": 10,
+      "title": "Libre comercio",
+      "runtimeSec": 3706,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197862",
+      "season": 3,
+      "episode": 1,
+      "title": "Doce pasos",
+      "runtimeSec": 3629,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197863",
+      "season": 3,
+      "episode": 2,
+      "title": "Como la flor",
+      "runtimeSec": 2945,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197864",
+      "season": 3,
+      "episode": 3,
+      "title": "Los juniors",
+      "runtimeSec": 3236,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197865",
+      "season": 3,
+      "episode": 4,
+      "title": "Guadalajara",
+      "runtimeSec": 3243,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197866",
+      "season": 3,
+      "episode": 5,
+      "title": "Agente en terreno",
+      "runtimeSec": 3533,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197867",
+      "season": 3,
+      "episode": 6,
+      "title": "La jefa",
+      "runtimeSec": 3429,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197868",
+      "season": 3,
+      "episode": 7,
+      "title": "La Voz",
+      "runtimeSec": 3340,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197869",
+      "season": 3,
+      "episode": 8,
+      "title": "El último danzón",
+      "runtimeSec": 3457,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197870",
+      "season": 3,
+      "episode": 9,
+      "title": "Rendición de cuentas",
+      "runtimeSec": 3410,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197871",
+      "season": 3,
+      "episode": 10,
+      "title": "La vida en tiempos de guerra",
+      "runtimeSec": 4133,
+      "sourceUrl": "https://www.netflix.com/mx/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130304",
+      "season": 1,
+      "episode": 1,
+      "title": "Camelot",
+      "runtimeSec": 3492,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130305",
+      "season": 1,
+      "episode": 2,
+      "title": "The Plaza System",
+      "runtimeSec": 3556,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130306",
+      "season": 1,
+      "episode": 3,
+      "title": "El Padrino",
+      "runtimeSec": 4087,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130307",
+      "season": 1,
+      "episode": 4,
+      "title": "Rafa, Rafa, Rafa!",
+      "runtimeSec": 3318,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130308",
+      "season": 1,
+      "episode": 5,
+      "title": "The Colombian Connection",
+      "runtimeSec": 4078,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130309",
+      "season": 1,
+      "episode": 6,
+      "title": "La Última Frontera",
+      "runtimeSec": 3356,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130310",
+      "season": 1,
+      "episode": 7,
+      "title": "Jefe de Jefes",
+      "runtimeSec": 3800,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130311",
+      "season": 1,
+      "episode": 8,
+      "title": "Just Say No",
+      "runtimeSec": 3725,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130312",
+      "season": 1,
+      "episode": 9,
+      "title": "881 Lope de Vega",
+      "runtimeSec": 3319,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80130313",
+      "season": 1,
+      "episode": 10,
+      "title": "Leyenda",
+      "runtimeSec": 4192,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "80186925",
+      "season": 2,
+      "episode": 1,
+      "title": "Salva El Tigre",
+      "runtimeSec": 3960,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025457",
+      "season": 2,
+      "episode": 2,
+      "title": "Alea lacta Est",
+      "runtimeSec": 3861,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025458",
+      "season": 2,
+      "episode": 3,
+      "title": "Ruben Zuno Arce",
+      "runtimeSec": 3455,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025459",
+      "season": 2,
+      "episode": 4,
+      "title": "The Big Dig",
+      "runtimeSec": 3645,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025460",
+      "season": 2,
+      "episode": 5,
+      "title": "AFO",
+      "runtimeSec": 3319,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025461",
+      "season": 2,
+      "episode": 6,
+      "title": "El Dedazo",
+      "runtimeSec": 3237,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025462",
+      "season": 2,
+      "episode": 7,
+      "title": "Truth and Reconciliation",
+      "runtimeSec": 3390,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025463",
+      "season": 2,
+      "episode": 8,
+      "title": "Se Cayó El Sistema",
+      "runtimeSec": 3437,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025464",
+      "season": 2,
+      "episode": 9,
+      "title": "Growth, Prosperity, and Liberation",
+      "runtimeSec": 2771,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81025465",
+      "season": 2,
+      "episode": 10,
+      "title": "Free Trade",
+      "runtimeSec": 3706,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197862",
+      "season": 3,
+      "episode": 1,
+      "title": "12 Steps",
+      "runtimeSec": 3629,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197863",
+      "season": 3,
+      "episode": 2,
+      "title": "Como La Flor",
+      "runtimeSec": 2945,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197864",
+      "season": 3,
+      "episode": 3,
+      "title": "Los Juniors",
+      "runtimeSec": 3236,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197865",
+      "season": 3,
+      "episode": 4,
+      "title": "GDL",
+      "runtimeSec": 3243,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197866",
+      "season": 3,
+      "episode": 5,
+      "title": "Boots on the Ground",
+      "runtimeSec": 3533,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197867",
+      "season": 3,
+      "episode": 6,
+      "title": "La Jefa",
+      "runtimeSec": 3429,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197868",
+      "season": 3,
+      "episode": 7,
+      "title": "La Voz",
+      "runtimeSec": 3340,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197869",
+      "season": 3,
+      "episode": 8,
+      "title": "Last Dance",
+      "runtimeSec": 3457,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197870",
+      "season": 3,
+      "episode": 9,
+      "title": "The Reckoning",
+      "runtimeSec": 3410,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80997085",
+      "contentId": "81197871",
+      "season": 3,
+      "episode": 10,
+      "title": "Life in Wartime",
+      "runtimeSec": 4133,
+      "sourceUrl": "https://www.netflix.com/ca/title/80997085"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077368",
+      "season": 1,
+      "episode": 1,
+      "title": "Capítulo uno: La desaparición de Will Byers",
+      "runtimeSec": 2976,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077369",
+      "season": 1,
+      "episode": 2,
+      "title": "Capítulo dos: La loca de la calle Maple",
+      "runtimeSec": 3384,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077370",
+      "season": 1,
+      "episode": 3,
+      "title": "Capítulo tres: Todo está bien",
+      "runtimeSec": 3171,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077371",
+      "season": 1,
+      "episode": 4,
+      "title": "Capítulo cuatro: El cuerpo",
+      "runtimeSec": 3085,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077372",
+      "season": 1,
+      "episode": 5,
+      "title": "Capítulo cinco: La pulga y el acróbata",
+      "runtimeSec": 3236,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077373",
+      "season": 1,
+      "episode": 6,
+      "title": "Capítulo seis: El monstruo",
+      "runtimeSec": 2861,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077374",
+      "season": 1,
+      "episode": 7,
+      "title": "Capítulo siete: La bañera",
+      "runtimeSec": 2581,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077375",
+      "season": 1,
+      "episode": 8,
+      "title": "Capítulo ocho: El otro lado",
+      "runtimeSec": 3342,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80117716",
+      "season": 2,
+      "episode": 1,
+      "title": "Capítulo uno: MADMAX",
+      "runtimeSec": 2945,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144891",
+      "season": 2,
+      "episode": 2,
+      "title": "Capítulo dos: Dulce o truco, bicho raro",
+      "runtimeSec": 3417,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144892",
+      "season": 2,
+      "episode": 3,
+      "title": "Capítulo tres: El renacuajo",
+      "runtimeSec": 3114,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144893",
+      "season": 2,
+      "episode": 4,
+      "title": "Capítulo cuatro: Will, el Sabio",
+      "runtimeSec": 2827,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144894",
+      "season": 2,
+      "episode": 5,
+      "title": "Capítulo cinco: Dig Dug",
+      "runtimeSec": 3541,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144895",
+      "season": 2,
+      "episode": 6,
+      "title": "Capítulo seis: El espía",
+      "runtimeSec": 3166,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144896",
+      "season": 2,
+      "episode": 7,
+      "title": "Capítulo siete: La hermana perdida",
+      "runtimeSec": 2785,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144897",
+      "season": 2,
+      "episode": 8,
+      "title": "Capítulo ocho: El azotamentes",
+      "runtimeSec": 2922,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144898",
+      "season": 2,
+      "episode": 9,
+      "title": "Capítulo nueve: El portal",
+      "runtimeSec": 3780,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80186941",
+      "season": 3,
+      "episode": 1,
+      "title": "Capítulo uno: ¿Me copias, Suzie?",
+      "runtimeSec": 3087,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222773",
+      "season": 3,
+      "episode": 2,
+      "title": "Capítulo dos: Ratas de centro comercial",
+      "runtimeSec": 3063,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222774",
+      "season": 3,
+      "episode": 3,
+      "title": "Capítulo tres: El caso de la guardavidas perdida",
+      "runtimeSec": 3038,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222775",
+      "season": 3,
+      "episode": 4,
+      "title": "Capítulo cuatro: La prueba del sauna",
+      "runtimeSec": 3218,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222776",
+      "season": 3,
+      "episode": 5,
+      "title": "Capítulo cinco: Los desollados",
+      "runtimeSec": 3173,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222777",
+      "season": 3,
+      "episode": 6,
+      "title": "Capítulo seis: E pluribus unum",
+      "runtimeSec": 3633,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222778",
+      "season": 3,
+      "episode": 7,
+      "title": "Capítulo siete: La picadura",
+      "runtimeSec": 3363,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222779",
+      "season": 3,
+      "episode": 8,
+      "title": "Capítulo ocho: La batalla de Starcourt",
+      "runtimeSec": 4716,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229866",
+      "season": 4,
+      "episode": 1,
+      "title": "Capítulo uno: El club",
+      "runtimeSec": 4726,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229867",
+      "season": 4,
+      "episode": 2,
+      "title": "Capítulo dos: La maldición de Vecna",
+      "runtimeSec": 4699,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229868",
+      "season": 4,
+      "episode": 3,
+      "title": "Capítulo tres: ¿Monstruo o superheroína?",
+      "runtimeSec": 3912,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229869",
+      "season": 4,
+      "episode": 4,
+      "title": "Capítulo cuatro: Querido Billy",
+      "runtimeSec": 4786,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229870",
+      "season": 4,
+      "episode": 5,
+      "title": "Capítulo cinco: Proyecto Nina",
+      "runtimeSec": 4631,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229871",
+      "season": 4,
+      "episode": 6,
+      "title": "Capítulo seis: En lo profundo",
+      "runtimeSec": 4548,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229872",
+      "season": 4,
+      "episode": 7,
+      "title": "Capítulo siete: Masacre en el laboratorio Hawkins",
+      "runtimeSec": 6080,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229873",
+      "season": 4,
+      "episode": 8,
+      "title": "Capítulo ocho: Papá",
+      "runtimeSec": 5269,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81227938",
+      "season": 4,
+      "episode": 9,
+      "title": "Capítulo nueve: El huésped",
+      "runtimeSec": 8569,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599029",
+      "season": 5,
+      "episode": 1,
+      "title": "Capítulo uno: La misión",
+      "runtimeSec": 4288,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599030",
+      "season": 5,
+      "episode": 2,
+      "title": "Capítulo Dos: La Desaparición de Holly Wheeler",
+      "runtimeSec": 3472,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599031",
+      "season": 5,
+      "episode": 3,
+      "title": "Capítulo tres: La trampa de Turnbow",
+      "runtimeSec": 4166,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599032",
+      "season": 5,
+      "episode": 4,
+      "title": "Capítulo cuatro: Hechicero",
+      "runtimeSec": 5205,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599033",
+      "season": 5,
+      "episode": 5,
+      "title": "Capítulo cinco: Electrochoque",
+      "runtimeSec": 4083,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599034",
+      "season": 5,
+      "episode": 6,
+      "title": "Capítulo seis: La huida de Camazotz",
+      "runtimeSec": 4535,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599035",
+      "season": 5,
+      "episode": 7,
+      "title": "Capítulo siete: El puente",
+      "runtimeSec": 3969,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599036",
+      "season": 5,
+      "episode": 8,
+      "title": "Capítulo ocho: Este Lado",
+      "runtimeSec": 7697,
+      "sourceUrl": "https://www.netflix.com/mx/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077368",
+      "season": 1,
+      "episode": 1,
+      "title": "Chapter One: The Vanishing of Will Byers",
+      "runtimeSec": 2976,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077369",
+      "season": 1,
+      "episode": 2,
+      "title": "Chapter Two: The Weirdo on Maple Street",
+      "runtimeSec": 3384,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077370",
+      "season": 1,
+      "episode": 3,
+      "title": "Chapter Three: Holly, Jolly",
+      "runtimeSec": 3171,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077371",
+      "season": 1,
+      "episode": 4,
+      "title": "Chapter Four: The Body",
+      "runtimeSec": 3085,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077372",
+      "season": 1,
+      "episode": 5,
+      "title": "Chapter Five: The Flea and the Acrobat",
+      "runtimeSec": 3236,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077373",
+      "season": 1,
+      "episode": 6,
+      "title": "Chapter Six: The Monster",
+      "runtimeSec": 2861,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077374",
+      "season": 1,
+      "episode": 7,
+      "title": "Chapter Seven: The Bathtub",
+      "runtimeSec": 2581,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80077375",
+      "season": 1,
+      "episode": 8,
+      "title": "Chapter Eight: The Upside Down",
+      "runtimeSec": 3342,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80117716",
+      "season": 2,
+      "episode": 1,
+      "title": "Chapter One: MADMAX",
+      "runtimeSec": 2945,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144891",
+      "season": 2,
+      "episode": 2,
+      "title": "Chapter Two: Trick or Treat, Freak",
+      "runtimeSec": 3417,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144892",
+      "season": 2,
+      "episode": 3,
+      "title": "Chapter Three: The Pollywog",
+      "runtimeSec": 3114,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144893",
+      "season": 2,
+      "episode": 4,
+      "title": "Chapter Four: Will the Wise",
+      "runtimeSec": 2827,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144894",
+      "season": 2,
+      "episode": 5,
+      "title": "Chapter Five: Dig Dug",
+      "runtimeSec": 3541,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144895",
+      "season": 2,
+      "episode": 6,
+      "title": "Chapter Six: The Spy",
+      "runtimeSec": 3166,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144896",
+      "season": 2,
+      "episode": 7,
+      "title": "Chapter Seven: The Lost Sister",
+      "runtimeSec": 2785,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144897",
+      "season": 2,
+      "episode": 8,
+      "title": "Chapter Eight: The Mind Flayer",
+      "runtimeSec": 2922,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80144898",
+      "season": 2,
+      "episode": 9,
+      "title": "Chapter Nine: The Gate",
+      "runtimeSec": 3780,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80186941",
+      "season": 3,
+      "episode": 1,
+      "title": "Chapter One: Suzie, Do You Copy?",
+      "runtimeSec": 3087,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222773",
+      "season": 3,
+      "episode": 2,
+      "title": "Chapter Two: The Mall Rats",
+      "runtimeSec": 3063,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222774",
+      "season": 3,
+      "episode": 3,
+      "title": "Chapter Three: The Case of the Missing Lifeguard",
+      "runtimeSec": 3038,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222775",
+      "season": 3,
+      "episode": 4,
+      "title": "Chapter Four: The Sauna Test",
+      "runtimeSec": 3218,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222776",
+      "season": 3,
+      "episode": 5,
+      "title": "Chapter Five: The Flayed",
+      "runtimeSec": 3173,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222777",
+      "season": 3,
+      "episode": 6,
+      "title": "Chapter Six: E Pluribus Unum",
+      "runtimeSec": 3633,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222778",
+      "season": 3,
+      "episode": 7,
+      "title": "Chapter Seven: The Bite",
+      "runtimeSec": 3363,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80222779",
+      "season": 3,
+      "episode": 8,
+      "title": "Chapter Eight: The Battle of Starcourt",
+      "runtimeSec": 4716,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229866",
+      "season": 4,
+      "episode": 1,
+      "title": "Chapter One: The Hellfire Club",
+      "runtimeSec": 4726,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229867",
+      "season": 4,
+      "episode": 2,
+      "title": "Chapter Two: Vecna's Curse",
+      "runtimeSec": 4699,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229868",
+      "season": 4,
+      "episode": 3,
+      "title": "Chapter Three: The Monster and the Superhero",
+      "runtimeSec": 3912,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229869",
+      "season": 4,
+      "episode": 4,
+      "title": "Chapter Four: Dear Billy",
+      "runtimeSec": 4786,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229870",
+      "season": 4,
+      "episode": 5,
+      "title": "Chapter Five: The Nina Project",
+      "runtimeSec": 4631,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229871",
+      "season": 4,
+      "episode": 6,
+      "title": "Chapter Six: The Dive",
+      "runtimeSec": 4548,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229872",
+      "season": 4,
+      "episode": 7,
+      "title": "Chapter Seven: The Massacre at Hawkins Lab",
+      "runtimeSec": 6080,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "80229873",
+      "season": 4,
+      "episode": 8,
+      "title": "Chapter Eight: Papa",
+      "runtimeSec": 5269,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81227938",
+      "season": 4,
+      "episode": 9,
+      "title": "Chapter Nine: The Piggyback",
+      "runtimeSec": 8569,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599029",
+      "season": 5,
+      "episode": 1,
+      "title": "Chapter One: The Crawl",
+      "runtimeSec": 4288,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599030",
+      "season": 5,
+      "episode": 2,
+      "title": "Chapter Two: The Vanishing of Holly Wheeler",
+      "runtimeSec": 3472,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599031",
+      "season": 5,
+      "episode": 3,
+      "title": "Chapter Three: The Turnbow Trap",
+      "runtimeSec": 4166,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599032",
+      "season": 5,
+      "episode": 4,
+      "title": "Chapter Four: Sorcerer",
+      "runtimeSec": 5205,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599033",
+      "season": 5,
+      "episode": 5,
+      "title": "Chapter Five: Shock Jock",
+      "runtimeSec": 4083,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599034",
+      "season": 5,
+      "episode": 6,
+      "title": "Chapter Six: Escape from Camazotz",
+      "runtimeSec": 4535,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599035",
+      "season": 5,
+      "episode": 7,
+      "title": "Chapter Seven: The Bridge",
+      "runtimeSec": 3969,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    },
+    {
+      "seriesId": "80057281",
+      "contentId": "81599036",
+      "season": 5,
+      "episode": 8,
+      "title": "Chapter Eight: The Rightside Up",
+      "runtimeSec": 7697,
+      "sourceUrl": "https://www.netflix.com/ca/title/80057281"
+    }
+  ]
+}

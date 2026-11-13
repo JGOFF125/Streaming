@@ -91,3 +91,12 @@ test('descriptive season names do not override explicit season numbering',()=>{
  assert.equal(parse(document([named])).episodes[0].season,1);
  named.numberLabelV2='A descriptive season';assert.throws(()=>parse(document([named])));
 });
+
+
+test('series aliases require a matching public series URL and unambiguous structured data',()=>{
+ const markup=(name,url=sourceUrl)=>'<script type="application/ld+json">'+JSON.stringify({'@type':'TVSeries',name,url})+'</script>';
+ assert.equal(parse(document([season()])+markup('Fictional series')).seriesTitle,'Fictional series');
+ assert.equal(parse(document([season()])+markup('Wrong page','https://www.netflix.com/title/999')).seriesTitle,null);
+ assert.equal(parse(document([season()])+markup('First')+markup('Second')).seriesTitle,null);
+ assert.equal(parse(document([season()])+markup('Secret','https://user@www.netflix.com/title/101')).seriesTitle,null);
+});

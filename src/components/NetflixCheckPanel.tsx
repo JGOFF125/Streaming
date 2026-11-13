@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import referenceCatalog from '../data/netflix-reference-catalog.json';
+import {recognizeNetflixSnapshot} from '../netflixRecognition';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, AppState, Platform, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { acquireNetflixOperation } from '../netflixOperation';
 import { netflixMedia } from '../netflixMedia';
@@ -12,6 +14,7 @@ export default function NetflixCheckPanel() {
   const [testing, setTesting] = useState(false);
   const [labelBaseline, setLabelBaseline] = useState<NetflixDisplayLabels | null>(null);
   const labelComparison = labelBaseline ? compareNetflixLabels(labelBaseline, snapshot?.displayMetadata ?? null) : null;
+  const recognition = useMemo(() => recognizeNetflixSnapshot(snapshot,referenceCatalog),[snapshot]);
   const running = useRef(false);
   const mounted = useRef(true);
   const refreshing = useRef(false);
@@ -92,12 +95,13 @@ export default function NetflixCheckPanel() {
   }
 
   async function shareReport() {
-    try { await Share.share({ title: 'Orbit Netflix controls check', message: netflixReport(snapshot, result, labelComparison) }); }
+    try { await Share.share({ title: 'Orbit Netflix controls check', message: netflixReport(snapshot, result, labelComparison, recognition) }); }
     catch { setMessage('Could not open sharing. You can read the result on this screen.'); }
   }
 
   return <View style={s.panel}>
     <Text style={s.title}>Netflix controls check</Text>
+    <Text style={s.note}>Report v4 · Installed Orbit {snapshot?.appBuild?.version ?? 'version unavailable'}{snapshot?.appBuild?.code ? ' · build '+snapshot.appBuild.code : ''}</Text>
     <Text style={s.note}>Optional tests of the separate Netflix app. Netflix video is not embedded in Orbit. Google sign-in and private rooms work without this permission.</Text>
     {!netflixMedia ? <Text style={s.note}>{Platform.OS === 'android'
       ? 'Install the new Orbit test APK to use this check. The previous build and Expo Go do not contain Netflix controls.'
@@ -131,6 +135,30 @@ export default function NetflixCheckPanel() {
             <Button label="Forget remembered labels" disabled={testing} onPress={() => setLabelBaseline(null)} />
           </>}
         </>}
+        <View style={s.candidate}>
+          <Text style={s.readout}>Automatic catalog candidate check</Text>
+          <Text style={s.note}>Development coverage: {recognition.catalogSeriesCount} reference series, {recognition.catalogEpisodeCount} episodes in Spanish and English. Other titles may not match.</Text>
+          <Text style={s.note}>{recognition.status==='context_supports_candidate'
+            ? 'A separate provider label also matches this candidate’s series. The connection still needs validation before sync.'
+            : recognition.status==='episode_candidate_only' ? 'An episode matches, but its series is not independently established.'
+            : recognition.status==='ambiguous' ? 'More than one match is possible. Orbit has not selected one.'
+            : recognition.status==='context_conflict' ? 'The episode and provider context disagree. Identity is not established.'
+            : recognition.status==='no_candidate' ? 'No exact episode match in this small reference catalog.'
+            : 'A usable current episode observation is required for this check.'}</Text>
+          {recognition.candidates.slice(0,3).map(candidate=><Text key={candidate.seriesId+':'+candidate.contentId} style={s.note}>
+            {referenceCatalog.series.find(series=>series.seriesId===candidate.seriesId)?.names[0] ?? 'Reference series'} · S{candidate.season}:E{candidate.episode} · candidate ID {candidate.contentId}
+          </Text>)}
+          <Text style={s.note}>Candidates do not enable play, pause, seek or room sync. This check stays on your phone.</Text>
+        </View>
+        {snapshot.contextMetadata && <>
+          <Text style={s.note}>Additional labels published by Netflix · local only</Text>
+          {snapshot.contextMetadata.albumLabel || snapshot.contextMetadata.artistLabel || snapshot.contextMetadata.albumArtistLabel ? <>
+            {!!snapshot.contextMetadata.albumLabel && <Text numberOfLines={3} style={s.readout}>{snapshot.contextMetadata.albumLabel}</Text>}
+            {!!snapshot.contextMetadata.artistLabel && <Text numberOfLines={3} style={s.readout}>{snapshot.contextMetadata.artistLabel}</Text>}
+            {!!snapshot.contextMetadata.albumArtistLabel && <Text numberOfLines={3} style={s.readout}>{snapshot.contextMetadata.albumArtistLabel}</Text>}
+          </> : <Text style={s.note}>No additional useful context labels were reported.</Text>}
+          <Text style={s.note}>These standard text fields may be absent or unrelated to the series. Raw labels are excluded from shared reports.</Text>
+        </>}
         {snapshot.queueEvidence && <Text style={s.note}>{snapshot.queueEvidence.status === 'candidate'
           ? 'Active Netflix item reports candidate catalog ID ' + snapshot.queueEvidence.candidateContentId + '. This is not yet verified for synchronization.'
           : 'The active Netflix item has not supplied a usable catalog ID. The shared diagnostic includes the result of this check.'}</Text>}
@@ -161,6 +189,7 @@ const s = StyleSheet.create({
   panel: { backgroundColor: '#172138', borderRadius: 18, padding: 17, marginBottom: 16, borderWidth: 1, borderColor: '#2b3552' },
   title: { color: '#fff', fontWeight: '700', fontSize: 19, marginBottom: 4 },
   note: { color: '#becae0', fontSize: 13, lineHeight: 19, marginTop: 9 },
+  candidate: { borderWidth: 1, borderColor: '#6574c4', borderRadius: 12, padding: 12, marginTop: 14 },
   readout: { color: '#fff', fontSize: 14, marginTop: 14 },
   button: { backgroundColor: '#505ce0', padding: 14, borderRadius: 10, alignItems: 'center', marginTop: 10 },
   disabled: { opacity: 0.5 }, buttonText: { color: '#fff', fontWeight: '700' },
