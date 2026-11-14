@@ -43,3 +43,9 @@ The USB phone is currently unavailable; installation and the new physical check 
 ## Connected installation
 
 The user reconnected/authorized the Pixel. The hash-pinned 1.3.7 APK was installed successfully using adb install -r, without clearing app data; package metadata confirms 1.3.7/code14, and Orbit was launched. The opt-in check-before-Play reproduction was requested. No new physical playback or counter outcome has been received yet.
+
+## Physical 1.3.7 and installed-player comparison
+
+The reproduction is completed: the user accepted protected playback and still reports loading/E100. The early fixed-counter window contains one page start/finish, one protected-media request and two console errors, with no narrower classification. No grant-call event was recorded in that particular early snapshot; it predates the later user report and is not proof of a permission failure. Later windows closed or had no retained matching records. Root cause and Netflix authorization remain unverified. The PC parser now preserves at most four prior fixed-counter windows within the same bounded log capture, omitting raw messages, window IDs and account data; nine checker tests and all 116 application/database/diagnostic tests pass, together with lint/typecheck.
+
+The user freshly confirms the same episode plays inside Rave with video/audio on the same phone. Scoped public runtime hierarchy evidence supports a native rendering surface distinct from browser browsing. Installed public package metadata supplies Media3/LiveKit/Javet leads but no documented Netflix playback contract. See [ANDROID_PLAYER_COMPONENT_RESEARCH.md](ANDROID_PLAYER_COMPONENT_RESEARCH.md). No private app storage, credentials, license material or implementation was copied. Explicitly authorized inquiries to Rave/Hearo were sent and verified with only a generic Android-phone description. No new APK or speculative DRM/browser change was made.

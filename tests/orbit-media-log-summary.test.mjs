@@ -93,3 +93,14 @@ test('native evidence starts at a fixed begin boundary, resets and never accepts
   const reset=summarizeOrbitMediaLogs([...lines,'I/OrbitBrowserDiag(123): begin:1','I/OrbitBrowserDiag(123): end:1'].join('\n'),123);
   assert.equal(reset.nativeBrowserEvidence.signalCounts.console_error,0);assert.equal(reset.nativeBrowserEvidence.attemptActive,false);
 });
+
+
+test('bounded prior windows retain fixed counts when a later empty check replaces the useful attempt',()=>{
+  const lines=[];for(let i=1;i<=7;i++){lines.push('I/OrbitBrowserDiag(123): begin:'+i);lines.push('I/OrbitBrowserDiag(123): signal:'+i+':protected_media_grant_called:'+i);lines.push('I/OrbitBrowserDiag(123): end:'+i);}
+  lines.push('I/OrbitBrowserDiag(123): begin:8');lines.push('I/OrbitBrowserDiag(123): private_cookie_account');
+  const r=summarizeOrbitMediaLogs(lines.join('\n'),123);
+  assert.equal(r.previousNativeWindows.length,4);assert.equal(r.previousNativeWindows[0].signalCounts.protected_media_grant_called,4);
+  assert.equal(r.previousNativeWindows[3].signalCounts.protected_media_grant_called,7);
+  assert.equal(r.nativeBrowserEvidence.signalCounts.protected_media_grant_called,0);
+  assert.doesNotMatch(JSON.stringify(r),/private_cookie|begin:|signal:|nativeAttempt/);
+});

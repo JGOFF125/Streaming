@@ -25,6 +25,7 @@ export function summarizeOrbitMediaLogs(input, pid) {
   const nativeBrowserEvidence = {attemptBoundaryObserved:false,attemptActive:false,signalCounts:Object.fromEntries(nativeSignalKeys.map(key=>[key,0]))};
   const observedTags = Object.fromEntries(mediaLogTags.map(tag => [tag, 0]));
   let nativeAttempt = null;
+  const previousNativeWindows = [];
   let matchingProcessLines = 0, inputTruncated = false, scanned = 0;
   for (const line of input.split(/\r?\n/)) {
     if (++scanned > 4000) { inputTruncated = true; break; }
@@ -37,6 +38,10 @@ export function summarizeOrbitMediaLogs(input, pid) {
       const begin = /^begin:([1-9][0-9]{0,5})$/.exec(match[3]);
       const end = /^end:([1-9][0-9]{0,5})$/.exec(match[3]);
       if (begin) {
+        if (nativeAttempt !== null) {
+          previousNativeWindows.push({signalCounts:{...nativeBrowserEvidence.signalCounts}});
+          if (previousNativeWindows.length > 4) previousNativeWindows.shift();
+        }
         nativeAttempt = begin[1]; nativeBrowserEvidence.attemptBoundaryObserved = true; nativeBrowserEvidence.attemptActive = true;
         for (const key of nativeSignalKeys) nativeBrowserEvidence.signalCounts[key] = 0;
       } else if (end && end[1] === nativeAttempt) nativeBrowserEvidence.attemptActive = false;
@@ -53,7 +58,7 @@ export function summarizeOrbitMediaLogs(input, pid) {
     status: Object.values(counts).some(Boolean) || Object.entries(nativeBrowserEvidence.signalCounts).some(([key,count])=>count>0 && /^(?:console_|network_|(?:page|resource)_http_|protected_media_denied|permission_request_blocked)/.test(key)) ? 'signals_observed' : 'no_classified_signal',
     scope: 'recent_orbit_main_process_warnings_and_errors',
     rendererAndSystemServiceLogsIncluded: false,
-    matchingProcessLines: Math.min(4000, matchingProcessLines), inputTruncated, observedTags, signals: counts, nativeBrowserEvidence,
+    matchingProcessLines: Math.min(4000, matchingProcessLines), inputTruncated, observedTags, signals: counts, nativeBrowserEvidence, previousNativeWindows,
     rootCauseVerified: false, netflixAuthorizationVerified: false, automaticSyncVerified: false,
   };
 }

@@ -42,7 +42,7 @@ if (query(['get-state'])?.trim() !== 'device') {
         if (logs === null) {coverage.failedProcessCount++;continue;}
         if (process.kind === 'renderer') coverage.includedRendererProcesses++;
         const part = summarizeOrbitMediaLogs(logs, process.pid);
-        if (process.kind === 'main') report.nativeBrowserEvidence = part.nativeBrowserEvidence;
+        if (process.kind === 'main') { report.nativeBrowserEvidence = part.nativeBrowserEvidence; report.previousNativeWindows = part.previousNativeWindows; }
         report.matchingProcessLines += part.matchingProcessLines;
         report.inputTruncated ||= part.inputTruncated;
         for (const key of Object.keys(report.signals)) report.signals[key] = Math.min(255, report.signals[key] + part.signals[key]);
