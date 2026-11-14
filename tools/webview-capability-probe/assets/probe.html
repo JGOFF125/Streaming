@@ -1,0 +1,21 @@
+<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; media-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+<title>Orbit offline capability check</title><style>body{font:18px sans-serif;padding:24px;background:#0b1020;color:white}pre{white-space:pre-wrap;font-size:14px}</style>
+<h1>Offline Android check</h1><p>No Netflix, accounts, network access or license requests. This checks platform capabilities only.</p><pre id="results"></pre>
+<script>
+(async()=>{
+ const out=document.getElementById('results');
+ const emit=(key,value)=>{const status=typeof value==='boolean'?(value?'yes':'no'):value;out.textContent+=key+': '+status+'\n';console.log('ORBIT_PROBE:'+key+':'+status);};
+ const timed=promise=>Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject({name:'TimeoutError'}),5000))]);
+ const failure=e=>({NotSupportedError:'not_supported',NotAllowedError:'not_allowed',SecurityError:'security_error',TimeoutError:'timeout'}[e&&e.name]||'other_error');
+ emit('secure_context',window.isSecureContext);emit('eme_api',typeof navigator.requestMediaKeySystemAccess==='function');emit('mse_api',typeof MediaSource!=='undefined');
+ emit('h264_mse',typeof MediaSource!=='undefined'&&MediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E"'));
+ emit('aac_mse',typeof MediaSource!=='undefined'&&MediaSource.isTypeSupported('audio/mp4; codecs="mp4a.40.2"'));
+ for(const [key,robustness] of [['restricted_eme',''],['default_eme',''],['software_crypto_eme','SW_SECURE_CRYPTO'],['software_decode_eme','SW_SECURE_DECODE'],['hardware_eme','HW_SECURE_ALL']]){
+  if(typeof navigator.requestMediaKeySystemAccess!=='function'){emit(key,'unavailable');continue;}
+  try {const access=await timed(navigator.requestMediaKeySystemAccess('com.widevine.alpha',[{initDataTypes:['cenc'],videoCapabilities:[{contentType:'video/mp4; codecs="avc1.42E01E"',robustness}],sessionTypes:['temporary'],persistentState:key==='restricted_eme'?'not-allowed':'optional',distinctiveIdentifier:key==='restricted_eme'?'not-allowed':'optional'}]));emit(key,'supported');
+   if(key==='default_eme'){try{await timed(access.createMediaKeys());emit('default_media_keys','created');}catch(e){emit('default_media_keys',failure(e));}}
+  }catch(e){emit(key,failure(e));}
+ }
+ emit('complete',true);
+})();
+</script>

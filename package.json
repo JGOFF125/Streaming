@@ -41,7 +41,7 @@
     "start:go": "expo start --go",
     "start:dev": "expo start --dev-client",
     "test:auth": "node --experimental-strip-types --test tests/google-auth.test.mjs tests/native-routes.test.mjs",
-    "test:netflix": "node --experimental-strip-types --test tests/netflix-diagnostics.test.mjs tests/netflix-operation.test.mjs tests/embedded-netflix-diagnostics.test.mjs tests/netflix-public-catalog.test.mjs tests/netflix-recognition.test.mjs tests/orbit-media-log-summary.test.mjs",
+    "test:netflix": "node --experimental-strip-types --test tests/netflix-diagnostics.test.mjs tests/netflix-operation.test.mjs tests/embedded-netflix-diagnostics.test.mjs tests/netflix-public-catalog.test.mjs tests/netflix-recognition.test.mjs tests/orbit-media-log-summary.test.mjs tests/offline-capability-result.test.mjs",
     "test:playback": "node --experimental-strip-types --test tests/playback-sync.test.mjs tests/playback-database.test.mjs tests/playback-client.test.mjs",
     "check:apk-permissions": "node scripts/check-apk-permissions.mjs",
     "catalog:netflix": "node --experimental-strip-types scripts/inspect-netflix-catalog.mjs",

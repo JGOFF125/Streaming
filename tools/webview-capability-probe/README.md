@@ -1,0 +1,31 @@
+# Offline WebView capability probe
+
+A separate developer diagnostic application, not an Orbit release or a Netflix player. It has **no Android permissions, including INTERNET**, no account fields, no provider URLs and no shared Orbit storage. It uses Android SDK tools already installed on the development computer; Expo/EAS still builds the actual Orbit app.
+
+The bundled local page is served only for one exact app-local HTTPS route. Network loading is disabled and the request client denies all other resources. Only its own script runs. It queries MSE H.264/AAC support and Widevine EME configurations, then tries creating a MediaKeys object for the default accepted configuration. It never creates a MediaKeySession or calls generateRequest/update, fetches a manifest or license, reads a device identifier, or accesses Netflix. Native queries ask whether Widevine MP4 and AVC/secure AVC decoding are supported and attempt opening/closing one unkeyed DRM session, without provisioning or key requests. No provider playback is verified by a positive result.
+
+The default browser agent/profile is used. One restricted configuration disallows persistent state and distinctive identifiers. Standard temporary configurations leave these optional, matching their ordinary defaults; the helper never reads a device identifier. This difference matters when interpreting rejected hardware robustness. A rejected configuration is not proof the hardware lacks DRM. An accepted configuration/MediaKeys object is not proof of decryption, decoded video or Netflix authorization. Protected-media permission is limited to the fixed app-local origin and exact resource. This does not change Orbit's permissions or consent handling.
+
+Build on Windows with PowerShell: ./tools/webview-capability-probe/build.ps1. Output, local-only signing key and APK remain ignored under .expo/webview-capability-probe. Optional parameters select existing SDK, Java, build-tools and platform paths. No dependencies are downloaded. The diagnostic uses its own package com.jgoff125.orbit.capabilityprobe and cannot update Orbit or Netflix.
+
+After reviewing the source and confirming one authorized USB phone, install .expo/webview-capability-probe/offline-probe.apk as a separate app. Start com.jgoff125.orbit.capabilityprobe/.ProbeActivity. It automatically finishes after its bounded check. Read only the fixed OrbitLocalProbe tag filtered to the probe's verified PID; do not collect general phone or provider logs. Retain only allowlisted capability results. The helper can later be removed independently without touching Orbit.
+
+Reference: [Android local content loading](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content), [MediaDrm capabilities](https://developer.android.com/reference/android/media/MediaDrm#isCryptoSchemeSupported(java.util.UUID,%20java.lang.String,%20int)), [W3C EME](https://www.w3.org/TR/encrypted-media/). Authentication and provider authorization are separate from these capability checks.
+
+## Public online comparison
+
+The optional -OnlineDemo build is a **different package**, com.jgoff125.orbit.demoprobe, with INTERNET only. Unlike the offline probe, it can contact the official Shaka demo and its normal public media/DRM services. It displays an explanation and Clear sample/Widevine sample buttons before making requests; protected-media permission requires an explicit in-app confirmation. It has no Netflix URL, account input, JS injection, page-content/cookie/license read, or app bridge. Only generic fixed error events are logged. TLS remains strict, external navigation/popups are blocked, and camera/microphone/location are not granted. It closes after ten minutes. Actual video/audio results require observation. A public sample success does not verify Netflix authorization.
+
+Current official demo: https://shaka-project.github.io/shaka-player/demo/ . The Angel One assets and public Widevine test license endpoint are taken from the project's own demo/common/assets.js; no production Netflix endpoint, credential or certificate is used. The old App Engine demo URL now redirects and should not be used as the canonical source.
+
+## Physical offline result and limits
+
+On November 13, the completed isolated default-profile check reports a secure context, EME and MSE APIs, AVC/AAC MSE support, accelerated rendering, native Widevine MP4/hardware support and a secure AVC decoder (ALL_CODECS includes secure-only codecs). The restricted configuration is rejected; the ordinary/default and SW_SECURE_CRYPTO configurations are accepted after exact-origin protected-media consent. SW_SECURE_DECODE and HW_SECURE_ALL are rejected. Creating the default MediaKeys object fails with NotSupportedError. The native unkeyed session returns needs_provisioning.
+
+This fresh offline package cannot provision over the network. Consequently, those session/MediaKeys failures do not establish broken device DRM or the cause of Orbit's E100. No license or provisioning message was generated/read by our code. A separate public online sample control is prepared to resolve this confound. The probe uses a default profile and separate package/origin/storage, so it does not reproduce Orbit's desktop profile or Netflix policy.
+
+## Confirmed public sample and profile follow-up
+
+The user confirms both the clear and Widevine public samples play video and sound on the phone with the standard profile. This is user-observed playback of the public sample, not Netflix or automatic synchronization. The demo helper now also offers Widevine + Orbit desktop settings: it derives the same desktop user-agent and AndroidX UA metadata from the installed engine version, including supported form factors, without changing DRM, cookies or device credentials. The physical outcome for this profile comparison is pending. Reopen the helper if its ten-minute limit closed it.
+
+The online helper's profile comparison uses an existing AndroidX WebKit 1.18.0 classes.jar. Supply its location with -OrbitProbeWebKit if it is not already in the project's ignored SDK cache. The builder does not download dependencies. AndroidX WebKit is public Apache-2.0 software; its source and license are available from the AndroidX project. No competitor library is used.
