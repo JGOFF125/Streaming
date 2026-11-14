@@ -53,3 +53,9 @@ The user freshly confirms the same episode plays inside Rave with video/audio on
 ## Independent public playback control
 
 Local investigation now includes a completed physical control: the user confirms clear and Widevine-protected Shaka Angel One samples play video/audio in a separate standard-profile Android WebView helper. A zero-permission offline helper had reported needs_provisioning / MediaKeys failure, but its lack of network and fresh origin/package confound that result; it is not the cause of Orbit's E100. The next comparison applies Orbit's desktop UA/Client Hints settings to the same public sample. Preserve actual Netflix identity/sync gates. No Orbit native change or speculative Netflix fix was shipped. See ANDROID_PLAYER_COMPONENT_RESEARCH.md.
+
+## Desktop-profile public DRM control completed
+
+The user now confirms video/audio for the public Widevine sample with Orbit's desktop UA/Client Hints settings as well. The helper's initial launch failure was a missing Core SDK dependency, corrected and verified with an actual UI/profile/process smoke check after unlocking the phone. This does not change production Orbit or identify E100's cause. Both standard and desktop public controls are complete; do not repeat them.
+
+The [official Netflix 1044 article](https://help.netflix.com/en/node/126040) matches the exact reported title-unavailable message and attributes persistent cases to device compatibility. The same phone's official Netflix/Rave success supports investigating the particular client route, not declaring the physical phone unsupported. Netflix's exact failed check remains unobserved. Media Integrity's default enabled status and store-independent design provide no evidence for a speculative Play-distribution or integrity-toggle fix. Continue the Netflix-specific supported player/identity adapter investigation, preserving the actual-ID gate.

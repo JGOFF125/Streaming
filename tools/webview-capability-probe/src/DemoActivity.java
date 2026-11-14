@@ -39,17 +39,19 @@ public final class DemoActivity extends Activity {
   });
   web.getSettings().setSupportMultipleWindows(true);
   defaultAgent=web.getSettings().getUserAgentString();
-  try{defaultMetadata=androidx.webkit.WebSettingsCompat.getUserAgentMetadata(web.getSettings());}catch(Exception e){emit("profile_unavailable");}
-  Button orbitProfile=new Button(this);orbitProfile.setText("Widevine + Orbit desktop settings");layout.addView(orbitProfile,3);orbitProfile.setOnClickListener(v->loadSample(true,true));
+  try{defaultMetadata=androidx.webkit.WebSettingsCompat.getUserAgentMetadata(web.getSettings());emit("profile_support_ready");}catch(Exception|LinkageError e){emit("profile_unavailable");}
+  Button orbitProfile=new Button(this);orbitProfile.setText("Widevine + Orbit desktop settings");orbitProfile.setEnabled(defaultMetadata!=null);layout.addView(orbitProfile,3);orbitProfile.setOnClickListener(v->loadSample(true,true));
   clear.setOnClickListener(v->loadSample(false,false));drm.setOnClickListener(v->loadSample(true,false));
   new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(()->finish(),600000);
+  if(getIntent().getBooleanExtra("verify_profile_only",false)){applyProfile(true);applyProfile(false);}
+  emit("screen_ready");
  }
  private boolean allowedPage(String url){try{android.net.Uri uri=android.net.Uri.parse(url);return "https".equals(uri.getScheme())&&"shaka-project.github.io".equals(uri.getHost())&&uri.getPath()!=null&&uri.getPath().startsWith("/shaka-player/demo/");}catch(Exception e){return false;}}
  private void loadSample(boolean protectedSample,boolean desktop){clearPending();if(!applyProfile(desktop))return;consoleErrors=0;emit(protectedSample?"widevine_sample_selected":"clear_sample_selected");String asset="https://storage.googleapis.com/shaka-demo-assets/angel-one"+(protectedSample?"-widevine":"")+"/dash.mpd";String hash="asset="+asset+(protectedSample?";license=https://proxy.uat.widevine.com/proxy":"")+";panel=HOME";web.loadUrl(ORIGIN+"/shaka-player/demo/#"+hash);}
  private boolean applyProfile(boolean desktop){
   try{
-   if(defaultMetadata==null)return false;
-   if(!desktop){web.getSettings().setUserAgentString(defaultAgent);androidx.webkit.WebSettingsCompat.setUserAgentMetadata(web.getSettings(),defaultMetadata);emit("system_profile_applied");return true;}
+   if(!desktop){web.getSettings().setUserAgentString(defaultAgent);if(defaultMetadata!=null)androidx.webkit.WebSettingsCompat.setUserAgentMetadata(web.getSettings(),defaultMetadata);emit("system_profile_applied");return true;}
+   if(defaultMetadata==null){emit("profile_unavailable");return false;}
    java.util.regex.Matcher chrome=java.util.regex.Pattern.compile("Chrome/([0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)").matcher(defaultAgent);
    java.util.regex.Matcher kit=java.util.regex.Pattern.compile("AppleWebKit/([0-9]+[.][0-9]+)").matcher(defaultAgent);
    if(!chrome.find()||!kit.find())return false;String version=chrome.group(1);String webkit=kit.group(1);
@@ -57,7 +59,7 @@ public final class DemoActivity extends Activity {
    androidx.webkit.UserAgentMetadata.Builder metadata=new androidx.webkit.UserAgentMetadata.Builder().setBrandVersionList(java.util.Collections.singletonList(brand)).setFullVersion(version).setPlatform("Linux").setPlatformVersion("0.0.0").setArchitecture("x86").setModel("").setMobile(false).setBitness(64).setWow64(false);
    if(androidx.webkit.WebViewFeature.isFeatureSupported(androidx.webkit.WebViewFeature.USER_AGENT_METADATA_FORM_FACTORS))metadata.setFormFactors(java.util.Collections.singletonList("Desktop"));
    web.getSettings().setUserAgentString("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/"+webkit+" (KHTML, like Gecko) Chrome/"+version+" Safari/"+webkit);androidx.webkit.WebSettingsCompat.setUserAgentMetadata(web.getSettings(),metadata.build());emit("desktop_profile_applied");return true;
-  }catch(Exception e){emit("profile_unavailable");return false;}
+  }catch(Exception|LinkageError e){emit("profile_unavailable");return false;}
  }
  private void clearPending(){if(dialog!=null){dialog.dismiss();dialog=null;}if(pending!=null){PermissionRequest request=pending;pending=null;request.deny();emit("protected_permission_denied");}}
  @Override public void onPause(){super.onPause();clearPending();if(web!=null)web.onPause();}

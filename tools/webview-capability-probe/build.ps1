@@ -1,6 +1,7 @@
 param(
  [switch]$OnlineDemo,
  [string]$OrbitProbeWebKit,
+ [string]$OrbitProbeCore,
  [string]$OrbitProbeSdk = "$env:LOCALAPPDATA/Android/Sdk",
  [string]$OrbitProbeJava = 'C:/Program Files/Android/Android Studio/jbr',
  [string]$OrbitProbeBuildTools = '36.0.0',
@@ -20,16 +21,25 @@ function Invoke-ProbeTool([string]$File,[string[]]$ToolArguments){
  & $File @ToolArguments
  if($LASTEXITCODE -ne 0){throw "Probe build tool failed: $([IO.Path]::GetFileName($File))"}
 }
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+function Assert-ProbeDependencyClass([string]$Jar,[string]$ClassPath){
+ $ProbeDependencyZip=[IO.Compression.ZipFile]::OpenRead($Jar)
+ try {if($null -eq $ProbeDependencyZip.GetEntry($ClassPath)){throw 'Required public SDK class is missing from a diagnostic dependency.'}} finally {$ProbeDependencyZip.Dispose()}
+}
 $OrbitProbeCompileClasspath=$OrbitProbeAndroid
 if($OnlineDemo){
  if(-not $OrbitProbeWebKit){$OrbitProbeWebKit=Join-Path $OrbitProbeRoot '.expo/browser-profile-build/webkit-classes.jar'}
  if(-not(Test-Path -LiteralPath $OrbitProbeWebKit)){throw 'Supply the existing public AndroidX WebKit 1.18.0 classes.jar using -OrbitProbeWebKit.'}
- $OrbitProbeCompileClasspath=$OrbitProbeAndroid+[IO.Path]::PathSeparator+$OrbitProbeWebKit
+ if(-not $OrbitProbeCore){$OrbitProbeCore=Join-Path $OrbitProbeRoot '.expo/webview-demo-probe/core-classes.jar'}
+ if(-not(Test-Path -LiteralPath $OrbitProbeCore)){throw 'Supply AndroidX Core 1.1.0 classes.jar (WebKit runtime dependency) using -OrbitProbeCore.'}
+ Assert-ProbeDependencyClass $OrbitProbeWebKit 'androidx/webkit/WebSettingsCompat.class'
+ Assert-ProbeDependencyClass $OrbitProbeCore 'androidx/core/content/pm/PackageInfoCompat.class'
+ $OrbitProbeCompileClasspath=($OrbitProbeAndroid,$OrbitProbeWebKit,$OrbitProbeCore) -join [IO.Path]::PathSeparator
 }
 $env:JAVA_HOME=$OrbitProbeJava
 Invoke-ProbeTool (Join-Path $OrbitProbeJava 'bin/javac.exe') @('--release','8','-classpath',$OrbitProbeCompileClasspath,'-d',(Join-Path $OrbitProbeOutput 'classes'),(Join-Path $PSScriptRoot $OrbitProbeSource))
 $OrbitProbeClasses=@(Get-ChildItem -LiteralPath (Join-Path $OrbitProbeOutput 'classes') -Filter '*.class' -Recurse | ForEach-Object {$_.FullName})
-Invoke-ProbeTool (Join-Path $OrbitProbeTools 'd8.bat') (@('--lib',$OrbitProbeAndroid,'--min-api','29','--output',(Join-Path $OrbitProbeOutput 'dex'))+$OrbitProbeClasses+$(if($OnlineDemo){@($OrbitProbeWebKit)}else{@()}))
+Invoke-ProbeTool (Join-Path $OrbitProbeTools 'd8.bat') (@('--lib',$OrbitProbeAndroid,'--min-api','29','--output',(Join-Path $OrbitProbeOutput 'dex'))+$OrbitProbeClasses+$(if($OnlineDemo){@($OrbitProbeWebKit,$OrbitProbeCore)}else{@()}))
 $OrbitProbeUnsigned=Join-Path $OrbitProbeOutput 'unsigned.apk'
 Invoke-ProbeTool (Join-Path $OrbitProbeTools 'aapt2.exe') @('link','--manifest',(Join-Path $PSScriptRoot $OrbitProbeManifestName),'-I',$OrbitProbeAndroid,'-A',(Join-Path $PSScriptRoot 'assets'),'-o',$OrbitProbeUnsigned)
 Invoke-ProbeTool (Join-Path $OrbitProbeJava 'bin/jar.exe') @('uf',$OrbitProbeUnsigned,'-C',(Join-Path $OrbitProbeOutput 'dex'),'classes.dex')
